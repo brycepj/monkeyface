@@ -46,6 +46,7 @@
 
 	var is = __webpack_require__(1);
 	var arrHas = __webpack_require__(5);
+	var params = __webpack_require__(7);
 	var Interface = __webpack_require__(6);
 
 	String.prototype.is = is;
@@ -54,7 +55,7 @@
 	Number.prototype.is = is;
 	Error.prototype.is = is;
 	Array.prototype.hasOnly = arrHas;
-
+	Function.prototype.params = params;
 
 
 	function main () {
@@ -68,40 +69,13 @@
 
 	main();
 
-	Function.prototype.params = function(){
-	  var fn = this;
-	   var fnStr = fn.toString();
 
-	   // parse argument refs
-	   var paramsStrArr = getParamNames(fn);
-
-	   return this.apply(null, arguments);
-	};
-
-
-
-	var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
-	var ARGUMENT_NAMES = /([^\s,]+)/g;
-	  
-	function getParamNames(func) {
-	  var fnStr = func.toString().replace(STRIP_COMMENTS, '');
-	  var result = fnStr.slice(fnStr.indexOf('(')+1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
-	  if(result === null)
-	     result = [];
-	  return result;
-	}
-
-
-	var newVal = functionWithSomeParams.params('stringArg', 123, ['arrayArg']);
+	var newVal = functionWithSomeParams.params('stringting', 111, ['arrayArg']);
 
 	function functionWithSomeParams (arg1__string, arg2__number, arg3__array) {
 	   console.log("Hello this is the function with the params", arg1__string, arg2__number, arg3__array);
-
 	}
 
-	Function.prototype.method_name = function(argument){
-	   // body...  
-	};
 
 
 	/*
@@ -210,7 +184,7 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-	  err_action: 'warn'
+	  err_action: 'throw'
 	};
 
 
@@ -287,6 +261,42 @@
 
 	*/
 
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	
+	function params(){
+	  var fn = this;
+	   var fnStr = fn.toString();
+
+	   // parse argument refs
+	   var paramsStrArr = getParamNames(fn);
+	   // decide on the API here -- this is missing a lot
+	   paramsStrArr.forEach(function(param, index){
+	    var pieces = param.split('__');
+	    var type = pieces.length == 2 ? pieces[1] : pieces[0];
+	    var val = arguments[index];
+	    val.is(type);
+	   });
+
+	   return this.apply(null, arguments);
+	};
+
+
+	var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+	var ARGUMENT_NAMES = /([^\s,]+)/g;
+	  
+	function getParamNames(func) {
+	  var fnStr = func.toString().replace(STRIP_COMMENTS, '');
+	  var result = fnStr.slice(fnStr.indexOf('(')+1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
+	  if(result === null)
+	     result = [];
+	  return result;
+	}
+
+	module.exports = params;
 
 /***/ }
 /******/ ]);

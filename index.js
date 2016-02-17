@@ -1,5 +1,6 @@
 var is = require('./lib/is');
 var arrHas = require('./lib/has');
+var params = require('./lib/params');
 var Interface = require('./lib/models/Interface');
 
 String.prototype.is = is;
@@ -22,40 +23,8 @@ function main () {
 
 main();
 
-function params(){
-  var fn = this;
-   var fnStr = fn.toString();
 
-   // parse argument refs
-   var paramsStrArr = getParamNames(fn);
-
-/* TODO: YOU LEFT OFF HERE */
-   var pairings = paramsStrArr.map(function(param, index){
-      param = param.split('__').length > 1 ? param.split('__')[1] : param.split('__')[0];
-      return {
-        type: param.split('__')[1],
-        val:
-      }
-   });
-
-   return this.apply(null, arguments);
-};
-
-
-
-var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
-var ARGUMENT_NAMES = /([^\s,]+)/g;
-  
-function getParamNames(func) {
-  var fnStr = func.toString().replace(STRIP_COMMENTS, '');
-  var result = fnStr.slice(fnStr.indexOf('(')+1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
-  if(result === null)
-     result = [];
-  return result;
-}
-
-
-var newVal = functionWithSomeParams.params('stringArg', 123, ['arrayArg']);
+var newVal = functionWithSomeParams.params('stringting', 111, ['arrayArg']);
 
 function functionWithSomeParams (arg1__string, arg2__number, arg3__array) {
    console.log("Hello this is the function with the params", arg1__string, arg2__number, arg3__array);
