@@ -46,8 +46,10 @@
 
 	var is = __webpack_require__(1);
 	var arrHas = __webpack_require__(5);
-	var params = __webpack_require__(7);
-	var Interface = __webpack_require__(6);
+	var params = __webpack_require__(6);
+	var InterfaceFactory = __webpack_require__(7);
+	var Interface = __webpack_require__(8);
+	var mock = __webpack_require__(9);
 
 	String.prototype.is = is;
 	Array.prototype.is = is;
@@ -65,6 +67,8 @@
 	  var newNum = 20; newNum.is('number');
 	  var newErr = new Error().is('error');
 	  var arrHas = ['hello', 'worlds'].hasOnly('string');
+
+	  InterfaceFactory.create('testInterfaceFromMock', mock.Obj);
 	}
 
 	main();
@@ -239,64 +243,6 @@
 
 /***/ },
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = Interface;
-	var check = __webpack_require__(2);
-
-	var Interface = (function() {
-	  function _Interface(cfg) {
-	    this.props = null;
-	    this.methods = null;
-	    this._parseCfg(cfg);
-	  }
-
-	  _Interface.prototype._parseCfg = function(cfg) {
-
-	    var isArray = check.isArray(cfg);
-	    var props = [];
-	    var methods = [];
-
-	    if (isArray) {
-	      cfg.forEach(function(str) {
-	        var method = str.includes('()') ? str.slice(0, -2) : null;
-	        if (method) {
-	          methods.push(method);
-	        } else {
-	          props.push(str);
-	        }
-	      });
-	    }
-	    // should return
-	    this.props = [];
-	    this.methods = [];
-	  };
-	  _Interface.prototype.validate = function(argument){
-	     // body...  
-	     return true;
-	  };
-	  // static method
-	  _Interface.ensureImplements = function(obj, interface) {
-	     
-	  };
-
-	  return _Interface;
-	})();
-
-	/*
-
-	  Should take an array of properties, methods
-	  or 
-	  An object
-
-
-	  ['private prop', 'public method()']
-
-	*/
-
-
-/***/ },
-/* 7 */
 /***/ function(module, exports) {
 
 	
@@ -330,6 +276,139 @@
 	}
 
 	module.exports = params;
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var registry = __webpack_require__(4).registry;
+	var Interface = __webpack_require__(8);
+
+	var InterfaceFactory = (function(){
+	  function _InterfaceFactory () {}
+
+	  _InterfaceFactory.prototype.create = function(name, cfg){
+	    var newInterface = new Interface(name, cfg); // name
+	    this._register(newInterface);
+	    return newInterface;
+	  };
+
+	  _InterfaceFactory.prototype._register = function(i){
+	    var name = i.name;
+	    registry[name] = i; 
+	  };
+
+	  _InterfaceFactory.prototype._checkRegistryKey = function(key){
+	     return !!this.getInterface(key);
+	  };
+
+	  _InterfaceFactory.prototype.getRegistryKeys = function(){
+	     return registry.keys; 
+	  };
+
+	  _InterfaceFactory.prototype.getInterface = function(key){
+	     return registry[key];
+	  };
+
+	  _InterfaceFactory.prototype.setInterface = function(key, i){
+	     registry[key] = i;
+	  };
+
+	  _InterfaceFactory.prototype.ensureImplements = function(val, i){
+	    // i supports string ref, or actual interface
+	    var isKey = typeof i === 'string' && this._checkRegistryKey(i);
+	    var result = isKey ? this.getInterface(i).validate(val) : i.validate(val);
+	    return result;
+	  };
+
+	  return _InterfaceFactory;
+	})();
+
+	var factory = new InterfaceFactory();
+	module.exports = factory;
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var check = __webpack_require__(2);
+
+	var Interface = (function() {
+	  
+	  function _Interface(name, cfg) {
+	    this.props = null;
+	    this.methods = null;
+	    this.name = name;
+	    this._parseCfg(cfg);
+	  }
+
+	  _Interface.prototype._parseCfg = function(cfg) {
+
+	    var isArray = check.isArray(cfg);
+	    var props = [];
+	    var methods = [];
+
+	    if (isArray) {
+	      cfg.forEach(function(str) {
+	        var method = str.includes('()') ? str.slice(0, -2) : null;
+	        if (method) {
+	          methods.push(method);
+	        } else {
+	          props.push(str);
+	        }
+	      });
+	    } else if (check.isObject(cfg)) {
+	      for (var key in cfg) {
+	        if (cfg.hasOwnProperty(key)) {
+	          var type = typeof cfg[key];
+	          if (type == 'function') {
+	            methods.push(key);
+	          } else {
+	            props.push(key);
+	          }
+	        }
+	      }
+	    }
+	    // should return
+	    this.props = props;
+	    this.methods = methods;
+	  };
+	  _Interface.prototype.validate = function(argument){
+	     // body...  
+	     return true;
+	  };
+	  // static method
+	  _Interface.ensureImplements = function(obj, interface) {
+	     
+	  };
+
+	  return _Interface;
+	})();
+
+	module.exports = Interface;
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	function noop(){}
+
+	function MockInterfaceConfigClass() {
+	  this.stringProp = 'stringery';
+	  this.numberProp = 1;
+	  this.objectProp = {};
+	  this.arrayProp = [];
+	  this.nullProp = null;
+	  this.functionProp = noop;
+	}
+
+	MockInterfaceConfigClass.prototype.mockMethod = noop;
+
+
+	module.exports = {
+	  Obj: new MockInterfaceConfigClass()
+	}
 
 /***/ }
 /******/ ]);

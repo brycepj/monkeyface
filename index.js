@@ -1,7 +1,9 @@
 var is = require('./lib/is');
 var arrHas = require('./lib/has');
 var params = require('./lib/params');
+var InterfaceFactory = require('./lib/services/InterfaceFactory');
 var Interface = require('./lib/models/Interface');
+var mock = require('./lib/services/mock');
 
 String.prototype.is = is;
 Array.prototype.is = is;
@@ -19,6 +21,8 @@ function main () {
   var newNum = 20; newNum.is('number');
   var newErr = new Error().is('error');
   var arrHas = ['hello', 'worlds'].hasOnly('string');
+
+  InterfaceFactory.create('testInterfaceFromMock', mock.Obj);
 }
 
 main();
