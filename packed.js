@@ -142,7 +142,9 @@
 	    return context instanceof(String);
 	}
 	var isObject = function(context) {
-	    return context instanceof(Object);
+	    return context instanceof(Object) 
+	      && !isArray(context)
+	      && !isNumber(context);
 	}
 	var isNumber = function(context) {
 	    return context instanceof(Number);
@@ -150,13 +152,18 @@
 	var isError = function(context) {
 	    return context instanceof(Error);
 	}
+	var isFunction = function(context) {
+	  return !!(context && context.constructor && context.call && context.apply);
+	}; 
+
 
 	module.exports = {
 	  isArray:isArray,
 	  isString: isString,
 	  isObject: isObject, 
 	  isNumber: isNumber, 
-	  isError: isError
+	  isError: isError,
+	  isFunction: isFunction
 	}
 
 /***/ },
@@ -193,7 +200,8 @@
 /* 5 */
 /***/ function(module, exports) {
 
-	
+	var err_action = 'warn'; // or throw or log
+
 
 	function arrHas (type) {
 	   var passes;
@@ -245,6 +253,11 @@
 	    // should return
 	    this.props = [];
 	    this.methods = [];
+	  };
+
+	  // static method
+	  _Interface.ensureImplements = function(obj, interface) {
+	     
 	  };
 
 	  return _Interface;
