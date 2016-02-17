@@ -1,0 +1,15 @@
+{
+  "name": "monkeyface",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "lite-server .",
+    "build" : "webpack index.js packed.js --watch" 
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^1.12.13"
+  }
+}
