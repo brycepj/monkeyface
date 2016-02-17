@@ -104,6 +104,7 @@
 	var maybeThrow = __webpack_require__(3);
 
 	function is (type) {
+	  
 	   switch (type) {
 	    case 'string':
 	       maybeThrow(check.isString(this), type, this);
@@ -115,7 +116,10 @@
 	      maybeThrow(check.isNumber(this), type, this);
 	      break;
 	    case 'error': 
-	       maybeThrow(check.isError(this), type, this);
+	      maybeThrow(check.isError(this), type, this);
+	      break;
+	    case 'function':
+	      maybeThrow(check.isFunction(this), type, this);
 	      break;
 	    case 'object':
 	       maybeThrow(check.isObject(this), type, this);
@@ -190,11 +194,24 @@
 /* 4 */
 /***/ function(module, exports) {
 
+	/* WEBPACK VAR INJECTION */(function(global) {var platform, registry;
+
+	var isBrowser = new Function("try {return this===window;}catch(e){ return false;}");
+	var isNode = new Function("try {return this===global;}catch(e){return false;}");
+
+	if(isNode() && global) platform = 'node';
+	if(isBrowser() && window) platform = 'browser';  
+
+	var top = platform == 'node' ? global : window;
+
+	var registry = top.__interfaces = {};
+
 	module.exports = {
-	  err_action: 'throw'
+	  err_action: 'throw',
+	  registry: registry,
+	  platform: platform
 	};
-
-
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 5 */
@@ -254,7 +271,10 @@
 	    this.props = [];
 	    this.methods = [];
 	  };
-
+	  _Interface.prototype.validate = function(argument){
+	     // body...  
+	     return true;
+	  };
 	  // static method
 	  _Interface.ensureImplements = function(obj, interface) {
 	     

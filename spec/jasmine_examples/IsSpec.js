@@ -7,14 +7,52 @@ describe("IsModule", function() {
     Number.prototype.is = is;
     Error.prototype.is = is;
     Function.prototype.is = is;
-
-
-    it("should catch non-strings passed as strings", function() {
+  
+  describe("String", function() {
+    it("should catch numbers passed as strings", function() {
         var testValue = 910203030;
         expect(function() {
             testValue.is('string');
         }).toThrowError();
     });
+
+    it("should catch objects passed as strings", function() {
+        var testValue = {};
+        expect(function() {
+            testValue.is('string');
+        }).toThrowError();
+    });
+
+    it("should catch errors passed as strings", function() {
+        var testValue = new Error();
+        expect(function() {
+            testValue.is('string');
+        }).toThrowError();
+    });
+
+    it("should catch functions passed as strings", function() {
+        var testValue = function(val) {
+            return val; };
+        expect(function() {
+            testValue.is('string');
+        }).toThrowError();
+    });
+
+    it("should catch arrays passed as strings", function() {
+        var testValue = [];
+        expect(function() {
+            testValue.is('string');
+        }).toThrowError();
+    });
+
+    it("should pass strings passed as strings", function() {
+        var testValue = 'this is a string';
+        expect(testValue.is('string')).toBeTruthy();
+    });
+
+});
+
+    
 
     it("should catch non-arrays passed as arrays", function() {
         var testValue = 910203030;
