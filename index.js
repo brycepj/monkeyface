@@ -1,4 +1,5 @@
-var is = require('./lib/is');
+function notyet() {
+  var is = require('./lib/is');
 var arrHas = require('./lib/has');
 var params = require('./lib/params');
 var InterfaceFactory = require('./lib/services/InterfaceFactory');
@@ -34,6 +35,9 @@ function functionWithSomeParams (arg1__string, arg2__number, arg3__array) {
    console.log("Hello this is the function with the params", arg1__string, arg2__number, arg3__array);
 }
 
+}
+
+
 
 
 /*
@@ -52,3 +56,9 @@ String.contains
 Function.params (this is a biggie)
   - ensure that params being passed match params set
 */
+
+var env = require('./lib/services/env');
+
+module.exports = (function(){
+
+})();
