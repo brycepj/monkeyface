@@ -58,7 +58,19 @@ Function.params (this is a biggie)
 */
 
 var env = require('./lib/services/env');
+var Interface = require('./lib/services/InterfaceFactory');
 
 module.exports = (function(){
+  var cfg = [
+  'helloProp', 
+  'helloMethod()', 
+  '?helloOptionalProp', 
+  '?helloOptionalMethod',
+  'helloProp2:string',
+  'helloProp3:string[]', 
+  'helloProp4:secondInterface'
+  ];
 
+  console.log('Singleton', Interface);
+  console.log('NewInterface', Interface.create('sweetInterfaceBro', cfg));
 })();
