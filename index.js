@@ -70,7 +70,8 @@ module.exports = (function(){
   'helloProp3:string[]', 
   'helloProp4:secondInterface'
   ];
+  var config = { hello: 'world', sprack: function(){}};
 
   console.log('Singleton', Interface);
-  console.log('NewInterface', Interface.create('sweetInterfaceBro', cfg));
+  console.log('NewInterface', Interface.create('sweetInterfaceBro', config));
 })();
