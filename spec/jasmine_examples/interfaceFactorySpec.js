@@ -10,41 +10,57 @@ describe("Interface Factory", function(){
 
   describe("Creator", function(){
     it("should correctly parse an array as config", function(){
-      var firstProp = 'rando';
-      var firstMethod = 'mcBando()';
-      var newInterface = InterfaceFactory.create([firstProp, firstMethod]);
-      var props = newInterface.props;
-      var methods = newInterface.methods;
-      expect(props[0]).toEqual(firstProp);
-      expect(methods[0]).toEqual(firstMethod);
+    var cfg = {
+			name: 'superSweetInterface',
+			declarations: [
+				'helloProp', 
+				'helloMethod()', 
+				'?helloOptionalProp', 
+				'?helloOptionalMethod',
+				'helloProp2:string',
+				'helloProp3:string[]', 
+				'helloProp4:secondInterface'
+			]
+			};
+			
+      var newInterface = InterfaceFactory.create(cfg.name, cfg.declarations);
+      var declarationsWithNulls = newInterface.declarations.find(function (value, index, obj) {
+				return value.name == null || value.required == null || value.method == null;
+			})
+			
+			expect(newInterface).toBeDefined();
+			expect(newInterface.declarations).toBeDefined();
+			expect(newInterface.name).toBeDefined();
+			expect(newInterface.declarations.length).toEqual(cfg.declarations.length);
+			expect(newInterface.name).toEqual(cfg.name);
+			expect(declarationsWithNulls).toBeUndefined();
+			
     });
 
     it("should correctly parse an object as config", function(){
       var mockObj = mock.Obj;
-      var newInterface = InterfaceFactory.create(mockObj);
-      var name = newInterface.name;
-      var props = newInterface.props;
-      var methods = newInterface.methods;
-
-      expect(props).toBeDefined();
-      expect(methods).toBeDefined();
-      expect(name).toBeDefined();
+			var interfaceName = 'yayQuery';
+      var newInterface = InterfaceFactory.create(interfaceName, mockObj);
+      
+      var declarationsWithNulls = newInterface.declarations.find(function (value, index, obj) {
+				return value.name == null || value.required == null || value.method == null;
+			});
+			
+			expect(newInterface).toBeDefined();
+			expect(newInterface.declarations).toBeDefined();
+			expect(newInterface.name).toBeDefined();
+			expect(newInterface.declarations.length).toEqual(Object.keys(mockObj).length);
+			expect(newInterface.name).toEqual(interfaceName);
+			expect(declarationsWithNulls).toBeUndefined();
     });
 
-    it("should return a valid interface object", function(){
-      var newInterface = InterfaceFactory.create(['rando', 'mcbando()']);
-      expect(newInterface).toEqual(jasmine.any(Interface));
-    });
-
-    it("should properly register an interface on the global scope", function(){
-      var newInterface = InterfaceFactory.create(['rando', 'mcbando()']);
-
-    })
 
   });
 
-  describe("Validate", function(){
-
+  describe("EnsureImplements", function(){
+		it("method should exist on InterfaceFactory", function () {
+			expect(InterfaceFactory.ensureImplements).toBeTruthy();
+		});
   });
 
 });

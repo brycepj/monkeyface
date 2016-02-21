@@ -59,6 +59,7 @@ Function.params (this is a biggie)
 
 var env = require('./lib/services/env');
 var Interface = require('./lib/services/InterfaceFactory');
+var _ = require('optimist');
 
 module.exports = (function(){
   var cfg = [
@@ -73,5 +74,5 @@ module.exports = (function(){
   var config = { hello: 'world', sprack: function(){}};
 
   console.log('Singleton', Interface);
-  console.log('NewInterface', Interface.create('sweetInterfaceBro', config));
+  console.log('NewInterface', Interface.create('sweetInterfaceBro', _));
 })();
