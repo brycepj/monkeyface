@@ -5,11 +5,19 @@
   "main": "index.js",
   "scripts": {
     "test": "lite-server .",
-    "build" : "webpack index.js packed.js --watch" 
+    "build": "webpack index.js monkeyface.js --watch"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "jasmine": "^2.4.1",
+    "karma": "^0.13.21",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-jasmine": "^0.3.7",
+    "karma-requirejs": "^0.2.5",
     "webpack": "^1.12.13"
+  },
+  "dependencies": {
+    "jasmine": "^2.4.1"
   }
 }
