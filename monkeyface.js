@@ -479,10 +479,10 @@
 
 /***/ },
 /* 12 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = (function() {
-		__webpack_require__(13);
+		$require('patchers');
 	})();
 
 /***/ },
