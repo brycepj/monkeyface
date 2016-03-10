@@ -1,0 +1,71 @@
+var _ = require('lodash');
+var expect = require("chai").expect;
+var should = require('chai').should();
+var assert = require('assert');
+var mocks = require('../lib/services/mock');
+var check = require('../lib/services/typeChecker');
+var InterfaceFactory = require('../lib/services/InterfaceFactory');
+var env = require('../lib/services/env');
+
+describe("Interface Factory", function(){
+  describe("createInterface()", function () {
+    it("should be a defined method", function() {
+      expect(InterfaceFactory.createInterface).to.be.ok;
+      expect(typeof InterfaceFactory.createInterface).to.equal('function');
+    });
+    
+    it("should return a valid interface object", function() {
+      const ifaceName = 'supabadintafacetho';
+      const props = ['hello', 'world', 'tho'];
+      const iface = InterfaceFactory.createInterface(ifaceName, props);
+      
+      expect(iface.declarations).to.be.ok;
+      expect(iface.declarations.length).to.equal(props.length);
+      expect(iface.name).to.be.ok;
+      expect(iface.name).to.equal(ifaceName);
+      expect(iface.validate).to.be.ok;
+    });
+    
+    it("should add the interface to the registry", function() {
+      const ifaceName = 'supabadintafacetho';
+      const props = ['hello', 'world', 'tho'];
+      const iface = InterfaceFactory.createInterface(ifaceName, props);
+      var interfaceRegistry = env.svc.__interfaces;
+      expect(interfaceRegistry).to.be.ok;
+      expect(interfaceRegistry[ifaceName]).to.be.ok;
+    });
+  });
+  
+  describe("ensureImplements()", function() {
+    it("should be a valid static method", function() {
+       const factory = InterfaceFactory;
+       expect(factory.ensureImplements).to.be.ok;
+    });
+    
+    it("should return the validated object", function() {
+      const ifaceName = 'supabadintafacetho';
+      const props = ['hello', 'world', 'tho'];
+      const iface = InterfaceFactory.createInterface(ifaceName, props);
+      const val = {
+        hello:"hello",
+        world: "world",
+        tho: "tho"
+      };
+      var returnVal = InterfaceFactory.ensureImplements(val, iface);
+      expect(returnVal).to.equal(val);
+    });
+    
+    it("should throw an error with an invalid object", function() {
+      // TODO: You need to expand this significantly with required props, optional props, types etc
+      const ifaceName = 'supabadintafacetho';
+      const props = ['hello', 'world', 'tho'];
+      const iface = InterfaceFactory.createInterface(ifaceName, props);
+      const val = {
+        hello:"hello"
+      };
+      var fn = InterfaceFactory.ensureImplements.bind(val, iface);
+      expect(fn).to.throw(Error);
+    })
+    
+  });
+});
