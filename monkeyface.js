@@ -536,13 +536,13 @@
 		// This is where you left off.
 		// You need to be able to accept an interface reference as an interface as well
 		var iface = Interface.createInterface('superBadInterface', ['hello:string']);
-		console.log(iface);
+
 		var tester = {
 			hello: 'world'
 		};
 		
 		tester = tester.implement(iface);
-		console.log('tester after implement', tester);
+
 	})();
 
 	function patchMethods(Class, methodsMap) {
