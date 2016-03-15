@@ -5,7 +5,6 @@ var assert = require('assert');
 var mocks = require('../lib/services/mock');
 var check = require('../lib/services/typeChecker');
 var InterfaceFactory = require('../lib/services/InterfaceFactory');
-var env = require('../lib/services/env');
 
 describe("Interface Factory", function(){
   describe("createInterface()", function () {
@@ -96,7 +95,7 @@ describe("Interface Factory", function(){
     });  
     
     it("should throw an error when bad types are passed", function() {
-      // make this better -- you shouldn't have to test this, if you test the typechecker
+      // make this better -- you shouldn't have to test this in createInterface, if you test the typechecker
       const ifaceName = 'supabadintafacetho';
       const props = ['hello:string', 'world:number', 'tho:array', 'checkme:date', 
       'robject:object', 'shmerror:error'];

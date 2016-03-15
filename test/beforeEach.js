@@ -1,4 +1,6 @@
 beforeEach(function() {
   // initialize patcher
-  require('../index');
+  require('../index')({
+    config: "Bonfig"
+  });
 });
