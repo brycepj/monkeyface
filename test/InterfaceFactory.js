@@ -55,7 +55,7 @@ describe("Interface Factory", function(){
       expect(returnVal).to.equal(val);
     });
     
-    it("should throw an error with an invalid object", function() {
+    it("should throw an error when missing a property", function() {
       // TODO: You need to expand this significantly with required props, optional props, types etc
       const ifaceName = 'supabadintafacetho';
       const props = ['hello', 'world', 'tho'];
@@ -65,7 +65,53 @@ describe("Interface Factory", function(){
       };
       var fn = InterfaceFactory.ensureImplements.bind(val, iface);
       expect(fn).to.throw(Error);
-    })
+    });
     
-  });
+    it("should return the validated object when missing an optional property", function() {
+      const ifaceName = 'supabadintafacetho';
+      const props = ['hello', 'world?', 'tho?'];
+      const iface = InterfaceFactory.createInterface(ifaceName, props);
+      const val = {
+        hello:"hello"
+      };
+      var validated = InterfaceFactory.ensureImplements(val, iface);
+      expect(validated).to.equal(val);
+    });
+    
+    it("should return the validated object when types pass", function() {
+      const ifaceName = 'supabadintafacetho';
+      const props = ['hello:string', 'world:number', 'tho:array', 'checkme:date', 
+      'robject:object', 'shmerror:error'];
+      const iface = InterfaceFactory.createInterface(ifaceName, props);
+      const val = {
+        hello:"hello",
+        world: 1,
+        tho: [],
+        checkme: new Date(),
+        robject: {},
+        shmerror: new Error()
+      };
+      var validated = InterfaceFactory.ensureImplements(val, iface);
+      expect(validated).to.equal(val);
+    });  
+    
+    it("should throw an error when bad types are passed", function() {
+      // make this better -- you shouldn't have to test this, if you test the typechecker
+      const ifaceName = 'supabadintafacetho';
+      const props = ['hello:string', 'world:number', 'tho:array', 'checkme:date', 
+      'robject:object', 'shmerror:error'];
+      const iface = InterfaceFactory.createInterface(ifaceName, props);
+      const val = {
+        hello: 1,
+        world: 1,
+        tho: 1,
+        checkme: 1,
+        robject: 1,
+        shmerror: 1
+      };
+      var validated = InterfaceFactory.ensureImplements.bind(val, iface);
+      expect(validated).to.throw(Error);
+    });  
+    
+  });  
 });
