@@ -1,13 +1,13 @@
+// YOU LEFT OFF HERE -- Try making InterfaceFactory the hub that sets up environment
 var _ = require('lodash');
 var expect = require("chai").expect;
 var should = require('chai').should();
 var assert = require('assert');
-var mocks = require('../lib/services/mock');
-var check = require('../lib/services/typeChecker');
 var InterfaceFactory = require('../lib/services/InterfaceFactory');
 
 describe("Interface Factory", function(){
   describe("createInterface()", function () {
+      
     it("should be a defined method", function() {
       expect(InterfaceFactory.createInterface).to.be.ok;
       expect(typeof InterfaceFactory.createInterface).to.equal('function');
@@ -29,7 +29,7 @@ describe("Interface Factory", function(){
       const ifaceName = 'supabadintafacetho';
       const props = ['hello', 'world', 'tho'];
       const iface = InterfaceFactory.createInterface(ifaceName, props);
-      var interfaceRegistry = env.svc.__interfaces;
+      var interfaceRegistry = env.registry;
       expect(interfaceRegistry).to.be.ok;
       expect(interfaceRegistry[ifaceName]).to.be.ok;
     });
