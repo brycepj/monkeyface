@@ -3,3 +3,4 @@ typings
 lib/**/*.js
 lib/**/*.js.map
 .vscode
+index.js.map
