@@ -1,6 +1,6 @@
 
-var check = $require('services/typeChecker');
-var maybeThrow = $require('services/maybeThrow');
+import check = require('../services/typeChecker');
+import maybeThrow = require('../services/maybeThrow');
 
 function implement (type, val) {
 
@@ -53,7 +53,7 @@ function implement (type, val) {
    return self;
 }
 
-module.exports = (function(){
+export = (function(){
 	return implement;
 })();
 

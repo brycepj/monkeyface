@@ -6,7 +6,7 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec",
     "build": "webpack index.js monkeyface.js --watch",
-    "tsdev": "tsc -w"
+    "tsdev": "tsc -w --module 'commonjs' --target 'es5'"
   },
   "author": "",
   "license": "ISC",

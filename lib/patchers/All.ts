@@ -1,10 +1,13 @@
-const ensure = $require('api/ensure');
+import ensure = require('../api/ensure');
+import Types = require('../services/Types');
+
 
 
 // TODO: Write a nice service for this and mocks
-exports = (function() {
-	Types.forEach(function(NativeClass){
-	  NativeClass.prototype.ensure = ensure;
+export = (function() {
+  let natives = Types.allNatives();
+	natives.forEach(function(native:any){
+    native.prototype.ensure = ensure;
 	});
 })();
 

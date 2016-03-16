@@ -1,4 +1,6 @@
-class Registry {
+class RegistryService {
+  public map: Object;
+  
   constructor() {
     this.map = {};
   }
@@ -19,4 +21,4 @@ class Registry {
   }
 }
 
-exports = new Registry();
+export = new RegistryService();

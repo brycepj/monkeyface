@@ -1,7 +1,7 @@
-var InterfaceFactory = $require('services/InterfaceFactory');
+import Bridge = require('../services/BridgeService');
 
-exports = {
-  create: InterfaceFactory.createInterface,
-  register: InterfaceFactory.registerInterface,
-  config: InterfaceFactory.configureFactory
+export = {
+  create: Bridge.createInterface,
+  register: Bridge.registerInterface,
+  // config: Bridge.configureFactory
 };

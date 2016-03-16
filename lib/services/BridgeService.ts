@@ -1,5 +1,5 @@
 
-var validation = $require('validation/factories');
+import validation = require('../validation/factories');
 
 class Bridge {
 
@@ -8,10 +8,10 @@ class Bridge {
   public Declaration: any; // create interface
   
   constructor() {
-    $require('patchers/index');
-    this.Registry = $require('factories/Registry'); // singleton
-    this.Interface = $require('factories/Interface'); // factory
-    this.Declaration = $require('factories/Declaration'); // factory - may not be neccessary here
+    require('../patchers/index');
+    this.Registry = require('./RegistryService');
+    this.Interface = require('../factories/InterfaceFactory'); // factory
+    this.Declaration = require('../factories/DeclarationFactory');
   }
 
   createInterface() { // make name optional
@@ -28,4 +28,4 @@ class Bridge {
 
 }
 
-exports = new Bridge();
+export = new Bridge();

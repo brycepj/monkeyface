@@ -1,21 +1,15 @@
-exports = {
-  allNatives: allNatives,
-  allNativesButOne: allNativesButOne,
-  allInstances: allInstances,
-  allInstancesButOne: allInstancesButOne
-}
+const Types = [String, Array, Object, Number, Error, Boolean, Date];
+const Instances = ["stringy", [], {}, 1, new Error("Message"), new Boolean(true), new Date()];
 
-var Types = [String, Array, Object, Number, Error, Boolean, Date];
-var Instances = ["stringy", [], {}, 1, new Error("Message"), new Boolean(true), new Date()];
-
-function allNatives(detail){
+function allNatives(detail?:string) {
   return !detail ? Types : Types.map(function(nativeClass){
     return { name: String(nativeClass), native: nativeClass };
   }); 
 }
 
 function allNativesButOne(native) {
-  return allNatives().filter(function(val, idx) {
+  let natives:any = allNatives();
+  return natives.filter(function(val, idx) {
     return val !== native;
   });
 }
@@ -32,4 +26,9 @@ function allInstancesButOne(native) {
   });
 };
 
-// TODO: Do interfaces too.
+export = {
+  allNatives: allNatives,
+  allNativesButOne: allNativesButOne,
+  allInstances: allInstances,
+  allInstancesButOne: allInstancesButOne
+}

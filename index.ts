@@ -1,9 +1,6 @@
 /// <reference path="typings/main.d.ts" />
 
-declare var $require: any;
+import publicApi = require('./lib/api/public');
 
-global["$require"] = function(name:string){
-  return require(__dirname + '/lib/' + name);
-};
-
-exports = $require('api/public');
+export = publicApi;
+ 

@@ -1,4 +1,4 @@
-global["$require"] = function (name) {
-    return require(__dirname + '/lib/' + name);
-};
-exports = $require('api/public');
+"use strict";
+var publicApi = require('./lib/api/public');
+module.exports = publicApi;
+//# sourceMappingURL=index.js.map

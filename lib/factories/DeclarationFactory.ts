@@ -2,7 +2,7 @@ import {iDeclarationFactory} from '../interfaces/Factories';
 import {iDeclaration} from '../interfaces/Models';
 import {Declaration} from '../models/Declaration';
 
-var check = $require('services/typeChecker');
+var check = require('../services/typeChecker');
 
 class DeclarationFactory implements iDeclarationFactory {
 
@@ -12,7 +12,7 @@ class DeclarationFactory implements iDeclarationFactory {
     return val;
   }
 
-  validate() {
+  validate(val:any, type:string) {
     // TODO: Simple Declaration vs Complex Declaration    
     return true;
   }

@@ -1,4 +1,4 @@
-var implement = $require('api/implement');
+// var check = $require('/check');
 
 function params() {
   var fn = this;
@@ -12,7 +12,7 @@ function params() {
     var pieces = param.split('__');
     var type = pieces.length == 2 ? pieces[1] : pieces[0];
     var val = args[index];
-    implement(type, val); // FIXME: Use typechecker, not monkeypatched (Null Undefined)
+    // check(type, val); // FIXME: Use typechecker, not monkeypatched (Null Undefined)
   });
 
   return this.apply(null, arguments);

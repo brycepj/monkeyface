@@ -1,5 +1,6 @@
-var check = $require('services/typeChecker');
-var u = $require('services/utils');
+import check = require('../services/typeChecker');
+import u = require('../services/utils');
+import {Declaration} from '../models/Declaration';
 
 var Interface = (function() {
   
@@ -10,7 +11,7 @@ var Interface = (function() {
   }
 
   _Interface.prototype._parseCfg = function(cfg) {
-		var Declaration = $require('models/Declaration');
+
     var self = this;
     var isListCfg = check.isArray(cfg);
     var isInferredCfg = check.isObject(cfg);
@@ -46,3 +47,17 @@ var Interface = (function() {
 
 var interfaceFactory = new Interface();
 exports = interfaceFactory;
+/*
+validate(iterable) {
+    var checkAll = this.declarations.every(function(declaration, idx) {
+      var key = declaration.name;
+      var val = iterable[key];
+      return declaration.validate(val, key);
+    });
+    return checkAll ? iterable : false;
+  };
+  // static method
+  create(obj, iface) {
+    // various private methods to create
+    return iface;
+  };*/

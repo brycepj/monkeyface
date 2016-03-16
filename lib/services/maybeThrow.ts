@@ -1,5 +1,3 @@
-var err_action = $require('services/env').err_action;
-
 function maybeThrow(Bool, type, self){
   if (!Bool){
     if (err_action === 'throw'){
@@ -12,4 +10,4 @@ function maybeThrow(Bool, type, self){
   }
 }
 
-module.exports = maybeThrow;
+export = maybeThrow;

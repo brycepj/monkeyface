@@ -1,11 +1,3 @@
-module.exports = {
-  forIn: forIn,
-  times: times, 
-	everyIn: everyIn,
-	mapObj: mapObj,
-  returnError: returnError
-}
-
 function forIn (object, iteratee) {
    for (var key in object) {
       if (object.hasOwnProperty(key)) {
@@ -52,3 +44,11 @@ var returnError = function(msg) {
   }
   return true;
 };
+
+export = {
+  forIn: forIn,
+  times: times, 
+	everyIn: everyIn,
+	mapObj: mapObj,
+  returnError: returnError
+}
