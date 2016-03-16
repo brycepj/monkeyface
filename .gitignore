@@ -2,3 +2,4 @@ node_modules
 typings
 lib/**/*.js
 lib/**/*.js.map
+.vscode
