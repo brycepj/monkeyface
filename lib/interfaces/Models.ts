@@ -1,5 +1,5 @@
 export interface iInterface {
-  name: string;
+  name: any;
   declarations: iDeclaration[];
 }
 
