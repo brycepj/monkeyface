@@ -1,5 +1,4 @@
-global.$require = function(name){
-  return require(__dirname + '/lib/' + name);
+global["$require"] = function (name) {
+    return require(__dirname + '/lib/' + name);
 };
-
 exports = $require('api/public');

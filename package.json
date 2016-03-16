@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec",
-    "build": "webpack index.js monkeyface.js --watch"
+    "build": "webpack index.js monkeyface.js --watch",
+    "tsdev": "tsc -w"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^2.12.1",
     "webpack": "^1.12.13"
   },
   "dependencies": {
