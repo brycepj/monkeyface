@@ -1,12 +1,13 @@
 
-import validation = require('../validation/factories');
+import validators = require('../validation/factories');
+import {iCreateInterfaceConfig} from '../interfaces/Config';
 
 class Bridge {
 
   public Registry: any; // create interface
   public Interface: any; // create interface
   public Declaration: any; // create interface
-  
+
   constructor() {
     require('../patchers/index');
     this.Registry = require('./RegistryService');
@@ -21,7 +22,7 @@ class Bridge {
   };
 
   registerInterface(name, cfg) {
-    const v = validation.registerInterface;
+    const v = validators.registerInterface;
     const i = this.Interface.create(name, v(cfg));
     this.Registry.register(i);
   };

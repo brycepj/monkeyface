@@ -1,16 +1,12 @@
 import check = require('../services/typeChecker');
 import u = require('../services/utils');
 import {Declaration} from '../models/Declaration';
+import {Interface} from '../models/Interface';
+class InterfaceFactory {
 
-var Interface = (function() {
-  
-  function _Interface(name, cfg) {
-    this.name = name;
-    this.declarations = [];
-    this._parseCfg(cfg);
-  }
+  constructor() {}
 
-  _Interface.prototype._parseCfg = function(cfg) {
+  _parseCfg(cfg) {
 
     var self = this;
     var isListCfg = check.isArray(cfg);
@@ -21,32 +17,29 @@ var Interface = (function() {
         self.declarations.push(new Declaration(str));
       });
     } else if (isInferredCfg) {
-      u.forIn(cfg, function(value, key){
+      u.forIn(cfg, function(value, key) {
         var type = check.discernType(value);
         var str = type === 'function' ? key + '()' : [key, type].join(':');
         self.declarations.push(new Declaration(str))
       });
     }
   };
-  _Interface.prototype.validate = function(iterable){
-     var checkAll = this.declarations.every(function(declaration, idx) {
-			 var key = declaration.name;
-			 var val = iterable[key];
-			 return declaration.validate(val, key);
-		 });
-     return checkAll ? iterable : false; 
+  validate(iterable) {
+    var checkAll = this.declarations.every(function(declaration, idx) {
+      var key = declaration.name;
+      var val = iterable[key];
+      return declaration.validate(val, key);
+    });
+    return checkAll ? iterable : false;
   };
-  // static method
-  _Interface.prototype.create = function(obj, iface) {
+  // TODO: As an optimization, consider using subclasses for various levels of parsing required
+  create(cfg) {
     // various private methods to create
-     return iface;
+    return new Interface(cfg);
   };
+}
 
-  return _Interface;
-})();
-
-var interfaceFactory = new Interface();
-exports = interfaceFactory;
+export = new InterfaceFactory();
 /*
 validate(iterable) {
     var checkAll = this.declarations.every(function(declaration, idx) {

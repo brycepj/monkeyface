@@ -19,6 +19,9 @@ class RegistryService {
     var i = 0;
     return i;
   }
+  listKeys(){
+    return Object.keys(this.map);
+  }
 }
 
 export = new RegistryService();
