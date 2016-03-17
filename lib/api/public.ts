@@ -1,7 +1,7 @@
 import Bridge = require('../services/BridgeService');
 
 export = {
-  create: Bridge.createInterface,
-  register: Bridge.registerInterface,
+  create: Bridge.createInterface.bind(Bridge),
+  register: Bridge.registerInterface.bind(Bridge),
   // config: Bridge.configureFactory
 };

@@ -14,9 +14,9 @@ class Bridge {
     this.Declaration = require('../factories/DeclarationFactory');
   }
 
-  createInterface() { // make name optional
-    const v = validation.createInterface;
-    const i = this.Interface.create(name, v(arguments));
+  createInterface(arg1, arg2, arg3) { // (name, props) || (props) // name , props 
+    let cfg:iCreateInterfaceConfig = validators.createInterface(arg1, arg2, arg3);
+    let i:any = this.Interface.create(cfg); // should return an interface (name, declarations, options)
     return this.Registry.create(i);
   };
 
