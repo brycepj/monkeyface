@@ -58,12 +58,18 @@ var discernType = function (val) {
 };
 
 // internal
-var isInterface = function(iterable, value){
-	var Interface = require('../factories/InterfaceFactory');
-  var isKey = isString(value);
-	var iface = isKey ? Interface.getInterface(value) : isValidInterface(value);
-	return iface && Interface.ensureImplements(iterable, iface);
+var implementsInterface = function(iterable, ifaceKey){
+	var registry = require('../services/BridgeService').Registry;
+  var u = require('./utils');
+  
+	var iface = isString(ifaceKey) && registry.check(ifaceKey) ? registry.get(ifaceKey) : u.returnError('badifacekeybreej');
+	return iface.validate(iterable);
 };
+
+var isInterface = function(val) {
+  var registry = require('../services/BridgeService').Registry;
+  return registry.check(val) || (isObject(val) && val.declarations);
+}
 
 var isValidInterface = function(value) {
   return (value.declarations && value.name) ? value : false;
@@ -83,6 +89,7 @@ export = {
 	isNull: isNull,
 	isBoolean: isBoolean,
 	isDate: isDate,
-	isInterface: isInterface,
+  isInterface: isInterface,
+	implementsInterface: implementsInterface,
   discernType: discernType
 }

@@ -4,20 +4,19 @@ class RegistryService {
   constructor() {
     this.map = {};
   }
-  create(Interface) {
-    return this.map[Interface.name] = Interface;
+  create(iface) {
+    this.map[iface.name] = iface;
   };
 
-  register(Interface) {
-    this.map[Interface.name] = Interface;
+  register(iface) {
+    this.map[iface.name] = iface;
   };
 
-  check() {
-    return false || true;
+  check(key) {
+    return !!this.map[key];
   }
-  get() {
-    var i = 0;
-    return i;
+  get(key) {
+    return this.map[key];
   }
   listKeys(){
     return Object.keys(this.map);

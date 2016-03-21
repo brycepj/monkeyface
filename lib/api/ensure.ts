@@ -2,13 +2,13 @@
 import check = require('../services/typeChecker');
 import maybeThrow = require('../services/maybeThrow');
 
-function implement (type, val) {
+function ensure(type) {
 
   var self = this;
   
-  if (val) {
-    self = val;
-  }
+  // if (val) {
+  //   self = val;
+  // }
   
    switch (type) {
     case 'string':
@@ -36,7 +36,7 @@ function implement (type, val) {
       maybeThrow(check.isDate(self), type, self);
       break;
     default:
-     maybeThrow(check.isInterface(self, type), type, self);
+     maybeThrow(check.implementsInterface(self, type), type, self);
      break;
    }
 
@@ -54,6 +54,6 @@ function implement (type, val) {
 }
 
 export = (function(){
-	return implement;
+	return ensure
 })();
 
