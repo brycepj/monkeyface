@@ -9,12 +9,12 @@ var isString = function(context) {
 isString.type = 'string';
 
 var isObject = function(context) {
-    return typeof context == 'object' 
-      && !isArray(context)
-      && !isNumber(context)
-			&& !isNull(context)
-			&& !isError(context)
-			&& !isDate(context);
+  let isntArray = !isArray(context);
+  let isntNumber =!isNumber(context)
+	let isntNull = !isNull(context)
+	let isntError = !isError(context)
+	let isntDate = !isDate(context);
+    return typeof context == 'object';
 };
 isObject.type = 'object';
 

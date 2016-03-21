@@ -38,11 +38,11 @@ function mapObj(object, iteratee) {
 	return arr;
 }
 
-var returnError = function(msg) {
+var returnError = function(msg?:string): boolean {
   if (msg) {
     throw new Error(msg);
   }
-  return true;
+  return false;
 };
 
 export = {

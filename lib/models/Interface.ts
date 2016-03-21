@@ -3,6 +3,7 @@ import {iCreateInterfaceConfig} from '../interfaces/Config';
 import {Declaration} from './Declaration';
 import check = require('../services/typeChecker');
 import u = require('../services/utils');
+import _ = require('lodash');
 
 export class Interface implements iInterface {
   
@@ -24,14 +25,13 @@ export class Interface implements iInterface {
     var self = this;
     let props = cfg.props;
     var isListCfg = check.isArray(props);
-    var isInferredCfg = check.isObject(props);
 
     if (isListCfg) {
       props.forEach(function(str) {
         self.declarations.push(new Declaration(str));
       });
-    } else if (isInferredCfg) {
-      u.forIn(props, function(value, key) {
+    } else {
+      _.forIn(props, function(value, key) {
         var type = check.discernType(value);
         var str = type === 'function' ? key + '()' : [key, type].join(':');
         self.declarations.push(new Declaration(str))
@@ -43,10 +43,13 @@ export class Interface implements iInterface {
     // this method should return the boolean and throw an error on misses
     
     let declarations = this.declarations;
-    let iterable = check.isObject(val) || check.isArray(val) ? val : u.returnError("Need to pass an iterable.");
+    let quickType = typeof val;
+    let iterable = (check.isObject(val) || 
+      check.isFunction(val) || 
+      check.isArray(val)) ? val : u.returnError("Need to pass an iterable.");
     let passes = false;
     
-    if (check.isObject(iterable)) {
+    if (check.isObject(iterable) || check.isFunction(iterable)) { // supports functions with props attached (lodash)
       passes = declarations.every(function (declaration:iDeclaration, idx:number, array:iDeclaration[]) {
         let key:string = declaration.name;
         return declaration.validate(iterable[key]);

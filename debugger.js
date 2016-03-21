@@ -1,18 +1,21 @@
 var i = require('./index');
+var _OBJ = require('lodash');
 
 // i.create() is shorthand for create, register, and return the interface
-var iHello = i.create('supabadinterface', ['hello:number', 'world:string']); // optional name
+var iLodash = i.create('iLodash', _OBJ); // optional name
 
 var crazyObj = {
   hello: 1,
   world: 'stringer'
 };
 
-var crazyObjReturner = (function (){
-  return crazyObj.ensure('supabadinterface'); // returns obj, or throws error if it doesn't match
+var crazyVal = _OBJ;
+
+var crazyValReturner = (function (){
+  return crazyVal.ensure('iLodash'); // returns obj, or throws error if it doesn't match
 })();
 
-if (crazyObjReturner !== crazyObj) {
+if (crazyValReturner !== crazyVal) {
   throw Error("BiG Error!");
 } else {
   console.log("Made it! Passed!")
