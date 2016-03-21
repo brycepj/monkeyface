@@ -59,7 +59,7 @@ var discernType = function (val) {
 
 // internal
 var isInterface = function(iterable, value){
-	var Interface = $require('factories/InterfaceFactory');
+	var Interface = require('../factories/InterfaceFactory');
   var isKey = isString(value);
 	var iface = isKey ? Interface.getInterface(value) : isValidInterface(value);
 	return iface && Interface.ensureImplements(iterable, iface);

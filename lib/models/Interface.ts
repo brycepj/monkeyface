@@ -1,33 +1,64 @@
-import {iInterface} from '../interfaces/Models';
-
-var check = require('../services/typeChecker');
-var u = require('../services/utils');
+import {iInterface, iDeclaration} from '../interfaces/Models';
+import {iCreateInterfaceConfig} from '../interfaces/Config';
+import {Declaration} from './Declaration';
+import check = require('../services/typeChecker');
+import u = require('../services/utils');
 
 export class Interface implements iInterface {
-  constructor(cfg) {
+  
+  public declarations: iDeclaration[];
+  public name: string;
+  
+  constructor(cfg:iCreateInterfaceConfig) {
     this.name = cfg.name;
     this.declarations = [];
-    this._parseCfg(cfg);
+    this.parseDeclarations(cfg);
+    this.options = cfg.options;
   }
 
-  _parseCfg(cfg) {
-    var Declaration = require('./Declaration');
+  private parseDeclarations(cfg) { // takes a config object, creates and stores declarations for each
+    // props could be an array of strings to parse, or an object to infer from
+    // Interface-level config should be determined here
+    // Declaration level config should be determined in the Declaration parsing 
+
     var self = this;
-    var isListCfg = check.isArray(cfg);
-    var isInferredCfg = check.isObject(cfg);
+    let props = cfg.props;
+    var isListCfg = check.isArray(props);
+    var isInferredCfg = check.isObject(props);
 
     if (isListCfg) {
-      cfg.forEach(function(str) {
+      props.forEach(function(str) {
         self.declarations.push(new Declaration(str));
       });
     } else if (isInferredCfg) {
-      u.forIn(cfg, function(value, key) {
+      u.forIn(props, function(value, key) {
         var type = check.discernType(value);
         var str = type === 'function' ? key + '()' : [key, type].join(':');
         self.declarations.push(new Declaration(str))
       });
     }
   };
+  
+  public validate(val:any) {
+    // this method should return the boolean and throw an error on misses
+    
+    let declarations = this.declarations;
+    let iterable = check.isObject(val) || check.isArray(val) ? val : u.returnError("Need to pass an iterable.");
+    let passes = false;
+    
+    if (check.isObject(iterable)) {
+      passes = declarations.every(function (declaration:iDeclaration, idx:number, array:iDeclaration[]) {
+        let key:string = declaration.name;
+        return declaration.validate(iterable[key]);
+      });
+    } else if(check.isArray(iterable)) { // when we want to validate a collection
+     var itemDeclaration = declarations[0];
+     passes = iterable.every(function(item) {
+       return itemDeclaration.validate(item);
+     });
+    } 
+    return passes ? val : false;
+  }
   
 
 }

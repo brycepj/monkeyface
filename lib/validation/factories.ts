@@ -48,13 +48,18 @@ function registerInterface(cfg) {
 // add other helpful (private) config props to options
 function addAnnotations(cfg:iCreateInterfaceConfig):iCreateInterfaceConfig {
   let Bridge = require('../services/BridgeService');
-  let annotatedOptions = _.assign(cfg.options, {
-    hasTypes: listHasSubstr(cfg.props, ':'),
-    hasModel: check.isObject(cfg.props),
-    hasOptional: listHasSubstr(cfg.props, '?'),
-    hasInterface: !!_.intersection(Bridge.Registry.listKeys(), cfg.props).length,
-    hasCollection: listHasSubstr(cfg.props, '[]') || 
-      (listHasSubstr(cfg.props, '[') && listHasSubstr(cfg.props, ']'))
+  let props = cfg.props;
+  let options = cfg.options;
+
+  let annotatedOptions = _.assign(options, {
+    isCollection: check.isString(props) && props.indexOf('[]') > -1,
+    isInferred: check.isObject(props)
+    // hasTypes: listHasSubstr(props, ':'),
+    // hasModel: check.isObject(props),
+    // hasOptional: listHasSubstr(props, '?'),
+    // hasInterface: !!_.intersection(Bridge.Registry.listKeys(), props).length,
+    // hasCollection: listHasSubstr(props, '[]') || 
+    //   (listHasSubstr(props, '[') && listHasSubstr(props, ']'))
   });
   return cfg;
 }

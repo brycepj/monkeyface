@@ -14,10 +14,10 @@ crazyObj = {
   world: null
 };
 
-function crazyObjReturner(){
-  return iHello.ensure(crazyObj); // returns obj, or throws error if it doesn't match
-}
+var crazyObjReturner = (function (){
+  return iHello.validate(crazyObj); // returns obj, or throws error if it doesn't match
+})();
 
-if (crazyObjReturner() !== crazyObj) {
-  throw Error("Bitches ain't shit!");
+if (crazyObjReturner !== crazyObj) {
+  throw Error("BiG Error!");
 }

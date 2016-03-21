@@ -1,6 +1,7 @@
 export interface iInterface {
   name: any;
   declarations: iDeclaration[];
+  validate: () => boolean;
 }
 
 export interface iDeclaration {
@@ -8,4 +9,5 @@ export interface iDeclaration {
   required: boolean;
   type: string;
   method: boolean;
+  validate: (any) => boolean;
 }
