@@ -8,8 +8,8 @@ export interface iRegistryFactory { // is not technically a factory
 }
 
 export interface iDeclarationFactory {
-  create: (configString:string) => iDeclaration;
-  validate: (val:any, type:string) => Boolean;
+  create: (configString: string) => iDeclaration;
+  validate: (val: any, type: string) => Boolean;
 }
 
 export interface iInterfaceFactory {

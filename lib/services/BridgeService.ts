@@ -16,14 +16,14 @@ class Bridge {
   }
 
   createInterface(arg1, arg2, arg3) { // (name, props) || (props) // name , props 
-    let cfg:iCreateInterfaceConfig = validators.createInterface(arg1, arg2, arg3);
-    let i:any = this.Interface.create(cfg); // should return an interface (name, declarations, options)
+    let cfg: iCreateInterfaceConfig = validators.createInterface(arg1, arg2, arg3);
+    let i: any = this.Interface.create(cfg); // should return an interface (name, declarations, options)
     return this.Registry.create(i);
   };
 
   registerInterface(name, cfg) {
-    const v = validators.registerInterface;
-    const i = this.Interface.create(name, v(cfg));
+    let cfg = validators.registerInterface(name, cfg);
+    let i = this.Interface.create(cfg);
     this.Registry.register(i);
   };
 

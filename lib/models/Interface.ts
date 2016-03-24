@@ -39,15 +39,14 @@ export class Interface implements iInterface {
     }
   };
   
-  public validate(val:any) {
+  public validate(val:any):any {
     // this method should return the boolean and throw an error on misses
     
     let declarations = this.declarations;
-    let quickType = typeof val;
-    let iterable = (check.isObject(val) || 
+    let iterable:any = (check.isObject(val) || 
       check.isFunction(val) || 
       check.isArray(val)) ? val : u.returnError("Need to pass an iterable.");
-    let passes = false;
+    let passes:boolean = false;
     
     if (check.isObject(iterable) || check.isFunction(iterable)) { // supports functions with props attached (lodash)
       passes = declarations.every(function (declaration:iDeclaration, idx:number, array:iDeclaration[]) {

@@ -12,7 +12,7 @@ class DeclarationFactory implements iDeclarationFactory {
     return val;
   }
 
-  validate(val:any, type:string) {
+  validate(val: any, type: string) {
     // TODO: Simple Declaration vs Complex Declaration    
     return true;
   }

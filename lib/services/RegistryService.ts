@@ -1,6 +1,6 @@
 class RegistryService {
   public map: Object;
-  
+
   constructor() {
     this.map = {};
   }
@@ -18,7 +18,7 @@ class RegistryService {
   get(key) {
     return this.map[key];
   }
-  listKeys(){
+  listKeys() {
     return Object.keys(this.map);
   }
 }

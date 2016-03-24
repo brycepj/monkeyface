@@ -64,7 +64,7 @@ var helloWorldian = {
   
 // interface types and optionals
 
-i.register('iLikeTypes', ['hello:string', 'world:number', 'smelly:iSmello']);
+i.register('iLikeTypes', ['hello:string', 'world?:number', 'smelly:iSmello']);
 
 var likeTypes = {
   hello: "22string",

@@ -1,3 +1,3 @@
 exports = (function() {
-	$require('patchers');
+  $require('patchers');
 })();

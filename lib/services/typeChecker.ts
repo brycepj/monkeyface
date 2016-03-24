@@ -14,7 +14,7 @@ var isObject = function(context) {
 	let isntNull = !isNull(context)
 	let isntError = !isError(context)
 	let isntDate = !isDate(context);
-    return typeof context == 'object';
+    return typeof context == 'object' && isntArray && isntDate && isntNumber && isNull && isntError;
 };
 isObject.type = 'object';
 
@@ -59,10 +59,9 @@ var discernType = function (val) {
 
 // internal
 var implementsInterface = function(iterable, ifaceKey){
-	var registry = require('../services/BridgeService').Registry;
-  var u = require('./utils');
-  
-	var iface = isString(ifaceKey) && registry.check(ifaceKey) ? registry.get(ifaceKey) : u.returnError('badifacekeybreej');
+	let registry = require('../services/BridgeService').Registry;
+  let u = require('./utils');
+	let iface = (isString(ifaceKey) && registry.check(ifaceKey)) ? registry.get(ifaceKey) : u.returnError('badifacekeybreej');
 	return iface.validate(iterable);
 };
 
