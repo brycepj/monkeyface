@@ -1,4 +1,3 @@
 "use strict";
-var publicApi = require('./lib/api/public');
-module.exports = publicApi;
+module.exports = require('./lib/api/public');
 //# sourceMappingURL=index.js.map
