@@ -1,6 +1,5 @@
-// var check = $require('/check');
-
 function params() {
+  var check = require('../services/typeChecker');
   var fn = this;
   var args = arguments;
   var fnStr = fn.toString();
@@ -12,7 +11,7 @@ function params() {
     var pieces = param.split('__');
     var type = pieces.length == 2 ? pieces[1] : pieces[0];
     var val = args[index];
-    // check(type, val); // FIXME: Use typechecker, not monkeypatched (Null Undefined)
+    val.ensure(type);
   });
 
   return this.apply(null, arguments);

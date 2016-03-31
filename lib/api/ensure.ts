@@ -54,6 +54,6 @@ function ensure(type) {
 }
 
 export = (function() {
-  return ensure
+  return ensure;
 })();
 

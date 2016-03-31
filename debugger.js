@@ -1,17 +1,17 @@
 var i = require('./index');
+var $ = require('lodash');
 
+// pass types
 
-// interface types and optionals
-var iSmello = i.create('iSmello', ['smello', 'world']);
+var iJquery = i.create('iJquery', $, {strict: true}); // discern types and ensure each prop type
+var hopefullyJQuery = $;
+var randoVal = hopefullyJQuery.ensure('iJquery');
 
-var iLikeType = i.create('iLikeTypes', ['hello:string', 'world?:number', 'smelly:iSmello']);
+// function param checking
 
-var likeTypes = {
-  hello: "22string",
-  world: 1,
-  smelly: {
-    world: null
-  }
-};
+function giveMeTheRightStuff(sweetJqueryParam__iJquery, sweetNumber__string){
+  // do wtf you want
+  console.log('do wtf you want', typeof sweetJqueryParam__iJquery.add, sweetNumber__number);
+}
 
-var think = likeTypes.ensure('iLikeTypes');
+giveMeTheRightStuff.params($, 111);

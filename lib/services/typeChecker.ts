@@ -70,6 +70,11 @@ var discernType = function(val) {
     }).type;
 };
 
+var typeByVal = function(val, type) {
+  let actualType = discernType(val);
+  return actualType === type;
+};
+
 // internal
 var implementsInterface = function(iterable, ifaceKey) {
   let registry = require('../services/BridgeService').Registry;
@@ -104,5 +109,6 @@ export = {
   isDate: isDate,
   isInterface: isInterface,
   implementsInterface: implementsInterface,
-  discernType: discernType
+  discernType: discernType,
+  typeByVal: typeByVal
 }
