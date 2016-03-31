@@ -1,6 +1,6 @@
 import {iInterface, iDeclaration} from '../interfaces/Models';
 import {iCreateInterfaceConfig} from '../interfaces/Config';
-import {Declaration} from './Declaration';
+import DeclarationFactory = require('../factories/DeclarationFactory');
 import check = require('../services/typeChecker');
 import u = require('../services/utils');
 import _ = require('lodash');
@@ -9,12 +9,15 @@ export class Interface implements iInterface {
   
   public declarations: iDeclaration[];
   public name: string;
+  public key: any;
+  public options: any;
   
   constructor(cfg:iCreateInterfaceConfig) {
     this.name = cfg.name;
     this.declarations = [];
     this.parseDeclarations(cfg);
     this.options = cfg.options;
+    
   }
 
   private parseDeclarations(cfg) { // takes a config object, creates and stores declarations for each
@@ -28,17 +31,19 @@ export class Interface implements iInterface {
 
     if (isListCfg) {
       props.forEach(function(str) {
-        self.declarations.push(new Declaration(str));
+        self.declarations.push(DeclarationFactory.create(str, cfg));
       });
     } else {
       _.forIn(props, function(value, key) {
         var type = check.discernType(value);
         var str = type === 'function' ? key + '()' : [key, type].join(':');
-        self.declarations.push(new Declaration(str))
+        self.declarations.push(DeclarationFactory.create(str))
       });
     }
   };
-  
+  public setKey(key:string):void {
+    this.key = key;
+  }
   public validate(val:any):any {
     // this method should return the boolean and throw an error on misses
     
@@ -50,7 +55,7 @@ export class Interface implements iInterface {
     
     if (check.isObject(iterable) || check.isFunction(iterable)) { // supports functions with props attached (lodash)
       passes = declarations.every(function (declaration:iDeclaration, idx:number, array:iDeclaration[]) {
-        let key:string = declaration.name;
+        let key:string = declaration.key;
         return declaration.validate(iterable[key]);
       });
     } else if(check.isArray(iterable)) { // when we want to validate a collection

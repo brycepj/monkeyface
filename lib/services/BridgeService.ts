@@ -18,7 +18,8 @@ class Bridge {
   createInterface(arg1, arg2, arg3) { // (name, props) || (props) // name , props 
     let cfg: iCreateInterfaceConfig = validators.createInterface(arg1, arg2, arg3);
     let i: any = this.Interface.create(cfg); // should return an interface (name, declarations, options)
-    return this.Registry.create(i);
+    this.Registry.create(i);
+    return i;
   };
 
   registerInterface(name, cfg) {

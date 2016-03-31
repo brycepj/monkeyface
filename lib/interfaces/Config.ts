@@ -1,7 +1,8 @@
 export interface iCreateInterfaceConfig {
   name:any;
   props: string[];
-  options?:iCreateInterfaceOptions
+  options?:iCreateInterfaceOptions;
+  key?:any;
 }
 
 export interface iCreateInterfaceOptionsPublic {

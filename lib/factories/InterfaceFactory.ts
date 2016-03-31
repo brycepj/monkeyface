@@ -26,7 +26,7 @@ class InterfaceFactory {
   };
   validate(iterable) {
     var checkAll = this.declarations.every(function(declaration, idx) {
-      var key = declaration.name;
+      var key = declaration.key;
       var val = iterable[key];
       return declaration.validate(val, key);
     });
@@ -43,7 +43,7 @@ export = new InterfaceFactory();
 /*
 validate(iterable) {
     var checkAll = this.declarations.every(function(declaration, idx) {
-      var key = declaration.name;
+      var key = declaration.key;
       var val = iterable[key];
       return declaration.validate(val, key);
     });

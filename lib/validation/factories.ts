@@ -53,7 +53,13 @@ function addAnnotations(cfg: iCreateInterfaceConfig): iCreateInterfaceConfig {
 
   let annotatedOptions = _.assign(options, {
     isCollection: check.isString(props) && props.indexOf('[]') > -1,
-    isInferred: check.isObject(props)
+    isInferred: check.isObject(props),
+    hasInterface: props.map(function(prop){
+      let pieces = prop.split(':');
+      let type = pieces.length == 2 ? pieces[1] : null;
+      let key = pieces[0];
+      return Bridge.Registry.check(type) ? key : null;
+    }).filter(function(val){return val});
     // hasTypes: listHasSubstr(props, ':'),
     // hasModel: check.isObject(props),
     // hasOptional: listHasSubstr(props, '?'),

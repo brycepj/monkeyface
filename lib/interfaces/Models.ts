@@ -2,10 +2,11 @@ export interface iInterface {
   name: any;
   declarations: iDeclaration[];
   validate: () => boolean;
+  key?: any;
 }
 
 export interface iDeclaration {
-  name: string;
+  key: string;
   required: boolean;
   type: string;
   method: boolean;
