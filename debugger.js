@@ -10,7 +10,6 @@ var likeTypes = {
   hello: "22string",
   world: 1,
   smelly: {
-    smello: null,
     world: null
   }
 };

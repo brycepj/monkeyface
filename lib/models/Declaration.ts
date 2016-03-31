@@ -42,7 +42,7 @@ export class Declaration implements iDeclaration {
 		var type = this.type;
 
     // this is where all conditions must be considered
-		if (isRequired && val === 'undefined') {return false} 
+		if (isRequired && val !== null && !val) {return false} 
 		else if (isMethod && !check.isFunction(val)) {return false} 
 		else if (type && check.discernType(val) !== type) {return false}
 		
