@@ -1,6 +1,6 @@
 {
   "name": "monkeyface",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "No-mess, declarative type checking & interfaces in JavaScript, through monkey-patching native types.",
   "main": "index.js",
   "scripts": {
