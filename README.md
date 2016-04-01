@@ -1,8 +1,8 @@
-<div style="text-align:center"><img src ="assets/monkeyface-logo.png"/></div>
-# monkeyface
+<div style="text-align:center"><img src ="./assets/monkeyface-logo.png"/></div>
+
 No-mess, declarative type checking and interfaces in Javascript without a build step. 
 
-*This library is pretty new and a little dangerous by design. Use at your peril.*
+*This library is pretty new, poorly documented, and a little dangerous by design. Use at your peril.*
 
 The `$ensure` method has been monkey-patched (read about monkey-patching [here](http://me.dt.in.th/page/JavaScript-override/))
 to the following types/primitives:`Function`, `Number`, `Boolean`, `Date`, `Object`, `Array`, `String`, and `Error` (not 
