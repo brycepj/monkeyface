@@ -4,11 +4,12 @@ No-mess, declarative type checking and interfaces in Javascript without a build 
 
 *This library is pretty new and a little dangerous by design. Use at your peril.*
 
-## type checking with `$ensure`: 
-
 The `$ensure` method has been monkey-patched (read about monkey-patching [here](http://me.dt.in.th/page/JavaScript-override/))
-to the following types/primitives: `Function`, `Number`, `Boolean`, `Date`, `Object`, `Array`, `String`, and `Error` (not 
-`undefined` or `null`).
+to the following types/primitives:`Function`, `Number`, `Boolean`, `Date`, `Object`, `Array`, `String`, and `Error` (not 
+`undefined` or `null`). The `$params` method has been monkey-patched to the `Function` type only, although it can validates 
+any type you can pass to `$ensure`.
+
+## type checking with `$ensure`:
 
 ```javascript
 const i = require('monkeyface');
@@ -52,19 +53,69 @@ var numberCollection = someRawCollectionFiltered.$ensure('[number]');
 
 ```
 
-## parameter type checking with $params
-The `$params` method has been monkey-patched to the `Function` type. Validates any type you can 
-validate with `$ensure`. 
+## parameter type checking with $params (checked upon execution)
 
 ```javascript
-function aReallyPickyFunction(someVal__number, someObj__iHelloWorld, someCollection__[string]){
+function aReallyPickyFunction(someVal$number, someObj$iHelloWorld){
   // do stuff
 }
 
-aReallyPickyFunction(1, {'hello': 'this', 'world', 'that'}, ['string1', 'string2']); // proceeds as expected
-aReallyPickyFunction(null, {}, 'wrong'); // throws an error
+aReallyPickyFunction(1, {'hello': 'this', 'world', 'that'}); // proceeds as expected
+aReallyPickyFunction(null, {}); // throws an error
 aReallyPickyFunction(); // throws an error
-aReallyPickyFunction({'hello': 'this', 'world', 'that'}, ['string1', 'string2'], 1); // throws an error (args out of order)
+aReallyPickyFunction({'hello': 'this', 'world', 'that'}, 1); // throws an error (args out of order)
 
 ```
 
+## interfaces (syntax mostly mimics Typescript's)
+
+```
+
+const i = require('monkeyface');
+
+// interfaces are initialized with `create` or `register`. Both make an interface available throughout
+// the application, but `create` actually returns the interface object. 
+
+var iCar = i.create('iCar', [
+  'numberOfWheels:number', 
+  'fins?:boolean', 
+  'make:string', 
+  'model?',
+  'type:iGasPoweredVehicle',
+  'accidents?:[Accident]' 
+]);
+
+// now you have some options. someVehical is returned in each case
+
+var myCar = someVehical.$ensure('iCar'); // ensures someVehicle implements iCar
+
+// or
+
+var myCar = someVehical.$ensure(iCar); // note, you can pass the interface directly
+
+// or
+
+var myCar = iCar.validate(someVehical) // also, ensures someVehicle implements iCar
+
+```
+
+## inferred interfaces
+
+create an interface from an existing object. 
+
+```
+const i = require('monkeyface');
+
+var myCar = new Car();
+
+var iCar = i.create('iCar', myCar);
+
+// or more usefully, infer types from third party libraries and 
+
+var Promise = require('bluebird');
+
+var iPromise = i.create('iPromise', Promise);
+
+var getSomeFile = promisifiedRequest('something.txt').$ensure('iPromise');
+
+```
