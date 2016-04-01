@@ -1,4 +1,4 @@
-!['monkeyface'](assets/monkeyface-logo.png)
+<div style="text-align:center"><img src ="assets/monkeyface-logo.png"/></div>
 # monkeyface
 No-mess, declarative type checking and interfaces in Javascript without a build step. 
 
