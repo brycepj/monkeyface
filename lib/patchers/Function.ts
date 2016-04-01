@@ -1,4 +1,4 @@
 module.exports = (function() {
-	Function.prototype.params = require('../api/params');
+	Function.prototype["$params"] = require('../api/params');
 })();
 

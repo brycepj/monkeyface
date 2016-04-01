@@ -1,11 +1,10 @@
 {
   "name": "monkeyface",
   "version": "1.0.0",
-  "description": "",
+  "description": "No-mess, declarative type checking & interfaces in JavaScript, through monkey-patching native types.",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec",
-    "build": "webpack index.js monkeyface.js --watch",
     "tsdev": "tsc -w --module 'commonjs' --target 'es5'"
   },
   "author": "",

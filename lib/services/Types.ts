@@ -1,5 +1,6 @@
 const Types = [String, Array, Object, Number, Error, Boolean, Date];
-const Instances = ["stringy", [], {}, 1, new Error("Message"), new Boolean(true), new Date()];
+const Names = ["string", "array", "object", "number", "error", "boolean", "date"];
+const Instances = ["stringy", [], {}, 1, new Error("Message"),true, new Date()];
 
 function allNatives(detail?: string) {
   return !detail ? Types : Types.map(function(nativeClass) {
@@ -27,6 +28,9 @@ function allInstancesButOne(native) {
 };
 
 export = {
+  Types: Types,
+  Names: Names,
+  Instances: Instances,
   allNatives: allNatives,
   allNativesButOne: allNativesButOne,
   allInstances: allInstances,

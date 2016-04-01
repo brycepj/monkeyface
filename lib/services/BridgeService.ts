@@ -23,10 +23,14 @@ class Bridge {
   };
 
   registerInterface(name, cfg) {
-    let cfg = validators.registerInterface(name, cfg);
+    cfg = validators.registerInterface(name, cfg);
     let i = this.Interface.create(cfg);
     this.Registry.register(i);
   };
+  
+  getInterface(name) {
+    return this.Registry.get(name);
+  }
 
 }
 

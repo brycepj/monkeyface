@@ -11,7 +11,7 @@ function params() {
     var pieces = param.split('__');
     var type = pieces.length == 2 ? pieces[1] : pieces[0];
     var val = args[index];
-    val.ensure(type);
+    val['$ensure'](type);
   });
 
   return this.apply(null, arguments);
