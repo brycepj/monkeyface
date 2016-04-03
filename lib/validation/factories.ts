@@ -15,7 +15,7 @@ function createInterface(arg1, arg2, arg3): iCreateInterfaceConfig {
     options: validOptions
   };
 
-  return configPipeline(rawConfig, [addAnnotations]);
+  return configPipeline(rawConfig, []);
 }
 
 function configPipeline(cfg, pipes: Function[]) {

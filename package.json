@@ -4,7 +4,7 @@
   "description": "No-mess, declarative type checking and interfaces in Javascript without a build step.",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec",
+    "test": "mocha -w --debug test/units/Interface.js",
     "tsdev": "tsc -w --module 'commonjs' --target 'es5'",
     "posttest": "publish"
   },
@@ -22,6 +22,7 @@
   "dependencies": {
     "chai": "^3.5.0",
     "lodash": "^4.6.1",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "shelljs": "^0.6.0"
   }
 }

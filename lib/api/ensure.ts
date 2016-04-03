@@ -2,7 +2,7 @@
 import check = require('../services/typeChecker');
 import maybeThrow = require('../services/maybeThrow');
 
-function ensure(type) {
+function ensure(type:string) {
   var Bridge = require('../services/BridgeService');
 
   var self = this;

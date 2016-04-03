@@ -9,7 +9,7 @@ var iThirdLevel = i.create('iThirdLevel', ['third:iSecondLevel']);
 var obj = {
   second: {
     world:'stirng',
-    // otherprop:111
+    otherprop:111
   },
   secondsecond: null
 };

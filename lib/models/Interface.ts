@@ -23,7 +23,7 @@ export class Interface implements iInterface {
 
   }
 
-  private parseDeclarations(cfg) { // takes a config object, creates and stores declarations for each
+  private parseDeclarations(cfg):void { // takes a config object, creates and stores declarations for each
     // props could be an array of strings to parse, or an object to infer from
     // Interface-level config should be determined here
     // Declaration level config should be determined in the Declaration parsing 
@@ -52,7 +52,7 @@ export class Interface implements iInterface {
     return hasDeclarations ? this.validateInterface(val) : this.validateDeclaration(val);
   }
 
-  private validateInterface(iterable) {
+  private validateInterface(iterable):boolean {
     let declarations = this.declarations;
     let passes: boolean = false;
     let isCollection = check.isArray(iterable);
@@ -69,24 +69,11 @@ export class Interface implements iInterface {
     return passes ? true : false;
   }
 
-  private validateDeclaration(val) {
-    var Bridge = require('../services/BridgeService');
-    var isRequired = this.required;
-    var isMethod = this.method;
-    var type = this.type;
-    
-    // this is where all conditions must be considered
-    if (isRequired && val !== null && !val) { return false }
-    else if (isMethod && !check.isFunction(val)) { return false }
-    else if (type && check.discernType(val) !== type
-      && !Bridge.ensureImplements(type, val)) { return false } // type must be primitive
 
-    return true;
-  }
 
-  private validateCollection(val) {
-    var itemDeclaration = declarations[0];
-    let passes = iterable.every(function(item) {
+  private validateCollection(val):boolean {
+    var itemDeclaration = this.declarations[0];
+    let passes = val.every(function(item) {
       return itemDeclaration.validate(item);
     });
     return passes;
