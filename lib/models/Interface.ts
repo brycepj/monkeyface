@@ -36,7 +36,7 @@ export class Interface implements iInterface {
       props.forEach(function(str) {
         self.declarations.push(DeclarationFactory.create(str, cfg));
       });
-    } else {
+    } else { // inferred
       _.forIn(props, function(value, key) {
         var type = check.discernType(value);
         var str = type === 'function' ? key + '()' : [key, type].join(':');

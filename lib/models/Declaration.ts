@@ -26,7 +26,7 @@ export class Declaration extends Interface {
     
     this.required = isRequired;
     this.method = isMethod; 
-    this.type = type;
+    this.type = isMethod ? 'function' : type;
     this.key = this.parsePropertyKey(configString);
   };
 
