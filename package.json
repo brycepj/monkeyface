@@ -1,6 +1,6 @@
 {
   "name": "monkeyface",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "No-mess, declarative type checking and interfaces in Javascript without a build step.",
   "main": "index.js",
   "scripts": {
