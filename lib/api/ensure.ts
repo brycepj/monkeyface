@@ -3,6 +3,7 @@ import check = require('../services/typeChecker');
 import maybeThrow = require('../services/maybeThrow');
 
 function ensure(type) {
+  var Bridge = require('../services/BridgeService');
 
   var self = this;
   
@@ -36,7 +37,7 @@ function ensure(type) {
       maybeThrow(check.isDate(self), type, self);
       break;
     default:
-      maybeThrow(check.implementsInterface(self, type), type, self);
+      maybeThrow(Bridge.ensureImplements(type, self), type, self);
       break;
   }
 

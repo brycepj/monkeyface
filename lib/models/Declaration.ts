@@ -19,8 +19,7 @@ export class Declaration extends Interface {
     this.parseDeclarationString(configString);
   }
   
-  private parseDeclarationString(configString){
-    // does this yet support interfaces?
+  private parseDeclarationString(configString:string):void {
     var isMethod = configString.includes('()');
     var isRequired = !configString.includes('?');
     var type = configString.includes(':') ? configString.split(':')[1] : null;
@@ -38,7 +37,7 @@ export class Declaration extends Interface {
     return configString;
   };
 
-  public validate(val){
+ /* public validate(val){
 		var isRequired = this.required;
 		var isMethod = this.method;
 		var type = this.type;
@@ -49,7 +48,7 @@ export class Declaration extends Interface {
 		else if (type && check.discernType(val) !== type) {return false}
 		
 		return true; 
-  };
+  };*/
 }
 
 

@@ -1,6 +1,6 @@
 const Types = [String, Array, Object, Number, Error, Boolean, Date];
 const Names = ["string", "array", "object", "number", "error", "boolean", "date"];
-const Instances = ["stringy", [], {}, 1, new Error("Message"),true, new Date(), null];
+const Instances = ["stringy", [], {}, 1, new Error("Message"),true, new Date()];
 
 function allNatives(detail?: string) {
   return !detail ? Types : Types.map(function(nativeClass) {

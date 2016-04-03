@@ -76,12 +76,7 @@ var typeByVal = function(val, type) {
 };
 
 // internal
-var implementsInterface = function(iterable, ifaceKey) {
-  let registry = require('../services/BridgeService').Registry;
-  let u = require('./utils');
-  let iface = (isString(ifaceKey) && registry.check(ifaceKey)) ? registry.get(ifaceKey) : u.returnError('badifacekeybreej');
-  return iface.validate(iterable);
-};
+
 
 // FIXME: Use case is when interface is referenced in a larger interface, but nested interface isn't registered yet
 var isInterface = function(val) {
@@ -89,7 +84,8 @@ var isInterface = function(val) {
   return (isString(val) && (registry.check(val)) || (isObject(val) && val.declarations));
 }
 
-var isValidInterface = function(value) {
+var isValidInterface = function(value, ifaceName?:string) {
+  ifaceName && this.type = ifaceName;
   return value !== null && (value.declarations && value.name) ? true : false;
 };
 isValidInterface.type = 'interface';
@@ -106,7 +102,6 @@ export = {
   isBoolean: isBoolean,
   isDate: isDate,
   isInterface: isValidInterface,
-  implementsInterface: implementsInterface,
   discernType: discernType,
   typeByVal: typeByVal
 }

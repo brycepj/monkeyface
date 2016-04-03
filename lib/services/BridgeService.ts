@@ -27,10 +27,19 @@ class Bridge {
     let i = this.Interface.create(cfg);
     this.Registry.register(i);
   };
-  
+
   getInterface(name) {
     return this.Registry.get(name);
   }
+
+  ensureImplements(iface: string, val) {
+    let u = require('./utils');
+    let registry = this.Registry;
+    let iterable = !!val ? val : u.returnError('Need to pass an iterable to ensureImplements'); 
+    let validInterface = registry.check(iface) ? registry.get(iface) : u.returnError('Please pass a valid interface, not ' + iface);
+    return validInterface.validate(iterable);
+  };
+  
 
 }
 
