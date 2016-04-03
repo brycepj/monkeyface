@@ -1,14 +1,20 @@
-function maybeThrow(Bool, type, self) {
-  let err_action = 'throw';
+function maybeThrow(Bool, type, val) {
+  let action = 'error';
+  let message = 'Monkeyface TypeError. Expected: ' + type + ' Received: ' + val;
+
   if (!Bool) {
-    if (err_action === 'throw') {
-      throw new Error("Monkeyface TypeError. Expected: " + type + ' Received: ' + self);
-    } else {
-      console.warn("Monkeyface TypeError. Expected:", type);
+    switch (action) {
+      case 'error':
+        throw new Error(message);
+      case 'warn':
+        console.warn(message);
+        break;
+      case 'debug':
+        console.log(message);
+        break;
     }
-  } else if (err_action == 'warn') {
-    console.log("Expected type: ", type, "Passed");
   }
+  return true;
 }
 
 export = maybeThrow;

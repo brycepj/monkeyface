@@ -1,8 +1,8 @@
 
-const expect = require("chai").expect;
-const should = require('chai').should();
-const assert = require('assert');
-const Instances = require('../../lib/services/Types').Instances;
+var expect = require("chai").expect;
+var should = require('chai').should();
+var assert = require('assert');
+var Instances = require('../../lib/services/Types').Instances;
 
 import _ = require('lodash');
 import check = require('../../lib/services/typeChecker');
@@ -35,16 +35,7 @@ describe("typeChecker", () => {
     });
   });
 
-  describe("isInterface", () => {
-    it("should only pass interfaces", () => {
-      let failing = _.filter(Instances, (instance, idx) => {
-        return check.isInterface(instance);
-      });
-      let iface = i.create('iHello', ['world']);
-      expect(check.isInterface(iface)).to.equal(true);
-      expect(failing.length).to.equal(0);
-    });
-  })
+
 
   describe("single value checkers", () => {
     it("isArray only passes one value", () => {
@@ -71,6 +62,16 @@ describe("typeChecker", () => {
     it("isError only passes one value", () => {
       primitiveChecker(check.isError, new Error());
     });
+    describe("isInterface", () => {
+      it("should only pass interfaces", () => {
+        let failing = _.filter(Instances, (instance, idx) => {
+          return check.isInterface(instance);
+        });
+        let iface = i.create('iHello', ['world']);
+        expect(check.isInterface(iface)).to.equal(true);
+        expect(failing.length).to.equal(0);
+      });
+    })
 
     function primitiveChecker(method, val) {
       let Instances = require('../../lib/services/Types').Instances;

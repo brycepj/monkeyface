@@ -6,3 +6,5 @@ lib/**/*.js
 lib/**/*.js.map
 .vscode
 index.js.map
+test/units/*.js
+test/units/*.js.map
