@@ -1,5 +1,13 @@
 /*
 MAIN.js
+
+TODO: 
+
+
+- update architecture with leaf pattern 
+- write tests
+
+
 */
 
 var i = require('monkeyface');

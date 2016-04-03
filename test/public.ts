@@ -1,9 +1,5 @@
 /// <reference path="../typings/main.d.ts" />
 
-beforeEach(() => {
-
-});
-
 const expect = require("chai").expect;
 const should = require('chai').should();
 const assert = require('assert');
@@ -21,6 +17,7 @@ describe("public api", () => {
       expect(iTestInterface.declarations).to.be.ok;
     });
   });
+  
   describe("register interface", () => {
     it("should add getable interface to the registry", () => {
       let monkeyface = require('../index');
@@ -30,6 +27,7 @@ describe("public api", () => {
       expect(iTestInterface.declarations).to.be.ok;
     });
   });
+  
   describe("$ensure", () => {
     it("should successfully return passing values for all types", () => {
       require('../index');
@@ -54,7 +52,6 @@ describe("public api", () => {
       function basicFunction(param1__number, param2__string, param3__date) {
         return val;
       }
-
       expect(basicFunction.$params(1, 'stringer', new Date())).to.equal(val);
     });
 

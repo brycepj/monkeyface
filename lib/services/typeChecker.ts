@@ -26,7 +26,7 @@ var isObject = function(context) {
   let isntNull = !isNull(context)
   let isntError = !isError(context)
   let isntDate = !isDate(context);
-  return typeof context == 'object' && isntArray && isntDate && isntNumber && isNull && isntError;
+  return typeof context == 'object' && isntArray && isntDate && isntNumber && isntNull && isntError;
 };
 isObject.type = 'object';
 
@@ -64,7 +64,7 @@ isDate.type = 'date';
 
 var discernType = function(val) {
   // it is important that isInterface come before isString, as interfaces are represented as strings
-  return [isInterface, isNull, isBoolean, isString, isNumber, isFunction, isError, isArray, isObject, isDate]
+  return [isValidInterface, isNull, isBoolean, isString, isNumber, isFunction, isError, isArray, isObject, isDate]
     .find(function(fn, index) {
       return fn(val);
     }).type;
@@ -86,15 +86,13 @@ var implementsInterface = function(iterable, ifaceKey) {
 // FIXME: Use case is when interface is referenced in a larger interface, but nested interface isn't registered yet
 var isInterface = function(val) {
   var registry = require('../services/BridgeService').Registry;
-  return isString(val) && (registry.check(val) || (isObject(val) && val.declarations));
+  return (isString(val) && (registry.check(val)) || (isObject(val) && val.declarations));
 }
-isInterface.type = 'interface';
 
 var isValidInterface = function(value) {
-  return (value.declarations && value.name) ? value : false;
+  return value !== null && (value.declarations && value.name) ? true : false;
 };
-
-
+isValidInterface.type = 'interface';
 
 
 export = {
@@ -107,7 +105,7 @@ export = {
   isNull: isNull,
   isBoolean: isBoolean,
   isDate: isDate,
-  isInterface: isInterface,
+  isInterface: isValidInterface,
   implementsInterface: implementsInterface,
   discernType: discernType,
   typeByVal: typeByVal

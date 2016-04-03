@@ -6,18 +6,21 @@ import u = require('../services/utils');
 import _ = require('lodash');
 
 export class Interface implements iInterface {
-  
+
   public declarations: iDeclaration[];
   public name: string;
   public key: any;
   public options: any;
-  
-  constructor(cfg:iCreateInterfaceConfig) {
+
+  constructor(cfg: iCreateInterfaceConfig, declaration?:iDeclaration) {
+    // gotta figure out how to handle super calls
+    
     this.name = cfg.name;
     this.declarations = [];
     this.parseDeclarations(cfg);
     this.options = cfg.options;
-    
+    this.declaration = declaration;
+
   }
 
   private parseDeclarations(cfg) { // takes a config object, creates and stores declarations for each
@@ -41,31 +44,49 @@ export class Interface implements iInterface {
       });
     }
   };
-  public setKey(key:string):void {
+  public setKey(key: string): void {
     this.key = key;
   }
-  public validate(val:any):any {
-    // this method should return the boolean and throw an error on misses
-    
-    let declarations = this.declarations;
-    let iterable:any = (check.isObject(val) || 
-      check.isFunction(val) || 
-      check.isArray(val)) ? val : u.returnError("Need to pass an iterable.");
-    let passes:boolean = false;
-    
-    if (check.isObject(iterable) || check.isFunction(iterable)) { // supports functions with props attached (lodash)
-      passes = declarations.every(function (declaration:iDeclaration, idx:number, array:iDeclaration[]) {
-        let key:string = declaration.key;
-        return declaration.validate(iterable[key]);
-      });
-    } else if(check.isArray(iterable)) { // when we want to validate a collection
-     var itemDeclaration = declarations[0];
-     passes = iterable.every(function(item) {
-       return itemDeclaration.validate(item);
-     });
-    } 
-    return passes ? val : false;
+  public validate(val: any): any {
+    /*
+      
+    */
+
+    if (!this.declarations.length && !!this.declaration) {
+      var isRequired = this.required;
+      var isMethod = this.method;
+      var type = this.type;
+
+      // this is where all conditions must be considered
+      if (isRequired && val !== null && !val) { return false }
+      else if (isMethod && !check.isFunction(val)) { return false }
+      else if (type && check.discernType(val) !== type) { return false }
+
+      return true;
+    } else {
+      // this method should return the boolean and throw an error on misses
+
+      let declarations = this.declarations;
+      let iterable: any = (check.isObject(val) ||
+        check.isFunction(val) ||
+        check.isArray(val)) ? val : u.returnError("Need to pass an iterable.");
+      let passes: boolean = false;
+
+      if (check.isObject(iterable) || check.isFunction(iterable)) { // supports functions with props attached (lodash)
+        passes = declarations.every(function(declaration: iDeclaration, idx: number, array: iDeclaration[]) {
+          let key: string = declaration.key;
+          return declaration.validate(iterable[key]);
+        });
+      } else if (check.isArray(iterable)) { // when we want to validate a collection
+        var itemDeclaration = declarations[0];
+        passes = iterable.every(function(item) {
+          return itemDeclaration.validate(item);
+        });
+      }
+      return passes ? val : false;
+    }
+
   }
-  
+
 
 }

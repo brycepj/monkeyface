@@ -1,13 +1,15 @@
+import {Interface} from './Interface';
 import {iDeclaration} from '../interfaces/Models';
 import check = require('../services/typeChecker');
 
-export class Declaration implements iDeclaration {
+export class Declaration extends Interface {
   public key: string;
   public required: boolean;
   public type: string;
   public method: boolean;
   
-  constructor(configString:string) {
+  constructor(configString:any) {
+    super(configString)
     // the constructor is passed the string passed by the user (e.g. 'hello:string')
     // or the inferred string generated during Interface construction
     this.key = null;
