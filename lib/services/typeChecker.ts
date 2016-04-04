@@ -22,9 +22,9 @@ isString.type = 'string';
 var isObject = function(context) {
   // TODO: Undo this nonsense
   let isntArray = !isArray(context);
-  let isntNumber = !isNumber(context)
-  let isntNull = !isNull(context)
-  let isntError = !isError(context)
+  let isntNumber = !isNumber(context);
+  let isntNull = !isNull(context);
+  let isntError = !isError(context);
   let isntDate = !isDate(context);
   return typeof context == 'object' && isntArray && isntDate && isntNumber && isntNull && isntError;
 };
@@ -85,7 +85,7 @@ var isInterface = function(val) {
 }
 
 var isValidInterface = function(value, ifaceName?:string) {
-  ifaceName && this.type = ifaceName;
+  if (ifaceName) {this.type = ifaceName};
   return value !== null && (value.declarations && value.name) ? true : false;
 };
 isValidInterface.type = 'interface';

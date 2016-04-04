@@ -1,16 +1,29 @@
+import Config = require('./ConfigService');
+
 function maybeThrow(Bool, type, val) {
-  let action = 'error';
-  let message = 'Monkeyface TypeError. Expected: ' + type + ' Received: ' + val;
+  let action = Config.action;
+  let error = {
+    action: action,
+    timestamp: new Date(),
+    message: 'Monkeyface Type Error! Expected: ' + type + ' Received: ' + val,
+    type: type,
+    value: val
+  };
+  let reducedError = Config.middleware ? Config.applyMiddleware(error) : error;
+
+  if (Config.handler) {
+    Config.applyHandler(reducedError);
+  }
 
   if (!Bool) {
     switch (action) {
       case 'error':
-        throw new Error(message);
+        throw new Error(error.message);
       case 'warn':
-        console.warn(message);
+        console.warn(error.message);
         break;
-      case 'debug':
-        console.log(message);
+      case 'log':
+        console.log(error.message);
         break;
     }
   }

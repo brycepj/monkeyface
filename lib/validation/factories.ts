@@ -46,7 +46,7 @@ function registerInterface(name: string, cfg) {
 }
 
 // add other helpful (private) config props to options
-function addAnnotations(cfg: iCreateInterfaceConfig): iCreateInterfaceConfig {
+/*function addAnnotations(cfg: iCreateInterfaceConfig): iCreateInterfaceConfig {
   let Bridge = require('../services/BridgeService');
   let props = cfg.props;
   let options = cfg.options;
@@ -68,7 +68,7 @@ function addAnnotations(cfg: iCreateInterfaceConfig): iCreateInterfaceConfig {
     //   (listHasSubstr(props, '[') && listHasSubstr(props, ']'))
   });
   return cfg;
-}
+}*/
 
 function isSimple(options: iCreateInterfaceOptionsPublic): iCreateInterfaceOptionsPublic {
 

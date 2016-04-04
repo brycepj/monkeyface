@@ -1,4 +1,5 @@
-module.exports = (function() {
-	Function.prototype["$params"] = require('../api/params');
+import Config = require('../services/ConfigService');
+export = (function() {
+	Function.prototype[Config.paramsKey] = require('../api/params');
 })();
 

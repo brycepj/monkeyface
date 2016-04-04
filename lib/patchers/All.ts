@@ -1,14 +1,13 @@
 import ensure = require('../api/ensure');
 import Types = require('../services/Types');
+import Config = require('../services/ConfigService');
+import _ = require('lodash');
 
-
-
-// TODO: Write a nice service for this and mocks
 export = (function() {
   let natives = Types.allNatives();
-	natives.forEach(function(native:any){
-    native.prototype['$ensure'] = ensure;
-	});
+  _.forEach(natives, (native) => {
+    native.prototype[Config.ensureKey] = ensure;
+  });
 })();
 
 

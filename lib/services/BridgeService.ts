@@ -1,6 +1,7 @@
 
 import validators = require('../validation/factories');
 import {iCreateInterfaceConfig} from '../interfaces/Config';
+import Config = require('./ConfigService');
 
 class Bridge {
 
@@ -9,6 +10,7 @@ class Bridge {
   public Declaration: any; // create interface
 
   constructor() {
+    console.log(Config);
     require('../patchers/index');
     this.Registry = require('./RegistryService');
     this.Interface = require('../factories/InterfaceFactory'); // factory
