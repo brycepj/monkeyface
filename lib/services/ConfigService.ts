@@ -1,13 +1,19 @@
 import _ = require('lodash');
 
 class ConfigService {
-  private props:iConfigProps;
-  constructor(props = {}) {
-    _.assign(this.props, defaults);
+  private props:any;
+  private defaults: any;
+  constructor() {
+    this.defaults = defaults;
+    this.props = _.assign({}, defaults);
   }
   
   setConfig(config){
     _.assign(this.props, config);
+  }
+  
+  resetDefaults(config?) {
+    this.props = config ? _.assign(this.props, defaults, config) : _.assign({}, defaults);
   }
   
   getConfig() {
@@ -54,7 +60,7 @@ var defaults = {
   };
 export = new ConfigService();
 
-declare interface iConfigProps {
+interface iConfigProps {
    ensureKey: string;
     paramsKey: string;
     exceptions: {

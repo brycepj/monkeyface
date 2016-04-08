@@ -1,7 +1,6 @@
 
 import validators = require('../validation/factories');
 import {iCreateInterfaceConfig} from '../interfaces/Config';
-import Config = require('./ConfigService');
 
 class Bridge {
 
@@ -10,7 +9,6 @@ class Bridge {
   public Declaration: any; // create interface
 
   constructor() {
-    console.log(Config);
     require('../patchers/index');
     this.Registry = require('./RegistryService');
     this.Interface = require('../factories/InterfaceFactory'); // factory
@@ -34,14 +32,25 @@ class Bridge {
     return this.Registry.get(name);
   }
 
+  ensureCollection(collectionDeclaration: string, arr: any[]) {
+    let check = require('./typeChecker');
+    var checker = check.getChecker(collectionDeclaration);
+    return arr.every((item, idx) => {
+      return checker(item);
+    });
+  }
+
   ensureImplements(iface: string, val) {
+    // TODO: Accept native classes
     let u = require('./utils');
     let registry = this.Registry;
-    let iterable = !!val ? val : u.returnError('Need to pass an iterable to ensureImplements'); 
+    // TODO: Accept interface objects
+    iface = iface['name'] ? iface['name'] : iface;
+    let iterable = !!val ? val : u.returnError('Need to pass an iterable to ensureImplements');
     let validInterface = registry.check(iface) ? registry.get(iface) : u.returnError('Please pass a valid interface, not ' + iface);
     return validInterface.validate(iterable);
   };
-  
+
 
 }
 

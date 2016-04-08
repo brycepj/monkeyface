@@ -9,6 +9,7 @@ function maybeThrow(Bool, type, val) {
     type: type,
     value: val
   };
+  
   let reducedError = Config.middleware ? Config.applyMiddleware(error) : error;
 
   if (Config.handler) {

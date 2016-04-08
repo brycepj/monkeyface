@@ -5,5 +5,5 @@ export = {
   create: Bridge.createInterface.bind(Bridge),
   register: Bridge.registerInterface.bind(Bridge),
   get: Bridge.getInterface.bind(Bridge),
-  config: Config.set.bind(Config)
+  config: Config.setConfig.bind(Config)
 };

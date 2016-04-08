@@ -23,7 +23,7 @@ export class Interface implements iInterface {
 
   }
 
-  private parseDeclarations(cfg):void { // takes a config object, creates and stores declarations for each
+  private parseDeclarations(cfg): void { // takes a config object, creates and stores declarations for each
     // props could be an array of strings to parse, or an object to infer from
     // Interface-level config should be determined here
     // Declaration level config should be determined in the Declaration parsing 
@@ -38,8 +38,13 @@ export class Interface implements iInterface {
       });
     } else { // inferred
       _.forIn(props, function(value, key) {
-        var type = check.discernType(value);
-        var str = type === 'function' ? key + '()' : [key, type].join(':');
+        var str;
+        if (value) {
+          var type = check.discernType(value);
+          str = type === 'function' ? key + '()' : [key, type].join(':');
+        }
+        str = key;
+
         self.declarations.push(DeclarationFactory.create(str))
       });
     }
@@ -52,7 +57,7 @@ export class Interface implements iInterface {
     return hasDeclarations ? this.validateInterface(val) : this.validateDeclaration(val);
   }
 
-  private validateInterface(iterable):boolean {
+  private validateInterface(iterable): boolean {
     let declarations = this.declarations;
     let passes: boolean = false;
     let isCollection = check.isArray(iterable);
@@ -71,7 +76,7 @@ export class Interface implements iInterface {
 
 
 
-  private validateCollection(val):boolean {
+  private validateCollection(val): boolean {
     var itemDeclaration = this.declarations[0];
     let passes = val.every(function(item) {
       return itemDeclaration.validate(item);

@@ -1,6 +1,6 @@
+import Config = require('../services/ConfigService');
 import ensure = require('../api/ensure');
 import Types = require('../services/Types');
-import Config = require('../services/ConfigService');
 import _ = require('lodash');
 
 export = (function() {
