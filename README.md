@@ -80,10 +80,10 @@ function aReallyPickyFunction(someVal$number, someObj$iHelloWorld){
   // do stuff
 }
 
-aReallyPickyFunction(1, {'hello': 'this', 'world', 'that'}); // proceeds as expected
-aReallyPickyFunction(null, {}); // throws an error
-aReallyPickyFunction(); // throws an error
-aReallyPickyFunction({'hello': 'this', 'world', 'that'}, 1); // throws an error (args out of order)
+aReallyPickyFunction.$params(1, {'hello': 'this', 'world', 'that'}); // proceeds as expected
+aReallyPickyFunction.$params(null, {}); // throws an error
+aReallyPickyFunction.$params(); // throws an error
+aReallyPickyFunction.$params({'hello': 'this', 'world', 'that'}, 1); // throws an error (args out of order)
 
 ```
 
