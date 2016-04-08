@@ -15,6 +15,7 @@
   "author": "Bryce Johnson",
   "license": "ISC",
   "devDependencies": {
+    "bluebird": "^3.3.4",
     "gulp": "^3.9.1",
     "gulp-typescript": "^2.12.1",
     "webpack": "^1.12.13"
