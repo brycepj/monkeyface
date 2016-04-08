@@ -4,12 +4,14 @@ No-mess, declarative type checking and interfaces in Javascript without a build 
 
 *This library is pretty new, poorly documented, and a little dangerous by design. Use at your peril.*
 
+## type checking
+
 The `$ensure` method has been monkey-patched (read about monkey-patching [here](http://me.dt.in.th/page/JavaScript-override/))
 to the following types/primitives:`Function`, `Number`, `Boolean`, `Date`, `Object`, `Array`, `String`, and `Error` (not 
 `undefined` or `null`). The `$params` method has been monkey-patched to the `Function` type only, although it can validates 
 any type you can pass to `$ensure`.
 
-## type checking with `$ensure`:
+### `$ensure`:
 
 ```javascript
 const i = require('monkeyface');
@@ -53,7 +55,7 @@ var numberCollection = someRawCollectionFiltered.$ensure('[number]');
 
 ```
 
-## parameter type checking with $params (checked upon execution)
+### parameter type checking with $params (checked upon execution)
 
 ```javascript
 function aReallyPickyFunction(someVal$number, someObj$iHelloWorld){
@@ -67,9 +69,9 @@ aReallyPickyFunction({'hello': 'this', 'world', 'that'}, 1); // throws an error 
 
 ```
 
-## interfaces (syntax mostly mimics Typescript's)
+## interfaces
 
-```
+```javascript
 
 const i = require('monkeyface');
 
@@ -78,11 +80,11 @@ const i = require('monkeyface');
 
 var iCar = i.create('iCar', [
   'numberOfWheels:number', 
-  'fins?:boolean', 
+  'fins?:boolean', // optional boolean
   'make:string', 
-  'model?',
-  'type:iGasPoweredVehicle',
-  'accidents?:[Accident]' 
+  'model?', // optional
+  'type:iGasPoweredVehicle', // interface
+  'accidents?:Accident[]' // collection of accidents 
 ]);
 
 // now you have some options. someVehical is returned in each case
@@ -103,19 +105,15 @@ var myCar = iCar.validate(someVehical) // also, ensures someVehicle implements i
 
 create an interface from an existing object. 
 
-```
+```javascript
 const i = require('monkeyface');
-
 var myCar = new Car();
-
 var iCar = i.create('iCar', myCar);
 
 // or more usefully, infer types from third party libraries and 
 
 var Promise = require('bluebird');
-
 var iPromise = i.create('iPromise', Promise);
-
 var getSomeFile = promisifiedRequest('something.txt').$ensure('iPromise');
 
 ```
