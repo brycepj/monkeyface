@@ -2,14 +2,32 @@
 
 No-mess, declarative type checking and interfaces in Javascript without a build step. 
 
-*This library is pretty new, poorly documented, and a little dangerous by design. Use at your peril.*
+*This library is pretty new, poorly tested, and a little dangerous by design. Use at your peril.*
+
+## what is this all about?
+
+I don't imagine everyone will want to use this little library, but I use it all the time on personal projects. I wrote it because I love using interfaces and typechecking in Javascript, but it bums me out how much a pain it can be to set up a project in TypeScript or Flow just to get those things. Monkeyface offers the simplest possible way to introduce typechecking and interfaces into any application Node application. 
+
+Just do this: 
+
+```
+npm install --save monkeyface
+```
+then, anywhere in your application:
+
+```javascript
+
+var i = require('monkeyface').config({/**/});
+
+``` 
+
+## on monkeypatching native types
+
+The `$ensure` method has been monkey-patched (read about monkey-patching [here](http://me.dt.in.th/page/JavaScript-override/)) to the following types/primitives:`Function`, `Number`, `Boolean`, `Date`, `Object`, `Array`, `String`, and `Error` (not `undefined` or `null`). The `$params` method has been monkey-patched to the `Function` type only.
+
+Admittedly this could be a little dangerous. It means that any references to `$ensure` or `$params` method anywhere in your application *or any of its dependencies* will be a conflict with monkeyface's. If that's the case, you can configure monkeyface to substitute any key you want for `$ensure` or `$params`.
 
 ## type checking
-
-The `$ensure` method has been monkey-patched (read about monkey-patching [here](http://me.dt.in.th/page/JavaScript-override/))
-to the following types/primitives:`Function`, `Number`, `Boolean`, `Date`, `Object`, `Array`, `String`, and `Error` (not 
-`undefined` or `null`). The `$params` method has been monkey-patched to the `Function` type only, although it can validates 
-any type you can pass to `$ensure`.
 
 ### `$ensure`:
 
@@ -117,3 +135,9 @@ var iPromise = i.create('iPromise', Promise);
 var getSomeFile = promisifiedRequest('something.txt').$ensure('iPromise');
 
 ```
+
+## roadmap
+
+- support for browsers
+- better test support
+- more typechecking methods ($not) 
