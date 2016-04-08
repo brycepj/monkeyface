@@ -37,7 +37,8 @@ function ensure(type:string) {
       maybeThrow(check.isDate(self), type, self);
       break;
     default:
-      maybeThrow(Bridge.ensureImplements(type, self), type, self);
+      (typeof type == 'string' && type.indexOf('[]') > -1) ? maybeThrow(Bridge.ensureCollection(type, self), type, self): maybeThrow(Bridge.ensureImplements(type, self), type, self);
+      
       break;
   }
 

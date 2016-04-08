@@ -1,3 +1,5 @@
+import u = require('./utils');
+
 function valueChecker(typeName, checker) {
   
   function toReturn(context:any):boolean {
@@ -75,6 +77,16 @@ var typeByVal = function(val, type) {
   return actualType === type;
 };
 
+var getChecker = (type) => {
+  var fn = null;
+  var itemType = type.slice(0, -2);
+  u.forIn(checkers, (checker) => {
+    if (isFunction(checker) && checker.type && checker.type === itemType) {
+      fn = checker;
+    }
+  });
+  return fn;
+}
 // internal
 
 
@@ -91,7 +103,7 @@ var isValidInterface = function(value, ifaceName?:string) {
 isValidInterface.type = 'interface';
 
 
-export = {
+var checkers = module.exports = {
   isArray: isArray,
   isString: isString,
   isObject: isObject,
@@ -103,5 +115,6 @@ export = {
   isDate: isDate,
   isInterface: isValidInterface,
   discernType: discernType,
-  typeByVal: typeByVal
+  typeByVal: typeByVal,
+  getChecker: getChecker
 }
