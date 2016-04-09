@@ -49,19 +49,6 @@ export class Declaration extends Interface {
 		
 		return true; 
   }
-
- /* public validate(val){
-		var isRequired = this.required;
-		var isMethod = this.method;
-		var type = this.type;
-
-    // this is where all conditions must be considered
-		if (isRequired && val !== null && !val) {return false} 
-		else if (isMethod && !check.isFunction(val)) {return false} 
-		else if (type && check.discernType(val) !== type) {return false}
-		
-		return true; 
-  };*/
 }
 
 
