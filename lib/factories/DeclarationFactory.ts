@@ -6,7 +6,7 @@ import check = require('../services/typeChecker');
 class DeclarationFactory implements iDeclarationFactory {
 
   // TODO: Simple Declaration vs Complex Declaration    
-  create(str:string, cfg?: any):any {
+  create(str: string, cfg?: any): any {
     var Bridge = require('../services/BridgeService');
     let strArr = str.split(':');
     let key = strArr[0];
@@ -26,11 +26,6 @@ class DeclarationFactory implements iDeclarationFactory {
     // if string indicates interface, return the interface
     let val: iDeclaration = new Declaration(str);
     return val;
-  }
-
-  validate(val: any, type: string) {
-    // TODO: Simple Declaration vs Complex Declaration    
-    return true;
   }
 }
 

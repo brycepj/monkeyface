@@ -19,15 +19,9 @@ export class Interface implements iInterface {
     this.declarations = [];
     this.parseDeclarations(cfg);
     this.options = cfg.options;
-    // this.declaration = declaration;
-
   }
 
-  private parseDeclarations(cfg): void { // takes a config object, creates and stores declarations for each
-    // props could be an array of strings to parse, or an object to infer from
-    // Interface-level config should be determined here
-    // Declaration level config should be determined in the Declaration parsing 
-
+  private parseDeclarations(cfg): void {
     var self = this;
     let props = cfg.props;
     var isListCfg = check.isArray(props);

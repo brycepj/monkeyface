@@ -2,15 +2,11 @@
 import check = require('../services/typeChecker');
 import maybeThrow = require('../services/maybeThrow');
 
-function ensure(type:string) {
+function ensure(type: string) {
   var Bridge = require('../services/BridgeService');
 
   var self = this;
-  
-  // if (val) {
-  //   self = val;
-  // }
-  
+
   switch (type) {
     case 'string':
       maybeThrow(check.isString(self), type, self);
@@ -37,12 +33,12 @@ function ensure(type:string) {
       maybeThrow(check.isDate(self), type, self);
       break;
     default:
-      (typeof type == 'string' && type.indexOf('[]') > -1) ? maybeThrow(Bridge.ensureCollection(type, self), type, self): maybeThrow(Bridge.ensureImplements(type, self), type, self);
-      
+      (typeof type == 'string' && type.indexOf('[]') > -1) ? maybeThrow(Bridge.ensureCollection(type, self), type, self) : maybeThrow(Bridge.ensureImplements(type, self), type, self);
+
       break;
   }
 
-  // FIXME: Come up with a better abstraction here, or figure out how to get rid of this
+  // FIXME: Is this still neccessary?
 
   if (type === "string") {
     return self.toString();

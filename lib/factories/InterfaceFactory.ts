@@ -2,9 +2,9 @@ import check = require('../services/typeChecker');
 import u = require('../services/utils');
 import {Declaration} from '../models/Declaration';
 import {Interface} from '../models/Interface';
-class InterfaceFactory {
 
-  constructor() {}
+class InterfaceFactory {
+  constructor() { }
 
   _parseCfg(cfg) {
 
@@ -40,17 +40,3 @@ class InterfaceFactory {
 }
 
 export = new InterfaceFactory();
-/*
-validate(iterable) {
-    var checkAll = this.declarations.every(function(declaration, idx) {
-      var key = declaration.key;
-      var val = iterable[key];
-      return declaration.validate(val, key);
-    });
-    return checkAll ? iterable : false;
-  };
-  // static method
-  create(obj, iface) {
-    // various private methods to create
-    return iface;
-  };*/
