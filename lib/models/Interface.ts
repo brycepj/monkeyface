@@ -47,8 +47,11 @@ export class Interface implements iInterface {
     this.key = key;
   }
   public validate(val: any): boolean {
-    let hasDeclarations = !!this.declarations.length;
-    return hasDeclarations ? this.validateInterface(val) : this.validateDeclaration(val);
+    let hasDeclarations: boolean = !!this.declarations.length || !!this.i;
+    let isValid: boolean = hasDeclarations ?
+      this.validateInterface(val) :
+      this.validateDeclaration(val);
+    return isValid;
   }
 
   private validateInterface(iterable): boolean {
@@ -59,8 +62,9 @@ export class Interface implements iInterface {
     if (!isCollection) { // supports functions with props attached (lodash)
       passes = declarations.every(function(declaration: iDeclaration, idx: number, array: iDeclaration[]) {
         let key: string = declaration.key;
+        let value = iterable[key];
         // if this is also an interface, this will run validate again
-        return declaration.validate(iterable[key]);
+        return declaration.validate(value);
       });
     } else { // when we want to validate a collection
       passes = this.validateCollection(iterable);
@@ -78,5 +82,17 @@ export class Interface implements iInterface {
     return passes;
   }
 
+  private validateDeclaration(val) {
+    var isRequired = this.required;
+    var isMethod = this.method;
+    var type = this.type;
+    let i = this.i;
+    // this is where all conditions must be considered
+    if (isRequired && i !== null) { return i.validate(val) }
+    else if (isRequired && val !== null && !val) { return false }
+    else if (isRequired && isMethod && !check.isFunction(val)) { return false }
+    else if (type && check.discernType(val) !== type) { return false }
 
+    return true;
+  }
 }

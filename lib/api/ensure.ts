@@ -1,6 +1,6 @@
 
-import check = require('../services/typeChecker');
-import maybeThrow = require('../services/maybeThrow');
+var check = require('../services/typeChecker');
+var maybeThrow = require('../services/maybeThrow');
 
 function ensure(type: string) {
   var Bridge = require('../services/BridgeService');

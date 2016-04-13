@@ -4,7 +4,9 @@ import {Declaration} from '../models/Declaration';
 import {Interface} from '../models/Interface';
 
 class InterfaceFactory {
-  constructor() { }
+  constructor() { 
+    
+  }
 
   _parseCfg(cfg) {
 

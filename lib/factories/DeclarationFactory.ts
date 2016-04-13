@@ -12,19 +12,18 @@ class DeclarationFactory implements iDeclarationFactory {
     let key = strArr[0];
     let hasType = strArr.length == 2;
     let declaredType = hasType ? strArr[1] : null;
-
-    if (check.isInterface(declaredType)) {
+    let iface;
+    if (Bridge.Registry.check(declaredType)) {
       let ifaceKey = declaredType;
-      let iface = Bridge.Registry.get(ifaceKey);
+      iface = Bridge.Registry.get(ifaceKey);
       let hasInterface = cfg.options.hasInterface;
       // if the annotated interface matches the current declaration
       if (hasInterface && hasInterface.indexOf(key) > -1) {
         iface.setKey(key);
       }
-      return iface;
     }
     // if string indicates interface, return the interface
-    let val: iDeclaration = new Declaration(str);
+    let val: iDeclaration = new Declaration(str, iface);
     return val;
   }
 }
