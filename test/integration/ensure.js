@@ -68,10 +68,10 @@ describe("$ensure", () => {
         expect(returnVal).to.equal(instance);
       });
     });
-    
+
     it("should fail all other types passed it", () => {
-      Instances.forEach((instance,instanceIdx) => {
-        Names.forEach((name,nameIdx) => {
+      Instances.forEach((instance, instanceIdx) => {
+        Names.forEach((name, nameIdx) => {
           if (nameIdx === instanceIdx) {
             var fn = instance.$ensure.bind(name);
             expect(fn).to.throw(Error);
