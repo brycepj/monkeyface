@@ -1,5 +1,3 @@
-<div style="text-align:center"><img src ="./assets/monkeyface-logo.png"/></div>
-
 No-mess, declarative type checking and interfaces in Javascript without a build step. 
 
 *This library is pretty new, poorly tested, and a little dangerous by design. Use at your peril.*
