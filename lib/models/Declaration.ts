@@ -8,7 +8,7 @@ export class Declaration extends Interface {
   public type: string;
   public method: boolean;
   public i: any;
-
+  public collection: any;
   constructor(configString: string, iface?: any) {
     super(configString);
     // the constructor is passed the string passed by the user (e.g. 'hello:string')
@@ -29,10 +29,12 @@ export class Declaration extends Interface {
     let isInterface = hasType && registry.check(type);
     var isMethod = configString.includes('()');
     var isRequired = !configString.includes('?');
-
+    let isCollection = type ? type.includes('[]') : false;
+    
     this.required = isRequired;
     this.method = isMethod;
     this.type = isMethod ? 'function' : type;
+    this.collection = isCollection ? type.slice(0, -2) : null;
     this.i = isInterface && this.i === null ? { name: type, instance: registry.get(type) } : null;
     this.key = this.parsePropertyKey(configString);
   };

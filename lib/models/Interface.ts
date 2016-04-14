@@ -48,9 +48,12 @@ export class Interface implements iInterface {
   }
   public validate(val: any): boolean {
     let hasDeclarations: boolean = !!this.declarations.length || !!this.i;
+    let isCollection = !!this.collection;
     let isValid: boolean = hasDeclarations ?
       this.validateInterface(val) :
-      this.validateDeclaration(val);
+      (isCollection ?
+        this.validateCollection(val) :
+        this.validateDeclaration(val));
     return isValid;
   }
 
@@ -58,13 +61,15 @@ export class Interface implements iInterface {
     let declarations = this.declarations;
     let passes: boolean = false;
     let isCollection = check.isArray(iterable);
-
+    if (!iterable) {
+      return passes;
+    }
     if (!isCollection) { // supports functions with props attached (lodash)
       passes = declarations.every(function(declaration: iDeclaration, idx: number, array: iDeclaration[]) {
         let key: string = declaration.key;
-        let value = iterable[key];
+        let value = iterable ? iterable[key] : undefined;
         // if this is also an interface, this will run validate again
-        return declaration.validate(value);
+        return iterable ? declaration.validate(value) : false;
       });
     } else { // when we want to validate a collection
       passes = this.validateCollection(iterable);
@@ -76,23 +81,46 @@ export class Interface implements iInterface {
 
   private validateCollection(val): boolean {
     var itemDeclaration = this.declarations[0];
-    let passes = val.every(function(item) {
-      return itemDeclaration.validate(item);
-    });
+    if (itemDeclaration) {
+      var passes = val.every(function(item) {
+        return itemDeclaration.validate(item);
+      });
+    } else {
+      var registry = require('../services/BridgeService').Registry;
+      var type = this.collection;
+      var validator = check.getChecker(type);
+      var iface = registry.get(type);
+      var passes = val.every(function(item) {
+        if (iface) {
+          return iface.validate(item)
+        } else {
+          return validator(item);
+        }
+      });
+    }
+
     return passes;
   }
 
-  private validateDeclaration(val) {
+  private validateDeclaration(val): boolean {
     var isRequired = this.required;
     var isMethod = this.method;
     var type = this.type;
     let i = this.i;
+    let passes = true;
     // this is where all conditions must be considered
-    if (isRequired && i !== null) { return i.validate(val) }
-    else if (isRequired && val !== null && !val) { return false }
-    else if (isRequired && isMethod && !check.isFunction(val)) { return false }
-    else if (type && check.discernType(val) !== type) { return false }
+    if (isRequired && i !== null) { passes = i.validate(val) }
+    else if (isRequired && val !== null && !val) { passes = false }
+    else if (isRequired && isMethod && !check.isFunction(val)) { passes = false }
+    else if (type && check.discernType(val) !== type) { passes = false }
 
-    return true;
+    // if (!passes) {
+    //   this.appendError();
+    // }
+    return passes;
+  }
+
+  private appendError() {
+    console.log(this);
   }
 }

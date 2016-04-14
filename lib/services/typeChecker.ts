@@ -78,8 +78,8 @@ var typeByVal = function(val, type) {
 };
 
 var getChecker = (type) => {
-  var fn = null;
-  var itemType = type.slice(0, -2);
+  var fn;
+  var itemType = type; //type.slice(0, -2);
   u.forIn(checkers, (checker) => {
     if (isFunction(checker) && checker.type && checker.type === itemType) {
       fn = checker;
