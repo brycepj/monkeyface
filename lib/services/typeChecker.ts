@@ -1,4 +1,5 @@
 import u = require('./utils');
+var Types = require('./Types');
 
 function valueChecker(typeName, checker): Function {
   let toReturn = function(context: any): boolean {return checker(context)};
@@ -42,6 +43,9 @@ var isDate = valueChecker('date', function(context) {
   return context instanceof Date;
 });
 
+var isValidType = (str) => {
+  return Types.Names.indexOf(str) > -1;
+}
 var discernType = function(val) {
   // it is important that isInterface come before isString, as interfaces are represented as strings
   return [isValidInterface, isNull, isBoolean, isString, isNumber, isFunction, isError, isArray, isObject, isDate]
@@ -67,19 +71,11 @@ var getChecker = (type) => {
 }
 // internal
 
-
-// // FIXME: Use case is when interface is referenced in a larger interface, but nested interface isn't registered yet
-// var isInterface = function(val) {
-//   var registry = require('../services/BridgeService').Registry;
-//   return (isString(val) && (registry.check(val)) || (isObject(val) && val.declarations));
-// }
-
 var isValidInterface = function(value, ifaceName?: string) {
   if (ifaceName) { this.type = ifaceName };
   return value !== null && (value.declarations && value.name) ? true : false;
 };
 isValidInterface.type = 'interface';
-
 
 var checkers = module.exports = {
   isArray: isArray,
@@ -94,5 +90,6 @@ var checkers = module.exports = {
   isInterface: isValidInterface,
   discernType: discernType,
   typeByVal: typeByVal,
-  getChecker: getChecker
+  getChecker: getChecker,
+  isValidType: isValidType
 }

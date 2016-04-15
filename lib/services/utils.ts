@@ -1,3 +1,7 @@
+function forEach(arr, iteratee) {
+  arr.forEach(iteratee);
+}
+
 function forIn(object, iteratee) {
   for (var key in object) {
     if (object.hasOwnProperty(key)) {
@@ -45,10 +49,22 @@ var returnError = function(msg?: string): boolean {
   return false;
 };
 
+var methodPatcher = function(native, name, method) {
+  // Object, function ensure(){};
+  Object.defineProperty(native.prototype, name, {
+    enumerable: false,
+    value: method,
+    writable: true,
+    configurable: false
+  });
+};
+
 export = {
+  forEach: forEach,
   forIn: forIn,
   times: times,
   everyIn: everyIn,
   mapObj: mapObj,
-  returnError: returnError
+  returnError: returnError,
+  methodPatcher: methodPatcher
 }

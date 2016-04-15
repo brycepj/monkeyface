@@ -7,7 +7,8 @@ class Bridge {
   public Registry: any; // create interface
   public Interface: any; // create interface
   public Declaration: any; // create interface
-  public State:any;
+  public State: any;
+
   constructor() {
     require('../patchers/index');
     this.Registry = require('./RegistryService');
@@ -35,8 +36,12 @@ class Bridge {
 
   ensureCollection(collectionDeclaration: string, arr: any[]) {
     let check = require('./typeChecker');
-    var checker = check.getChecker(collectionDeclaration);
+    var checker = check.getChecker(collectionDeclaration)
+      || check.getChecker(collectionDeclaration.slice(0, -1))
+      || this.Registry.get(collectionDeclaration.slice(0, -1));
+
     return arr.every((item, idx) => {
+      checker = checker.validate ? checker.validate.bind(checker) : checker;
       return checker(item);
     });
   }

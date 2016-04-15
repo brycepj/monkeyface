@@ -1,5 +1,6 @@
+var Config = require('../services/ConfigService');
+
 function params() {
-  var check = require('../services/typeChecker');
   var fn = this;
   var args = arguments;
   var fnStr = fn.toString();
@@ -8,10 +9,11 @@ function params() {
   var paramsStrArr = getParamNames(fn);
   // decide on the API here -- this is missing a lot
   paramsStrArr.forEach(function(param, index) {
-    var pieces = param.split('__');
+    var pieces = param.split('$');
     var type = pieces.length == 2 ? pieces[1] : pieces[0];
     var val = args[index];
-    val['$ensure'](type);
+    // FIXME: Use proper configged ensureKey
+    val[Config.ensureKey](type);
   });
 
   return this.apply(null, arguments);
@@ -23,9 +25,7 @@ var ARGUMENT_NAMES = /([^\s,]+)/g;
 function getParamNames(func) {
   var fnStr = func.toString().replace(STRIP_COMMENTS, '');
   var result = fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
-  if (result === null)
-    result = [];
-  return result;
+  return result === null ? [] : result;
 }
 
 module.exports = params;

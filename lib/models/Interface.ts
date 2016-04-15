@@ -5,6 +5,7 @@ import check = require('../services/typeChecker');
 import u = require('../services/utils');
 import _ = require('lodash');
 
+// TODO: Abstract out validation code into a validating service
 export class Interface implements iInterface {
 
   public declarations: iDeclaration[];

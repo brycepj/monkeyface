@@ -1,6 +1,6 @@
 import {Interface} from './Interface';
 import {iDeclaration} from '../interfaces/Models';
-import check = require('../services/typeChecker');
+var check = require('../services/typeChecker');
 
 export class Declaration extends Interface {
   public key: string;
@@ -10,6 +10,7 @@ export class Declaration extends Interface {
   public i: any;
   public collection: any;
   constructor(configString: string, iface?: any) {
+    // FIXME: This signature doesn't match the super's
     super(configString);
     // the constructor is passed the string passed by the user (e.g. 'hello:string')
     // or the inferred string generated during Interface construction
@@ -26,15 +27,18 @@ export class Declaration extends Interface {
     let registry = require('../services/BridgeService').Registry;
     let hasType = configString.includes(':');
     let type = hasType ? configString.split(':')[1] : null;
+    let depluralizedType = type ? type.slice(0, -1) : null;
+    let isParamCollection = check.isValidType(depluralizedType) || registry.check(depluralizedType);
+    let isCollection = type ? type.includes('[]') : false;
     let isInterface = hasType && registry.check(type);
     var isMethod = configString.includes('()');
     var isRequired = !configString.includes('?');
-    let isCollection = type ? type.includes('[]') : false;
     
     this.required = isRequired;
     this.method = isMethod;
     this.type = isMethod ? 'function' : type;
-    this.collection = isCollection ? type.slice(0, -2) : null;
+    this.type = isParamCollection ? depluralizedType : type;
+    this.collection = isCollection && !isParamCollection ? type.slice(0, -2) : null;
     this.i = isInterface && this.i === null ? { name: type, instance: registry.get(type) } : null;
     this.key = this.parsePropertyKey(configString);
   };
