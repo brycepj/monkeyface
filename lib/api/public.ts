@@ -8,7 +8,7 @@ var exporter: any = module.exports = function(cfg) {
 
   var Bridge = require('../services/BridgeService');
 
-  exporter = {
+  return exporter = {
     create: Bridge.createInterface.bind(Bridge),
     register: Bridge.registerInterface.bind(Bridge),
     get: Bridge.getInterface.bind(Bridge)
