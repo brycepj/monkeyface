@@ -3,7 +3,7 @@ var expect = require("chai").expect;
 var should = require('chai').should();
 var assert = require('assert');
 
-var i = require('../../index');
+var i = require('../../index')();
 
 var iLodash = i.create('iLodash', _);
 var iLowLevel = i.create('iLowLevel', ['lowest:string', 'thing?:number', 'lodash:iLodash', 'numbaz:number[]']);

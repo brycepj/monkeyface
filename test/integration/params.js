@@ -3,7 +3,7 @@ var expect = require("chai").expect;
 var should = require('chai').should();
 var assert = require('assert');
 
-var i = require('../../index');
+var i = require('../../index')();
 
 var iHelloWorld = i.create('iHelloWorld', ['hello', 'world']);
 
