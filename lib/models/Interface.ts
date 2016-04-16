@@ -1,19 +1,24 @@
 import {iInterface, iDeclaration} from '../interfaces/Models';
 import {iCreateInterfaceConfig} from '../interfaces/Config';
 import DeclarationFactory = require('../factories/DeclarationFactory');
-import check = require('../services/typeChecker');
+var check = require('../services/typeChecker');
 import u = require('../services/utils');
 import _ = require('lodash');
 
 // TODO: Abstract out validation code into a validating service
-export class Interface implements iInterface {
+export class Interface {
 
   public declarations: iDeclaration[];
   public name: string;
   public key: any;
   public options: any;
+  public collection: any;
+  public required: any;
+  public method: any;
+  public type: any;
+  public i: any;
 
-  constructor(cfg: iCreateInterfaceConfig, declaration?: iDeclaration) {
+  constructor(cfg: any, declaration?: any) {
     // gotta figure out how to handle super calls
 
     this.name = cfg.name;

@@ -4,9 +4,9 @@ var should = require('chai').should();
 var assert = require('assert');
 var Instances = require('../../lib/services/Types').Instances;
 
-import _ = require('lodash');
-import check = require('../../lib/services/typeChecker');
-import i = require('../../index');
+var _:_.LoDashStatic = require('lodash');
+var check = require('../../lib/services/typeChecker');
+var i = require('../../index');
 
 describe("typeChecker", () => {
   describe("overview", () => {

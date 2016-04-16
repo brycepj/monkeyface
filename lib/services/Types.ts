@@ -15,17 +15,17 @@ function allNativesButOne(native) {
   });
 }
 
-function allInstances(detail) {
-  return !detail ? Instances : Instances.map(function(instance, idx) {
-    return { name: instance, type: instance.__proto__, value: instance };
-  })
-}
+// function allInstances(detail) {
+//   return !detail ? Instances : Instances.map(function(instance, idx) {
+//     return { name: instance, type: instance.__proto__, value: instance };
+//   })
+// }
 
-function allInstancesButOne(native) {
-  return allInstances().filter(function(val, idx) {
-    return val !== native;
-  });
-};
+// function allInstancesButOne(native) {
+//   return allInstances().filter(function(val, idx) {
+//     return val !== native;
+//   });
+// };
 
 export = {
   Types: Types,
@@ -33,6 +33,6 @@ export = {
   Instances: Instances,
   allNatives: allNatives,
   allNativesButOne: allNativesButOne,
-  allInstances: allInstances,
-  allInstancesButOne: allInstancesButOne
+  // allInstances: allInstances,
+  // allInstancesButOne: allInstancesButOne
 }

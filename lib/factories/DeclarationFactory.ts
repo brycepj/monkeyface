@@ -3,7 +3,7 @@ import {iDeclaration} from '../interfaces/Models';
 import {Declaration} from '../models/Declaration';
 import check = require('../services/typeChecker');
 
-class DeclarationFactory implements iDeclarationFactory {
+class DeclarationFactory {
 
   // TODO: Simple Declaration vs Complex Declaration    
   create(str: string, cfg?: any): any {

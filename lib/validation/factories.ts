@@ -5,7 +5,7 @@ import check = require('../services/typeChecker');
 import { iCreateInterfaceConfig, iCreateInterfaceOptionsPublic,
 iCreateInterfaceOptions } from '../interfaces/Config';
 
-function createInterface(arg1, arg2, arg3): iCreateInterfaceConfig {
+function createInterface(arg1?, arg2?, arg3?): iCreateInterfaceConfig {
   let hasName: boolean = typeof arg1 === 'string';
   let options: Object = hasName ? (arg3 ? arg3 : {}) : (arg2 ? arg2 : {});
   let validOptions: iCreateInterfaceOptionsPublic = createInterfaceOptions(options);

@@ -1,8 +1,8 @@
 import u = require('./utils');
 var Types = require('./Types');
 
-function valueChecker(typeName, checker): Function {
-  let toReturn = function(context: any): boolean {return checker(context)};
+function valueChecker(typeName, checker): any {
+  let toReturn = function(context: any): boolean { return checker(context) };
   toReturn['type'] = typeName;
   return toReturn;
 };
@@ -71,13 +71,13 @@ var getChecker = (type) => {
 }
 // internal
 
-var isValidInterface = function(value, ifaceName?: string) {
+var isValidInterface:any = function(value, ifaceName?: string) {
   if (ifaceName) { this.type = ifaceName };
   return value !== null && (value.declarations && value.name) ? true : false;
 };
 isValidInterface.type = 'interface';
 
-var checkers = module.exports = {
+var checkers: any = module.exports = {
   isArray: isArray,
   isString: isString,
   isObject: isObject,

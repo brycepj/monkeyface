@@ -1,3 +1,5 @@
+require('./jsPolyfills');
+
 function forEach(arr, iteratee) {
   arr.forEach(iteratee);
 }

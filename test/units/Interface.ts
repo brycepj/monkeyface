@@ -2,7 +2,7 @@
 var expect = require("chai").expect;
 var should = require('chai').should();
 var assert = require('assert');
-var _ = require('lodash');
+var _:_.LoDashStatic = require('lodash');
 
 var i = require("../../index");
 
@@ -32,8 +32,8 @@ describe("New interface model", () => {
         expect(iLodash.validate(_)).to.equal(true);
       });
       it("should not validate an altered version of the object inferred from", () => {
-        var newLodash = _.cloneDeep(_);
-        newLodash['add'] = 1;
+        var newLodash:any = _.cloneDeep(_);
+        newLodash['add'] = 11;
         expect(iLodash.validate(_)).to.equal(false);
       })
     });

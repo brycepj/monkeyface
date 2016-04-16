@@ -24,10 +24,9 @@ class ConfigService {
   applyMiddleware(error): any {
     let mw = this.props.exceptions.middleware;
     mw = typeof mw === 'function' ? [mw] : mw;
-    let reduced = _.reduce(mw, function(sum: any, n: Function) {
-      return n(sum) || u.returnError(("Middleware functions must return error object");
+    return _.reduce(mw, function(sum: any, n: Function) {
+      return (n(sum) || u.returnError("Middleware functions must return error object"));
     }, error);
-    return reduced;
   }
 
   applyHandler(error): void {

@@ -1,9 +1,10 @@
-import check = require('../services/typeChecker');
-import u = require('../services/utils');
+var check = require('../services/typeChecker');
+var u = require('../services/utils');
 import {Declaration} from '../models/Declaration';
 import {Interface} from '../models/Interface';
 
 class InterfaceFactory {
+  public declarations: any;
   constructor() { 
     
   }
