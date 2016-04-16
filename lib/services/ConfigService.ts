@@ -4,6 +4,7 @@ import u = require('./utils');
 class ConfigService {
   private props: any;
   private defaults: any;
+  
   constructor() {
     this.defaults = defaults;
     this.props = _.assign({}, defaults);
@@ -33,6 +34,10 @@ class ConfigService {
     if (this.handler !== null) {
       this.handler(error);
     }
+  }
+  
+  get env() {
+    return this.props.env;
   }
   get ensureKey() {
     return this.props.ensure.key;

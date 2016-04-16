@@ -1,16 +1,16 @@
-// var i = require('index')(cfg);
+import prod = require('../patchers/prod');
 
 var exporter: any = module.exports = function(cfg) {
-  var Config = require('../services/ConfigService');
-  var setConfig = Config.setConfig.bind(Config);
-
+  let Config = require('../services/ConfigService');
+  let setConfig = Config.setConfig.bind(Config);
+  let isProduction = Config.env === 'production';
   if (cfg) setConfig(cfg);
+  let Bridge = require('../services/BridgeService');
 
-  var Bridge = require('../services/BridgeService');
 
   return exporter = {
-    create: Bridge.createInterface.bind(Bridge),
-    register: Bridge.registerInterface.bind(Bridge),
-    get: Bridge.getInterface.bind(Bridge)
-  }
+    create: isProduction ? prod.create : Bridge.createInterface.bind(Bridge),
+    register: isProduction ? prod.register : Bridge.registerInterface.bind(Bridge),
+    get: isProduction ? prod.get : Bridge.getInterface.bind(Bridge)
+  };
 }

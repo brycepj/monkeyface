@@ -1,5 +1,5 @@
-No-mess, declarative type checking and interfaces in Javascript without a build step. 
-
+No-mess, declarative type checking and interfaces in Javascript.
+ 
 *This library is pretty new, poorly tested, and a little dangerous by design. Use at your peril.*
 
 ## what is this all about?

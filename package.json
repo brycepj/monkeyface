@@ -1,13 +1,13 @@
 {
   "name": "monkeyface",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "No-mess, declarative type checking and interfaces in Javascript without a build step.",
   "main": "index.js",
   "scripts": {
     "test": "mocha -w --debug test/units/Interface.js",
     "tsdev": "tsc -w --module 'commonjs' --target 'es6'",
     "release": "release-it -n",
-    "perf": "node ./test/_perfBenchmarks.js"
+    "perf": "node ./perf/index.js"
   },
   "repository": {
     "type": "git",
