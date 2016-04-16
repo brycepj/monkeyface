@@ -4,6 +4,7 @@ import prod = require('./prod');
 var params = require('../api/params');
 
 export = (function() {
-	u.methodPatcher(Function, Config.paramsKey, params);
+  let method = Config.env === 'production' ? prod.params : params;
+	u.methodPatcher(Function, Config.paramsKey, method);
 })();
 

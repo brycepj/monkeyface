@@ -11,7 +11,9 @@ class ConfigService {
   }
 
   setConfig(config) {
+    console.log(config);
     _.assign(this.props, config);
+    console.log(this.props);
   }
 
   resetDefaults(config?) {
