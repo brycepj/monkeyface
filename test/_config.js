@@ -37,7 +37,7 @@ describe("config", () => {
       expect(typeof noop[newParamsKey]).to.equal('function');
     });
     it("should properly apply multiple error handling middleware", () => {
-      Config.setMiddleware([middleWareOne, middleWareTwo]);
+      Config.middleware = [middleWareOne, middleWareTwo];
 
       var obj = {};
       var iJelloWorld = i.create('iJelloWorld', ['jello', 'world']);
@@ -59,7 +59,7 @@ describe("config", () => {
         return error;
       }
 
-      Config.setMiddleware(fn);
+      Config.middleware = fn;
 
       var obj = {};
       var iJelloWorld = i.create('iRelloWorld', ['rello', 'world']);
@@ -73,7 +73,7 @@ describe("config", () => {
       }
     });
     it("should properly divert to a custom handler", () => {
-      Config.setHandler(customHandler);
+      Config.handler = customHandler;
       var addedKey = 'customHandler';
       var obj = {};
       var iTrelloWorld = i.create('iTrelloWorld', ['trello', 'world']);

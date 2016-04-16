@@ -43,7 +43,7 @@ class ConfigService {
   get paramsDivider() {
     return this.props.params.divider;
   }
-  setHandler(fn) {
+  set handler(fn) {
     this.props.exceptions.handler = fn;
   }
   get handler() {
@@ -53,7 +53,7 @@ class ConfigService {
     return this.props.exceptions.action;
   }
   // backdoor for testing
-  setMiddleware(val: any) { // should be function or function[]
+  set middleware(val: any) { // should be function or function[]
     this.props.exceptions.middleware = val;
   }
   get middleware() {
@@ -62,7 +62,7 @@ class ConfigService {
 
 }
 
-var noop = () => { };
+var noop = () => {};
 var defaults = {
   ensure: {
     key: '$ensure'
@@ -75,7 +75,8 @@ var defaults = {
     action: 'error',
     handler: null,
     middleware: null
-  }
+  },
+  env: process.env.NODE_ENV || 'development'
 };
 export = new ConfigService();
 
@@ -91,5 +92,6 @@ interface iConfigProps {
     action?: string;
     handler?: (err?) => {};
     middleware?: any;
-  }
+  };
+  env: string;
 } 
