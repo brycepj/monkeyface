@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha -w --debug test/units/Interface.js",
     "tsdev": "tsc -w --module 'commonjs' --target 'es6'",
-    "release": "release-it -n"
+    "release": "release-it -n",
+    "perf": "node ./test/_perfBenchmarks.js"
   },
   "repository": {
     "type": "git",
