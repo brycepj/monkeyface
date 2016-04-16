@@ -1,4 +1,5 @@
 import _ = require('lodash');
+import u = require('./utils');
 
 class ConfigService {
   private props: any;
@@ -21,14 +22,17 @@ class ConfigService {
   }
 
   applyMiddleware(error): any {
-    return _.reduce(this.middleware, function(sum: any, n: Function) {
-      return n(sum);
+    let mw = this.props.exceptions.middleware;
+    mw = typeof mw === 'function' ? [mw] : mw;
+    let reduced = _.reduce(mw, function(sum: any, n: Function) {
+      return n(sum) || u.returnError(("Middleware functions must return error object");
     }, error);
+    return reduced;
   }
 
-  applyHandler(err): void {
+  applyHandler(error): void {
     if (this.handler !== null) {
-      this.handler(err);
+      this.handler(error);
     }
   }
   get ensureKey() {
@@ -40,15 +44,23 @@ class ConfigService {
   get paramsDivider() {
     return this.props.params.divider;
   }
+  setHandler(fn) {
+    this.props.exceptions.handler = fn;
+  }
   get handler() {
     return this.props.exceptions.handler;
   }
   get action() {
     return this.props.exceptions.action;
   }
+  // backdoor for testing
+  setMiddleware(val: any) { // should be function or function[]
+    this.props.exceptions.middleware = val;
+  }
   get middleware() {
     return this.props.exceptions.middleware;
   }
+
 }
 
 var noop = () => { };
@@ -69,16 +81,16 @@ var defaults = {
 export = new ConfigService();
 
 interface iConfigProps {
-  ensure: {
+  ensure?: {
     key?: string;
   };
-  params: {
+  params?: {
     key?: string;
     divider?: string;
   };
-  exceptions: {
-    action: string;
-    handler: (err?) => {};
-    middleware: any;
+  exceptions?: {
+    action?: string;
+    handler?: (err?) => {};
+    middleware?: any;
   }
 } 

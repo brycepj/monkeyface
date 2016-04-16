@@ -30,7 +30,6 @@ describe("config service", () => {
       };
       Config.resetDefaults(cfg);
       let newProps = Config.getConfig();
-      console.log(cfg, newProps);
       expect(Object.keys(newProps)).to.equal(Object.keys(cfg));
     });
   });

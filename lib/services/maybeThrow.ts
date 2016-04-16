@@ -1,7 +1,7 @@
 import Config = require('./ConfigService');
 
 function maybeThrow(Bool, type, val) {
-  let action = Config.action;
+  let action = Config.action || 'error';
   let error = {
     action: action,
     timestamp: new Date(),
@@ -10,21 +10,21 @@ function maybeThrow(Bool, type, val) {
     value: val
   };
   
-  let reducedError = Config.middleware ? Config.applyMiddleware(error) : error;
+  var reducedError = Config.middleware ? Config.applyMiddleware(error) : error;
 
   if (Config.handler) {
     Config.applyHandler(reducedError);
   }
-
+  
   if (!Bool) {
     switch (action) {
       case 'error':
-        throw new Error(error.message);
+        throw new Error(JSON.stringify(error, null, 2));
       case 'warn':
-        console.warn(error.message);
+        console.warn(error);
         break;
       case 'log':
-        console.log(error.message);
+        console.log(error);
         break;
     }
   }

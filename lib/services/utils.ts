@@ -59,6 +59,16 @@ var methodPatcher = function(native, name, method) {
   });
 };
 
+var valChanger = function(obj, dotPath, newVal) {
+  obj = _.cloneDeep(obj);
+  if (!dotPath) {
+    return obj;
+  }
+  _.set(obj, dotPath, newVal);
+  return obj;
+}
+
+
 export = {
   forEach: forEach,
   forIn: forIn,
@@ -66,5 +76,6 @@ export = {
   everyIn: everyIn,
   mapObj: mapObj,
   returnError: returnError,
-  methodPatcher: methodPatcher
+  methodPatcher: methodPatcher,
+  valChanger: valChanger
 }

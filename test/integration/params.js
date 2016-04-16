@@ -82,4 +82,3 @@ function basicInterfaceCollectionProcessor(iColl$iHelloWorlds) {
 
 
 var gotHelloWorld = i.get('iHelloWorld');
-console.log(iHelloWorld === gotHelloWorld);

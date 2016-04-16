@@ -7,6 +7,7 @@ class Bridge {
   public Registry: any; // create interface
   public Interface: any; // create interface
   public Declaration: any; // create interface
+  public Config: any;
   public State: any;
 
   constructor() {
@@ -14,6 +15,7 @@ class Bridge {
     this.Registry = require('./RegistryService');
     this.Interface = require('../factories/InterfaceFactory'); // factory
     this.Declaration = require('../factories/DeclarationFactory');
+
     this.State = {}; // track passes and fails
   }
 
