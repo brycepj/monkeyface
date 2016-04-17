@@ -4,7 +4,7 @@ var should = require('chai').should();
 var assert = require('assert');
 var _:_.LoDashStatic = require('lodash');
 
-var i = require("../../index");
+var i = require("../../index")();
 
 describe("New interface model", () => {
   describe("meta config", () => {
@@ -32,10 +32,10 @@ describe("New interface model", () => {
         expect(iLodash.validate(_)).to.equal(true);
       });
       it("should not validate an altered version of the object inferred from", () => {
-        var newLodash:any = _.cloneDeep(_);
-        newLodash['add'] = 11;
-        expect(iLodash.validate(_)).to.equal(false);
-      })
+        var newLodash = _.cloneDeep(_);
+        delete newLodash['upperCase'];
+        expect(iLodash.validate(newLodash)).to.equal(false);
+      });
     });
     describe("different argument passing", () => {
 
