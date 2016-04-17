@@ -1,47 +1,24 @@
-import u = require('./utils');
+var u = require('./utils');
 var Types = require('./Types');
 
-function valueChecker(typeName, checker): any {
-  let toReturn = function(context: any): boolean { return checker(context) };
-  toReturn['type'] = typeName;
+function valueChecker(typeName) {
+  let toReturn = function(context: any) {
+    let str = Object.prototype.toString.call(context);
+    return str.indexOf(typeName) > -1;
+  };
+  toReturn['type'] = typeName.toLowerCase();
   return toReturn;
 };
 
-var isArray = valueChecker('array', function(context) {
-  return context instanceof (Array);
-});
-
-var isString = valueChecker('string', function(context) {
-  return context instanceof (String) || typeof context === 'string';
-});
-
-var isObject = valueChecker('object', function(context) {
-  return typeof context == 'object' && !isArray(context) && !isDate(context) && !isError(context);
-});
-
-var isNumber = valueChecker('number', function(context) {
-  return context instanceof (Number) || typeof context === 'number';
-});
-
-var isError = valueChecker('error', function(context) {
-  return context instanceof (Error);
-});
-
-var isFunction = valueChecker('function', function(context) {
-  return !!(context && context.constructor && context.call && context.apply);
-});
-
-var isBoolean = valueChecker('boolean', function(context) {
-  return context === true || context === false || toString.call(context) == '[object Boolean]';
-});
-
-var isNull = valueChecker('null', function(context) {
-  return context === null;
-});
-
-var isDate = valueChecker('date', function(context) {
-  return context instanceof Date;
-});
+var isArray = valueChecker('Array');
+var isString = valueChecker('String');
+var isObject = valueChecker('Object');
+var isNumber = valueChecker('Number');
+var isError = valueChecker('Error');
+var isFunction = valueChecker('Function');
+var isBoolean = valueChecker('Boolean');
+var isNull = valueChecker('Null')
+var isDate = valueChecker('Date');
 
 var isValidType = (str) => {
   return Types.Names.indexOf(str) > -1;
@@ -69,9 +46,8 @@ var getChecker = (type) => {
   });
   return fn;
 }
-// internal
 
-var isValidInterface:any = function(value, ifaceName?: string) {
+var isValidInterface: any = function(value, ifaceName?: string) {
   if (ifaceName) { this.type = ifaceName };
   return value !== null && (value.declarations && value.name) ? true : false;
 };
