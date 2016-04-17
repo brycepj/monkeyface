@@ -46,7 +46,7 @@ function pickyForNumbers(arg$number){
   // do stuff
 }
 
-pickySignature.$params(123); // ensures arg is a number, then executes
+pickyForNumbers.$params(123); // ensures arg is a number, then executes
 
 function pickyForIHelloWorlds(arg$iHelloWorld){
   // do stuff
