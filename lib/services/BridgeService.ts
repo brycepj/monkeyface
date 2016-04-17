@@ -1,7 +1,6 @@
 
-import u = require('./utils');
-import validators = require('../validation/factories');
-import {iCreateInterfaceConfig} from '../interfaces/Config';
+var u = require('./utils');
+var check = require('./typeChecker');
 
 class Bridge {
 
@@ -27,11 +26,9 @@ class Bridge {
     return this.Registry.get(name);
   }
 
-  ensureCollection(collectionDeclaration: string, arr: any[]): boolean {
-    let check = require('./typeChecker');
-    var checker = check.getChecker(collectionDeclaration)
-      || check.getChecker(collectionDeclaration.slice(0, -1))
-      || this.Registry.get(collectionDeclaration.slice(0, -1));
+  private ensureCollection(key: string, arr: any[]): boolean {
+    let typeStr = this.getCollectionKey(key);
+    var checker = check.getChecker(typeStr) || this.Registry.get(typeStr);
 
     return arr.every((item, idx) => {
       checker = checker.validate ? checker.validate.bind(checker) : checker;
@@ -39,18 +36,28 @@ class Bridge {
     });
   }
 
-  ensureImplements(iface: string, val): boolean {
-    // TODO: Accept native classes
-    let u = require('./utils');
-    let registry = this.Registry;
-    // TODO: Accept interface objects
-    iface = iface['name'] ? iface['name'] : iface;
+  private ensureImplements(iface: string, val): boolean {
+    // TODO: Accept native classes & interface objects
     let iterable = !!val ? val : u.returnError('Need to pass an iterable to ensureImplements');
-    let validInterface = registry.check(iface) ? registry.get(iface) : u.returnError('Please pass a valid interface, not ' + iface);
-    return validInterface.validate(iterable);
+    let registeredInterface = this.Registry.get(iface);
+    return registeredInterface.validate(iterable);
   };
 
+  public ensureComplex(type, val): boolean {
+    return !!this.getCollectionKey(type) ?
+      this.ensureCollection(type, val), type, val) :
+      this.ensureImplements(type, val), type, val);
+  }
 
+  private getCollectionKey(str) { // returns basic type or false
+    let hasBrackets = str.indexOf('[]') > -1;
+    let bracketlessType = hasBrackets ? str.slice(0, -2) : null;
+    let singularType = str.slice(0, -1);
+    let isPluralType = !hasBrackets && check.isValidType(singularType);
+    let isPluralInterface = !isPluralType && this.Registry.check(singularType);
+    return (hasBrackets || isPluralInterface || isPluralType) ?
+      (hasBrackets ? bracketlessType : singularType) : false;
+  }
 }
 
 export = new Bridge();
@@ -60,3 +67,4 @@ interface iInterfaceConfig {
   props: string[];
   options?: Object;
 }
+

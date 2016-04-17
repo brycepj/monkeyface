@@ -33,15 +33,7 @@ function ensure(type: string) {
       maybeThrow(check.isDate(self), type, self);
       break;
     default:
-      let isCollection = type.indexOf('[]') > -1 ||
-        check.isValidType(type.slice(0, -1)) ||
-        Bridge.Registry.check(type.slice(0, -1));
-      // console.log('isCollection', isCollection, type, Bridge.Registry.listKeys());
-      // TODO: This checking/splitting should be handled elsewhere.
-      (check.isString(type) && isCollection) ?
-        maybeThrow(Bridge.ensureCollection(type, self), type, self) :
-        maybeThrow(Bridge.ensureImplements(type, self), type, self);
-
+      maybeThrow(ensureComplex(type, self), type, self);
       break;
   }
 
@@ -51,4 +43,3 @@ function ensure(type: string) {
 export = (function() {
   return ensure;
 })();
-
