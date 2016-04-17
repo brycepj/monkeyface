@@ -2,7 +2,7 @@ No-mess, declarative typechecking and interfaces in Javascript.
  
 ## what is this all about?
 
-I don't know how many people will want to use this little library, but I use it all the time. I wrote it so I could have interfaces and typechecking to Javascript, without the setup and/or build step that come with TypeScript or Flow. As far as I can tell, this is the simplest, quickest possible way to introduce typechecking and interfaces into a Node application. 
+I don't know how many people will want to use this little library, but I use it all the time. I wrote it so I could have interfaces and typechecking in Javascript, without the setup and/or build step that come with TypeScript or Flow. As far as I can tell, this is the simplest, quickest possible way to introduce typechecking and interfaces into a Node application. 
 
 You just do this: 
 
