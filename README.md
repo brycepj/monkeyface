@@ -1,6 +1,6 @@
 No-mess, declarative typechecking and interfaces in Javascript.
  
-## what is this all about?
+## What is this all about?
 
 I don't know how many people will want to use this little library, but I use it all the time. I wrote it so I could have interfaces and typechecking in Javascript, without the setup and/or build step that come with TypeScript or Flow. As far as I can tell, this is the simplest, quickest possible way to introduce typechecking and interfaces into a Node application. 
 
@@ -63,7 +63,7 @@ pickyForCollections.$params([{hello:1,world:2}, {hello:3, world: 4}]);
 
 ```
 
-### monkeypatching native types
+### Monkeypatching native types
 
 This library works by monkey patching native types. The `$ensure` method has been monkey-patched (read about monkey-patching [here](http://me.dt.in.th/page/JavaScript-override/)) to the following types/primitives:`Function`, `Number`, `Boolean`, `Date`, `Object`, `Array`, `String`, and `Error` (not `undefined` or `null`). The `$params` method has been monkey-patched to the `Function` type only.
 
@@ -73,7 +73,7 @@ Admittedly this could be a little dangerous. It means that any references to `$e
 
 It may slow down your code in development(see `./perf`), but in production the public api turns into a bunch of [noops](http://whatis.techtarget.com/definition/no-op-no-operation). 
 
-## interfaces
+## Interfaces
 
 ```javascript
 
@@ -100,7 +100,7 @@ var myCar = iCar.validate(someVehical) // pass the value into the interface's va
 
 ```
 
-### inferred interfaces
+### Inferred interfaces
 
 You can create an interface from an existing object. This is helpful if you want to create interfaces with third-party libraries or complex objects.
 
@@ -117,7 +117,7 @@ var iPromise = i.create('iPromise', new Promise(() => {}));
 var getSomeFile = promisifiedRequest('something.txt').$ensure('iPromise');
 
 ```
-### config 
+### Config 
 
 ```javascript
 
@@ -137,7 +137,8 @@ require('monkeyface')({
 })
 
 ```
-### roadmap
+### Roadmap
 
 - support for browser javascript
 - more typechecking methods ($not) 
+- better test coverage
