@@ -24,7 +24,7 @@ var isValidType = (str) => {
   return Types.Names.indexOf(str) > -1;
 }
 var discernType = function(val) {
-  return isValidInterface(val) ? 
+  return isValidInterface(val) ?
     isValidInterface.type :
     Object.prototype.toString.call(elem).slice(8, -1).toLowerCase();
 };
@@ -35,10 +35,8 @@ var typeByVal = function(val, type) {
 };
 
 var getChecker = (type) => {
-  var fn;
-  var itemType = type; //type.slice(0, -2);
   u.forIn(checkers, (checker) => {
-    if (isFunction(checker) && checker.type && checker.type === itemType) {
+    if (isFunction(checker) && checker.type && checker.type === type) {
       fn = checker;
     }
   });
