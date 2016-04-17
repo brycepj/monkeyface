@@ -24,11 +24,9 @@ var isValidType = (str) => {
   return Types.Names.indexOf(str) > -1;
 }
 var discernType = function(val) {
-  // it is important that isInterface come before isString, as interfaces are represented as strings
-  return [isValidInterface, isNull, isBoolean, isString, isNumber, isFunction, isError, isArray, isObject, isDate]
-    .find(function(fn, index) {
-      return fn(val);
-    }).type;
+  return isValidInterface(val) ? 
+    isValidInterface.type :
+    Object.prototype.toString.call(elem).slice(8, -1).toLowerCase();
 };
 
 var typeByVal = function(val, type) {
