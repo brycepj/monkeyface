@@ -5,9 +5,7 @@ import {Interface} from '../models/Interface';
 
 class InterfaceFactory {
   public declarations: any;
-  constructor() { 
-    
-  }
+  constructor() { }
 
   _parseCfg(cfg) {
 
@@ -36,10 +34,26 @@ class InterfaceFactory {
     return checkAll ? iterable : false;
   };
   // TODO: As an optimization, consider using subclasses for various levels of parsing required
-  create(cfg) {
-    // various private methods to create
+  create(name?, rawProps?, options?) {
+    let props = this.parseConfigProps(rawProps);
+    let cfg = { name: name, props: props, options: options };
     return new Interface(cfg);
   };
+  
+  private parseConfigProps(propsInput: any): i {
+    var inputType: string = check.discernType(propsInput),
+      props: any[] = [];
+    if (inputType === 'string') {
+      props.push(propsInput)
+    } else if (inputType === 'object' || inputType === 'function') {
+      u.forIn((val, key) => { let type = check.discernType(val), str = [key, type].join(':'); props.push(str) });
+    } else if (inputType === 'array') {
+      props = propsInput;
+    } else {
+      return u.returnError(inputType, "Pass a valid configuration argumentation.");
+    }
+    return props;
+  }
 }
 
 export = new InterfaceFactory();

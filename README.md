@@ -79,8 +79,6 @@ It may slow down your code in development(see `./perf`), but in production the p
 
 var i = require('monkeyface');
 
-/* interfaces can be initialized with `create` or `register` methods. Both register an interface for use throughout the application, but `create` returns the interface object. */
-
 var iCar = i.create('iCar', [
   'numberOfWheels:number', 
   'fins?:boolean', // optional boolean

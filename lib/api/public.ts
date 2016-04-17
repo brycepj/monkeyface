@@ -10,7 +10,6 @@ var exporter: any = module.exports = function(cfg) {
 
   return exporter = {
     create: isProduction ? prod.create : Bridge.createInterface.bind(Bridge),
-    register: isProduction ? prod.register : Bridge.registerInterface.bind(Bridge),
     get: isProduction ? prod.get : Bridge.getInterface.bind(Bridge)
   };
 }
