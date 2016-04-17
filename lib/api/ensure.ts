@@ -33,7 +33,7 @@ function ensure(type: string) {
       maybeThrow(check.isDate(self), type, self);
       break;
     default:
-      maybeThrow(ensureComplex(type, self), type, self);
+      maybeThrow(Bridge.ensureComplex(type, self), type, self);
       break;
   }
 
