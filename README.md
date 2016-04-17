@@ -1,141 +1,142 @@
 No-mess, declarative type checking and interfaces in Javascript.
  
-*This library is pretty new, poorly tested, and a little dangerous by design. Use at your peril.*
-
 ## what is this all about?
 
-I don't imagine everyone will want to use this little library, but I use it all the time on personal projects. I wrote it because I love using interfaces and typechecking in Javascript, but it bums me out how much a pain it can be to set up a project in TypeScript or Flow just to get those things. Monkeyface offers the simplest possible way to introduce typechecking and interfaces into any application Node application. 
+I don't know that many people will want to use this little library, but I use it all the time. I wrote it to bring interfaces and typechecking to Javascript, without the setup and/or build step that come with TypeScript or Flow. As far as I can tell, this is the simplest, quickest possible way to introduce typechecking and interfaces into a Node application. 
 
 Just do this: 
 
 ```
 npm install --save monkeyface
 ```
-then, anywhere in your application:
+then, somewhere in your application, initialize monkeyface:
 
 ```javascript
 
-var i = require('monkeyface').config({/**/});
+// no config
+require('monkeyface')();
+
+// with config
+require('monkeyface')({/* options, see documentation below */});
 
 ``` 
 
-## on monkeypatching native types
+Then you can use typechecking and interfaces anywhere in your code (no imports/requires).
 
-The `$ensure` method has been monkey-patched (read about monkey-patching [here](http://me.dt.in.th/page/JavaScript-override/)) to the following types/primitives:`Function`, `Number`, `Boolean`, `Date`, `Object`, `Array`, `String`, and `Error` (not `undefined` or `null`). The `$params` method has been monkey-patched to the `Function` type only.
-
-Admittedly this could be a little dangerous. It means that any references to `$ensure` or `$params` method anywhere in your application *or any of its dependencies* will conflict with monkeyface's. If that's the case, you can configure monkeyface to substitute any key you want for `$ensure` or `$params`.
-
-## type checking
-
-### `$ensure`:
+### Typechecking
 
 ```javascript
-const i = require('monkeyface');
 
-// when mustBeANumber is declared, if couldBeANumber is anything but a number, a (helpful) error is thrown
-
-var couldBeANumber = Math.floor(Math.random(0,1) ? 123456 : 'some string';
-var mustBeANumber = couldBeANumber.$ensure('number');
-
-// $ensure enforces interfaces too (more on how these work later)
-
-var iHelloWorld = i.create('iHelloWorld', ['hello', 'world']);
-
-function helloWorldReturner(someVal){
-  return someVal.$ensure('iHelloWorld');
+// ensures passed value is a number
+function numberReturner(num){
+  return num.$ensure('number');
 }
 
-var goodObj = {
-  hello: "this", 
-  world: "that"
-};
+// ensures that obj implements iHelloWorld interface
+function objReturner(obj) {
+  return obj.$ensure('iHelloWorld');
+}
 
-var badObj = {
-  wack: "adoodle"
-};
+// ensures collection contains only iHelloWorld objects
+function collectionReturner(coll) {
+  return coll.$ensure('iHelloWorld[]')
+}
 
-// this returns goodObj
-var validObject = helloWorldReturner(goodObj);
-
-// this throws an error
-var invalidObject = helloWorldReturner(badObj);
-
-
-// you can also use $ensure to check collections (includes collections of all types)
-
-var someRawCollection = [1, 2, 3, 4, 5, null];
-var someRawCollectionFiltered = someRawCollection.filter(function(item){ return typeof item === 'number'});
-
-var numberCollection = someRawCollection.$ensure('[number]'); // throws an error
-var numberCollection = someRawCollectionFiltered.$ensure('[number]');
-
-```
-
-### parameter type checking with $params (checked upon execution)
-
-```javascript
-function aReallyPickyFunction(someVal$number, someObj$iHelloWorld){
+function pickyForNumbers(arg$number){
   // do stuff
 }
 
-aReallyPickyFunction.$params(1, {'hello': 'this', 'world', 'that'}); // proceeds as expected
-aReallyPickyFunction.$params(null, {}); // throws an error
-aReallyPickyFunction.$params(); // throws an error
-aReallyPickyFunction.$params({'hello': 'this', 'world', 'that'}, 1); // throws an error (args out of order)
+pickySignature.$params(123); // ensures arg is a number, then executes
+
+function pickyForIHelloWorlds(arg$iHelloWorld){
+  // do stuff
+}
+
+pickyForIHelloWorlds.$params({hello:1,world:2}); // ensures arg implements iHelloWorld, then executes
+
+function pickyForCollections(arg$iHelloWorlds) { // note the 's' on the end 
+  // do stuff
+}
+
+pickyForCollections.$params([{hello:1,world:2}, {hello:3, world: 4}]); // ensures collection items implement iHelloWorld, then executes
 
 ```
+
+### monkeypatching native types
+
+This library works by monkey patching native types. The `$ensure` method has been monkey-patched (read about monkey-patching [here](http://me.dt.in.th/page/JavaScript-override/)) to the following types/primitives:`Function`, `Number`, `Boolean`, `Date`, `Object`, `Array`, `String`, and `Error` (not `undefined` or `null`). The `$params` method has been monkey-patched to the `Function` type only.
+
+Admittedly this could be a little dangerous. It means that any references to `$ensure` or `$params` method anywhere in your application *or any of its dependencies* will conflict with monkeyface's. If that's the case, you can configure monkeyface to substitute any key you want for `$ensure` or `$params`. Even so, if you accidentally use either key in your application, you'll override monkeyface's.
+
+### Performance
+
+It may slow down your code in development(see `./perf`), but in production the public api turns into a bunch of [noops](http://whatis.techtarget.com/definition/no-op-no-operation). 
 
 ## interfaces
 
 ```javascript
 
-const i = require('monkeyface');
+var i = require('monkeyface');
 
-// interfaces are initialized with `create` or `register`. Both make an interface available throughout
-// the application, but `create` actually returns the interface object. 
+/* interfaces can be initialized with `create` or `register` methods. Both register an interface for use throughout the application, but `create` returns the interface object. */
 
 var iCar = i.create('iCar', [
   'numberOfWheels:number', 
   'fins?:boolean', // optional boolean
   'make:string', 
-  'model?', // optional
+  'model?', // optional anything
   'type:iGasPoweredVehicle', // interface
   'accidents?:Accident[]' // collection of accidents 
 ]);
 
-// now you have some options. someVehical is returned in each case
+// now you have some options. someVehical is returned in each case.
 
-var myCar = someVehical.$ensure('iCar'); // ensures someVehicle implements iCar
+var myCar = someVehical.$ensure('iCar'); // pass the interface name
 
-// or
+var myCar = someVehical.$ensure(iCar); // pass the interface object
 
-var myCar = someVehical.$ensure(iCar); // note, you can pass the interface directly
-
-// or
-
-var myCar = iCar.validate(someVehical) // also, ensures someVehicle implements iCar
+var myCar = iCar.validate(someVehical) // pass the value into the interface's validate method (returns a boolean)
 
 ```
 
-## inferred interfaces
+### inferred interfaces
 
-create an interface from an existing object. 
+You can create an interface from an existing object. This is helpful if you want to create interfaces with third-party libraries or complex objects.
 
 ```javascript
-const i = require('monkeyface');
+var i = require('monkeyface');
+
+// complex object
 var myCar = new Car();
 var iCar = i.create('iCar', myCar);
 
-// or more usefully, infer types from third party libraries and 
-
+// third party 
 var Promise = require('bluebird');
-var iPromise = i.create('iPromise', Promise);
+var iPromise = i.create('iPromise', new Promise(() => {})); 
 var getSomeFile = promisifiedRequest('something.txt').$ensure('iPromise');
 
 ```
+### config 
 
-## roadmap
+```javascript
 
-- support for browsers
-- better test support
+require('monkeyface')({
+  env:, // 'production' or 'development'. Checks process.env, then defaults to 'development'
+  ensure: {
+    key: '$$randomEnsure'// overrides use of '$ensure'
+  },
+  params: {
+    key: '$$randomParams' // override use of '$params'
+  }
+  exceptions: {
+    action: 'error', // 'error' (throws error), 'warn' (console.warn) or 'debug' (console.log), defaults to 'error'
+    middleware: [fn, fn], // functions are each passed error object and must return it
+    handler: fn // custom function to handle error throwing (receives error object)
+  }
+})
+
+```
+### roadmap
+
+- support for browser javascript
 - more typechecking methods ($not) 
