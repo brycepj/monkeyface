@@ -12,7 +12,6 @@ function params() {
     var pieces = param.split('$');
     var type = pieces.length == 2 ? pieces[1] : pieces[0];
     var val = args[index];
-    // FIXME: Use proper configged ensureKey
     val[Config.ensureKey](type);
   });
 

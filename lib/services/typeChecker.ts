@@ -26,7 +26,7 @@ var isValidType = (str) => {
 var discernType = function(val) {
   return isValidInterface(val) ?
     isValidInterface.type :
-    Object.prototype.toString.call(elem).slice(8, -1).toLowerCase();
+    Object.prototype.toString.call(val).slice(8, -1).toLowerCase();
 };
 
 var typeByVal = function(val, type) {

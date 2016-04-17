@@ -19,8 +19,8 @@ export class Interface {
   public i: any;
 
   constructor(cfg: any, declaration?: any) {
+    // if config is string, this is declaration
     // gotta figure out how to handle super calls
-
     this.name = cfg.name;
     this.declarations = [];
     this.parseDeclarations(cfg);

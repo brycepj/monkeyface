@@ -33,7 +33,7 @@ export class Declaration extends Interface {
     let isInterface = hasType && registry.check(type);
     var isMethod = configString.includes('()');
     var isRequired = !configString.includes('?');
-    
+
     this.required = isRequired;
     this.method = isMethod;
     this.type = isMethod ? 'function' : type;

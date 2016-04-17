@@ -2,7 +2,7 @@ export = (() => {
 
 // includes
 if (!String.prototype.includes) {
-  String.prototype.includes = function(search, start) {
+  String.prototype.includes = function(search, start):boolean {
     if (typeof start !== 'number') {
       start = 0;
     }

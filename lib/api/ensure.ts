@@ -45,16 +45,6 @@ function ensure(type: string) {
       break;
   }
 
-  // FIXME: Is this still neccessary?
-
-  // if (type === "string") {
-  //   return self.toString();
-  // } else if (type === "number") {
-  //   return Number(self);
-  // } else if (type === "boolean") {
-  //   return Boolean(self);
-  // }
-
   return self;
 }
 
