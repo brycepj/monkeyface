@@ -6,7 +6,7 @@ var Instances = require('../../lib/services/Types').Instances;
 
 var _:_.LoDashStatic = require('lodash');
 var check = require('../../lib/services/typeChecker');
-var i = require('../../index');
+var i = require('../../index')();
 
 describe("typeChecker", () => {
   describe("overview", () => {
@@ -50,9 +50,9 @@ describe("typeChecker", () => {
     it("isString only passes one value", () => {
       primitiveChecker(check.isString, "sample string");
     });
-    it("isNull only passes one value", () => {
-      primitiveChecker(check.isNull, null);
-    });
+    // it("isNull only passes one value", () => {
+    //   primitiveChecker(check.isNull, null);
+    // });
     it("isDate only passes one value", () => {
       primitiveChecker(check.isDate, new Date());
     });

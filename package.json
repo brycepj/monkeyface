@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -w --debug test/units/Interface.js",
-    "tsdev": "tsc -w --module 'commonjs' --target 'es6'",
+    "tsdev": "tsc -w --module 'commonjs' --target 'es5'",
     "release": "release-it -n",
     "perf": "node ./perf/index.js"
   },
