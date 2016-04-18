@@ -6,7 +6,9 @@
   "scripts": {
     "test": "gulp test",
     "test-dev": "gulp test-dev",
-    "tsdev": "tsc -w --module 'commonjs' --target 'es5'",
+    "dev-ts": "gulp dev-ts",
+    "build-ts": "gulp build-ts",
+    "build": "gulp build",
     "release": "release-it -n",
     "perf": "node ./perf/index.js"
   },
@@ -18,11 +20,12 @@
   "license": "ISC",
   "devDependencies": {
     "benchmark": "^2.1.0",
-    "bluebird": "^3.3.4",
+    "bluebird": "^3.3.5",
     "chai": "^3.5.0",
+    "fs-extra": "^0.26.7",
     "gulp": "^3.9.1",
     "gulp-mocha": "^2.2.0",
-    "gulp-typescript": "^2.12.1",
+    "gulp-typescript": "^2.13.0",
     "mocha": "^2.4.5",
     "webpack": "^1.12.13"
   },
