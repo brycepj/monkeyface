@@ -120,7 +120,7 @@ var getSomeFile = promisifiedRequest('something.txt').$ensure('iPromise');
 ```javascript
 
 require('monkeyface')({
-  env:, // 'production' or 'development'. Checks process.env, then defaults to 'development'
+  env: 'production', // 'production' or 'development'. Checks process.env, then defaults to 'development'
   ensure: {
     key: '$$randomEnsure'// overrides use of '$ensure'
   },
