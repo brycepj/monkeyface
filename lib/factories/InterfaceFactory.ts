@@ -50,7 +50,7 @@ class InterfaceFactory {
     } else if (inputType === 'array') {
       props = propsInput;
     } else {
-      return u.returnError(inputType, "Pass a valid configuration argumentation.");
+      return u.returnError(inputType, "Pass valid config arguments (string, object or array)");
     }
     return props;
   }

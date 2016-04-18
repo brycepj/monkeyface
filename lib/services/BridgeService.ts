@@ -38,7 +38,7 @@ class Bridge {
 
   private ensureImplements(iface: string, val): boolean {
     // TODO: Accept native classes & interface objects
-    let iterable = !!val ? val : u.returnError('Need to pass an iterable to ensureImplements');
+    let iterable = !!val ? val : u.returnError('Need to pass an iterable to ensureImplements (interface)');
     let registeredInterface = this.Registry.get(iface);
     return registeredInterface.validate(iterable);
   };
