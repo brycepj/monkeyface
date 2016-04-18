@@ -1,8 +1,8 @@
-No-mess, declarative typechecking and interfaces in Javascript.
+No-mess, declarative typechecking and interfaces in Javascript. 
  
 ## What is this all about?
 
-I don't know how many people will want to use this little library, but I use it all the time. I wrote it so I could have interfaces and typechecking in Javascript, without the setup and/or build step that come with TypeScript or Flow. As far as I can tell, this is the simplest, quickest possible way to introduce typechecking and interfaces into a Node application. 
+I don't know how many people will want to use this little library, but I use it all the time. I wrote it so I could quickly get interfaces and typechecking in Javascript, without the setup and/or build step that come with other typechecking tools like [TypeScript](https://www.typescriptlang.org/) or [Flow](https://github.com/facebook/flow). As far as I can tell, this is the simplest, quickest possible way to introduce typechecking and interfaces into a Javascript application. 
 
 You just do this: 
 
@@ -67,7 +67,7 @@ pickyForCollections.$params([{hello:1,world:2}, {hello:3, world: 4}]);
 
 This library works by monkey patching native types. The `$ensure` method has been monkey-patched (read about monkey-patching [here](http://me.dt.in.th/page/JavaScript-override/)) to the following types/primitives:`Function`, `Number`, `Boolean`, `Date`, `Object`, `Array`, `String`, and `Error` (not `undefined` or `null`). The `$params` method has been monkey-patched to the `Function` type only.
 
-Admittedly this could be a little dangerous. It means that any references to `$ensure` or `$params` method anywhere in your application *or any of its dependencies* will conflict with monkeyface's. If that's the case, you can configure monkeyface to substitute any key you want for `$ensure` or `$params`. Even so, if you accidentally use either key in your application, you'll override monkeyface's.
+Admittedly this could be a little dangerous. It means that any references to `$ensure` or `$params` method anywhere in your application *or any of its dependencies* could conflict with monkeyface's. If that's the case, you can configure monkeyface to substitute any key you want for `$ensure` or `$params`. Having said that, I have yet to have an issue with conflicts. 
 
 ### Performance
 
@@ -137,6 +137,8 @@ require('monkeyface')({
 ```
 ### Roadmap
 
-- support for browser javascript
+There's still a lot to do to get this where I want it to be. 
+
+- better support browser javascript
 - more typechecking methods ($not) 
 - better test coverage
