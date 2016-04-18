@@ -4,7 +4,8 @@
   "description": "No-mess, declarative type checking and interfaces in Javascript without a build step.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -w --debug test/units/Interface.js",
+    "test": "gulp test",
+    "test-dev": "gulp test-dev",
     "tsdev": "tsc -w --module 'commonjs' --target 'es5'",
     "release": "release-it -n",
     "perf": "node ./perf/index.js"
@@ -18,14 +19,14 @@
   "devDependencies": {
     "benchmark": "^2.1.0",
     "bluebird": "^3.3.4",
+    "chai": "^3.5.0",
     "gulp": "^3.9.1",
+    "gulp-mocha": "^2.2.0",
     "gulp-typescript": "^2.12.1",
+    "mocha": "^2.4.5",
     "webpack": "^1.12.13"
   },
   "dependencies": {
-    "chai": "^3.5.0",
-    "lodash": "^4.6.1",
-    "mocha": "^2.4.5",
-    "shelljs": "^0.6.0"
+    "lodash": "^4.6.1"
   }
 }
