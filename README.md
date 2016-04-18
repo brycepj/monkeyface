@@ -94,7 +94,7 @@ var myCar = someVehical.$ensure('iCar'); // pass the interface name
 
 var myCar = someVehical.$ensure(iCar); // pass the interface object
 
-var myCar = iCar.validate(someVehical) // pass the value into the interface's validate method (returns a boolean)
+var myCar = iCar.validate(someVehical) // use the interface to validate values (returns a boolean)
 
 ```
 
@@ -122,10 +122,10 @@ var getSomeFile = promisifiedRequest('something.txt').$ensure('iPromise');
 require('monkeyface')({
   env: 'production', // 'production' or 'development'. Checks process.env, then defaults to 'development'
   ensure: {
-    key: '$$randomEnsure'// overrides use of '$ensure'
+    key: '$$alternateEnsure'// overrides use of '$ensure'
   },
   params: {
-    key: '$$randomParams' // override use of '$params'
+    key: '$$alternateParams' // override use of '$params'
   }
   exceptions: {
     action: 'error', // 'error' (throws error), 'warn' (console.warn) or 'debug' (console.log), defaults to 'error'
@@ -140,5 +140,7 @@ require('monkeyface')({
 There's still a lot to do to get this where I want it to be. 
 
 - better support browser javascript
-- more typechecking methods ($not) 
+- more typechecking methods (e.g. $not) 
+- config options for inferred objects
+- accept interface props confi
 - better test coverage
