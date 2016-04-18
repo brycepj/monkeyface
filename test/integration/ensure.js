@@ -2,7 +2,7 @@ var _ = require('lodash');
 var expect = require("chai").expect;
 var should = require('chai').should();
 var assert = require('assert');
-var u = require('../lib/api/services/utils');
+var u = require('../../lib/services/utils');
 var i = require('../../index')();
 
 var iLodash = i.create('iLodash', _);
