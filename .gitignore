@@ -8,3 +8,4 @@ test/units/*.js
 test/units/*.js.map
 _debugger.js
 _usage.js
+npm-debug.log
