@@ -45,8 +45,8 @@ class Bridge {
 
   public ensureComplex(type, val): boolean {
     return !!this.getCollectionKey(type) ?
-      this.ensureCollection(type, val), type, val) :
-      this.ensureImplements(type, val), type, val);
+      this.ensureCollection(type, val) :
+      this.ensureImplements(type, val);
   }
 
   private getCollectionKey(str) { // returns basic type or false
