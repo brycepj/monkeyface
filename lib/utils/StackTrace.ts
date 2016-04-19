@@ -1,4 +1,6 @@
-declare var __stack:any;
+declare var __stack: any;
+declare var global: any;
+declare var Error: any;
 
 global['__stack'] = function() {
   var orig = Error.prepareStackTrace;
@@ -13,7 +15,7 @@ global['__stack'] = function() {
 
 export class StackTrace {
   public list;
-  
+
   constructor() {
     this.setStack();
   }
@@ -29,23 +31,23 @@ export class StackTrace {
   getFunctionName(idx) {
     return this.list[idx].getFunctionName();
   }
-  
+
   getFileName(idx) {
     return this.list[idx].getFileName();
   }
-  
+
   getMethodName(idx) {
     return this.list[idx].getMethodName();
   }
-  
+
   getColumnNumber(idx) {
     return this.list[idx].getColumnNumber();
   }
-  
+
   getContext(idx) {
     return this.list[idx].getThis();
   }
-  
+
   getOrigin(idx) {
     return this.list[idx].getEvalOrigin();
   }

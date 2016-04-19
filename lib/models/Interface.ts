@@ -3,7 +3,7 @@ import {iCreateInterfaceConfig} from '../interfaces/Config';
 import DeclarationFactory = require('../factories/DeclarationFactory');
 var check = require('../services/typeChecker');
 import u = require('../services/utils');
-import _ = require('lodash');
+var _ = require('lodash');
 
 // TODO: Abstract out validation code into a validating service
 export class Interface {

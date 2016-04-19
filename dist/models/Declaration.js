@@ -20,14 +20,14 @@ var Declaration = (function (_super) {
     }
     Declaration.prototype.parseDeclarationString = function (configString) {
         var registry = require('../services/BridgeService').Registry;
-        var hasType = configString.includes(':');
+        var hasType = configString.indexOf(':') > -1;
         var type = hasType ? configString.split(':')[1] : null;
         var depluralizedType = type ? type.slice(0, -1) : null;
         var isParamCollection = check.isValidType(depluralizedType) || registry.check(depluralizedType);
-        var isCollection = type ? type.includes('[]') : false;
+        var isCollection = type ? type.indexOf('[]') > -1 : false;
         var isInterface = hasType && registry.check(type);
-        var isMethod = configString.includes('()');
-        var isRequired = !configString.includes('?');
+        var isMethod = configString.indexOf('()') > -1;
+        var isRequired = configString.indexOf('?') === -1;
         this.required = isRequired;
         this.method = isMethod;
         this.type = isMethod ? 'function' : type;

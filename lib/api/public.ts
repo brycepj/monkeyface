@@ -1,3 +1,4 @@
+declare var module: any;
 import prod = require('../patchers/prod');
 
 var exporter: any = module.exports = function(cfg) {

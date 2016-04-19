@@ -72,6 +72,13 @@ var ConfigService = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(ConfigService.prototype, "verbose", {
+        get: function () {
+            return this.props.verbose;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(ConfigService.prototype, "middleware", {
         get: function () {
             return this.props.exceptions.middleware;
@@ -98,6 +105,7 @@ var defaults = {
         handler: null,
         middleware: null
     },
-    env: process.env.NODE_ENV || 'development'
+    env: process.env.NODE_ENV || 'development',
+    verbose: false
 };
 module.exports = new ConfigService();

@@ -1,3 +1,5 @@
+declare var require: any;
+
 var check = require('../services/typeChecker');
 var maybeThrow = require('../services/maybeThrow');
 import {StackTrace} from '../utils/StackTrace';

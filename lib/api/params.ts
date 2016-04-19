@@ -1,3 +1,6 @@
+declare var require: any;
+declare var module: any;
+
 var Config = require('../services/ConfigService');
 
 function params() {

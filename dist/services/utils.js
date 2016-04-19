@@ -1,5 +1,6 @@
 "use strict";
 require('./jsPolyfills');
+var _ = require('lodash');
 function forEach(arr, iteratee) {
     arr.forEach(iteratee);
 }
@@ -60,6 +61,9 @@ var valChanger = function (obj, dotPath, newVal) {
     _.set(obj, dotPath, newVal);
     return obj;
 };
+var arrLastX = function (arr, num) {
+    return arr.slice(Math.max(arr.length - num, 1));
+};
 module.exports = {
     forEach: forEach,
     forIn: forIn,
@@ -68,5 +72,6 @@ module.exports = {
     mapObj: mapObj,
     returnError: returnError,
     methodPatcher: methodPatcher,
-    valChanger: valChanger
+    valChanger: valChanger,
+    arrLastX: arrLastX
 };

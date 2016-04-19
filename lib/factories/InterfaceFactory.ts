@@ -40,7 +40,7 @@ class InterfaceFactory {
     return new Interface(cfg);
   };
   
-  private parseConfigProps(propsInput: any): i {
+  private parseConfigProps(propsInput: any) {
     var inputType: string = check.discernType(propsInput),
       props: any[] = [];
     if (inputType === 'string') {

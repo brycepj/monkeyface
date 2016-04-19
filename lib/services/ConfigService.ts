@@ -1,4 +1,6 @@
-import _ = require('lodash');
+declare var process: any;
+var _ = require('lodash');
+
 import u = require('./utils');
 
 class ConfigService {
@@ -36,28 +38,28 @@ class ConfigService {
     }
   }
 
-  get env():string {
+  get env(): string {
     return this.props.env;
   }
-  get ensureKey():string {
+  get ensureKey(): string {
     return this.props.ensure.key;
   }
-  get paramsKey():string {
+  get paramsKey(): string {
     return this.props.params.key;
   }
-  get paramsDivider():string {
+  get paramsDivider(): string {
     return this.props.params.divider;
   }
   set handler(fn) {
     this.props.exceptions.handler = fn;
   }
-  get handler():Function {
+  get handler(): Function {
     return this.props.exceptions.handler;
   }
-  get action():string {
+  get action(): string {
     return this.props.exceptions.action;
   }
-  get verbose ():boolean {
+  get verbose(): boolean {
     return this.props.verbose;
   }
   // backdoor for testing

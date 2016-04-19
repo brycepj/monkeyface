@@ -25,14 +25,14 @@ export class Declaration extends Interface {
 
   private parseDeclarationString(configString: string): void {
     let registry = require('../services/BridgeService').Registry;
-    let hasType = configString.includes(':');
+    let hasType = configString.indexOf(':') > -1;
     let type = hasType ? configString.split(':')[1] : null;
     let depluralizedType = type ? type.slice(0, -1) : null;
     let isParamCollection = check.isValidType(depluralizedType) || registry.check(depluralizedType);
-    let isCollection = type ? type.includes('[]') : false;
+    let isCollection = type ? type.indexOf('[]') > -1 : false;
     let isInterface = hasType && registry.check(type);
-    var isMethod = configString.includes('()');
-    var isRequired = !configString.includes('?');
+    var isMethod = configString.indexOf('()') > -1;
+    var isRequired = configString.indexOf('?') === -1;
 
     this.required = isRequired;
     this.method = isMethod;

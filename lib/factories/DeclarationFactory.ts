@@ -1,7 +1,6 @@
 import {iDeclarationFactory} from '../interfaces/Factories';
 import {iDeclaration} from '../interfaces/Models';
 import {Declaration} from '../models/Declaration';
-import check = require('../services/typeChecker');
 
 class DeclarationFactory {
 

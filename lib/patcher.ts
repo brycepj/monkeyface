@@ -1,3 +1,3 @@
-exports = (function() {
+export = (function() {
   require('./patchers/index');
 })();
