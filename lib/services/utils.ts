@@ -1,4 +1,3 @@
-require('./jsPolyfills');
 var _ = require('lodash');
 
 function forEach(arr, iteratee) {
