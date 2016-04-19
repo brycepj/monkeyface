@@ -31,11 +31,15 @@ gulp.task('test-dev', ['test-cfg', 'test-units', 'test-integration'], () => {
   gulp.watch('./**/*.js', ['test-dev']);
 });
 
-var tsProject = ts.createProject('tsconfig.json', {});
+var tsProject = ts.createProject('tsconfig.json', {
+  module: 'commonjs',
+  target: 'es5'
+});
+
 var ts_files = ['lib/**/*.ts'];
 
 gulp.task('dev-ts', ['build-ts'], () => {
-  gulp.watch(ts_files, ['test-dev']);
+  gulp.watch(ts_files, ['dev-ts']);
 });
 
 gulp.task('build-ts', () => {
@@ -45,7 +49,7 @@ gulp.task('build-ts', () => {
 });
 
 // change to testing dist files
-gulp.task('build', ['build-ts','test']);
+gulp.task('build', ['build-ts', 'test']);
 
 // move built js files to dist.
 // update refs
