@@ -2,5 +2,5 @@
 
 /// <reference path="typings/main.d.ts" />
 
-export = require('./lib/api/public');
+export = require('./dist/api/public');
  
