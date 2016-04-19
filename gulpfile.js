@@ -44,6 +44,7 @@ gulp.task('build-ts', () => {
     .pipe(gulp.dest('dist'));
 });
 
+// change to testing dist files
 gulp.task('build', ['build-ts','test']);
 
 // move built js files to dist.

@@ -70,6 +70,9 @@ var valChanger = function(obj, dotPath, newVal) {
   return obj;
 }
 
+var arrLastX = function(arr, num) {
+  return arr.slice(Math.max(arr.length - num, 1));
+}
 
 export = {
   forEach: forEach,
@@ -79,5 +82,6 @@ export = {
   mapObj: mapObj,
   returnError: returnError,
   methodPatcher: methodPatcher,
-  valChanger: valChanger
+  valChanger: valChanger,
+  arrLastX: arrLastX
 }

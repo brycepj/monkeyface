@@ -34,7 +34,8 @@ var typeByVal = function(val, type) {
   return actualType === type;
 };
 
-var getChecker = (type) => {
+var getChecker = (type, registry?) => {
+  var fn;
   u.forIn(checkers, (checker) => {
     if (isFunction(checker) && checker.type && checker.type === type) {
       fn = checker;

@@ -4,7 +4,7 @@ import u = require('./utils');
 class ConfigService {
   private props: any;
   private defaults: any;
-  
+
   constructor() {
     this.defaults = defaults;
     this.props = _.assign({}, defaults);
@@ -35,27 +35,30 @@ class ConfigService {
       this.handler(error);
     }
   }
-  
-  get env() {
+
+  get env():string {
     return this.props.env;
   }
-  get ensureKey() {
+  get ensureKey():string {
     return this.props.ensure.key;
   }
-  get paramsKey() {
+  get paramsKey():string {
     return this.props.params.key;
   }
-  get paramsDivider() {
+  get paramsDivider():string {
     return this.props.params.divider;
   }
   set handler(fn) {
     this.props.exceptions.handler = fn;
   }
-  get handler() {
+  get handler():Function {
     return this.props.exceptions.handler;
   }
-  get action() {
+  get action():string {
     return this.props.exceptions.action;
+  }
+  get verbose ():boolean {
+    return this.props.verbose;
   }
   // backdoor for testing
   set middleware(val: any) { // should be function or function[]
@@ -67,7 +70,7 @@ class ConfigService {
 
 }
 
-var noop = () => {};
+var noop = () => { };
 var defaults = {
   ensure: {
     key: '$ensure'
@@ -81,7 +84,8 @@ var defaults = {
     handler: null,
     middleware: null
   },
-  env: process.env.NODE_ENV || 'development'
+  env: process.env.NODE_ENV || 'development',
+  verbose: false
 };
 export = new ConfigService();
 
@@ -99,4 +103,5 @@ interface iConfigProps {
     middleware?: any;
   };
   env: string;
+  verbose: boolean;
 } 

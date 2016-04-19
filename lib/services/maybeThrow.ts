@@ -1,32 +1,21 @@
+import {TypeCheckError} from '../utils/TypeCheckError';
 import Config = require('./ConfigService');
+import {StackTrace} from '../utils/StackTrace';
 
-function maybeThrow(Bool, type, val) {
-  let action = Config.action || 'error';
-  let error = {
-    action: action,
-    timestamp: new Date(),
-    message: 'Monkeyface Type Error! Expected: ' + type + ' Received: ' + val,
-    type: type,
-    value: val
-  };
-  
-  var reducedError = Config.middleware ? Config.applyMiddleware(error) : error;
-
-  if (Config.handler) {
-    Config.applyHandler(reducedError);
-  }
+function maybeThrow(Bool, type, val, stack) {
   
   if (!Bool) {
-    switch (action) {
-      case 'error':
-        throw new Error(JSON.stringify(error, null, 2));
-      case 'warn':
-        console.warn(error);
-        break;
-      case 'log':
-        console.log(error);
-        break;
+    let stack = new StackTrace();
+    let typeError = TypeCheckError.create(type, val, stack);
+
+    var reducedError = Config.middleware ? Config.applyMiddleware(typeError) : typeError;
+
+    if (Config.handler) {
+      Config.applyHandler(typeError);
     }
+    let errJson = JSON.stringify(typeError, null, 2);
+    
+    typeError.enact();
   }
   return true;
 }

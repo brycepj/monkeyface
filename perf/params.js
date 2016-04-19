@@ -1,3 +1,8 @@
+exports = {
+  run:
+  log:
+}
+
 var _ = require('lodash');
 var Benchmark = require('benchmark');
 

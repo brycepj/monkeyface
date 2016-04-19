@@ -145,3 +145,4 @@ There's still a lot to do to get this where I want it to be.
 - accept interface props confi
 - better test coverage
 - (refactor) better separation of concerns w/ models
+- lose lodash dependency
