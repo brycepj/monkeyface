@@ -11,13 +11,14 @@ global['__stack'] = function () {
 var StackTrace = (function () {
     function StackTrace() {
         this.setStack();
-        this.getOrigin = this.flexibleCallsiteWrapper('getEvalOrigin');
-        this.getLineNumber = this.flexibleCallsiteWrapper('getLineNumber');
-        this.getFunctionName = this.flexibleCallsiteWrapper('getFunctionName');
-        this.getFileName = this.flexibleCallsiteWrapper('getFileName');
-        this.getMethodName = this.flexibleCallsiteWrapper('getMethodName');
-        this.getColumnNumber = this.flexibleCallsiteWrapper('getColumnNumber');
-        this.getContext = this.flexibleCallsiteWrapper('getThis');
+        var flexibleWrap = this.flexibleCallsiteWrapper;
+        this.getOrigin = flexibleWrap('getEvalOrigin');
+        this.getLineNumber = flexibleWrap('getLineNumber');
+        this.getFunctionName = flexibleWrap('getFunctionName');
+        this.getFileName = flexibleWrap('getFileName');
+        this.getMethodName = flexibleWrap('getMethodName');
+        this.getColumnNumber = flexibleWrap('getColumnNumber');
+        this.getContext = flexibleWrap('getThis');
     }
     StackTrace.prototype.setStack = function () {
         this.list = __stack();
