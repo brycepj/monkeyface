@@ -11,30 +11,21 @@ global['__stack'] = function () {
 var StackTrace = (function () {
     function StackTrace() {
         this.setStack();
+        this.getOrigin = this.flexibleCallsiteWrapper('getEvalOrigin');
+        this.getLineNumber = this.flexibleCallsiteWrapper('getLineNumber');
+        this.getFunctionName = this.flexibleCallsiteWrapper('getFunctionName');
+        this.getFileName = this.flexibleCallsiteWrapper('getFileName');
+        this.getMethodName = this.flexibleCallsiteWrapper('getMethodName');
+        this.getColumnNumber = this.flexibleCallsiteWrapper('getColumnNumber');
+        this.getContext = this.flexibleCallsiteWrapper('getThis');
     }
     StackTrace.prototype.setStack = function () {
         this.list = __stack();
     };
-    StackTrace.prototype.getLineNumber = function (idx) {
-        return this.list[idx].getLineNumber();
-    };
-    StackTrace.prototype.getFunctionName = function (idx) {
-        return this.list[idx].getFunctionName();
-    };
-    StackTrace.prototype.getFileName = function (idx) {
-        return this.list[idx].getFileName();
-    };
-    StackTrace.prototype.getMethodName = function (idx) {
-        return this.list[idx].getMethodName();
-    };
-    StackTrace.prototype.getColumnNumber = function (idx) {
-        return this.list[idx].getColumnNumber();
-    };
-    StackTrace.prototype.getContext = function (idx) {
-        return this.list[idx].getThis();
-    };
-    StackTrace.prototype.getOrigin = function (idx) {
-        return this.list[idx].getEvalOrigin();
+    StackTrace.prototype.flexibleCallsiteWrapper = function (method) {
+        return function (idx, site) {
+            return site ? site[method]() : this.list[idx][method]();
+        };
     };
     return StackTrace;
 }());
