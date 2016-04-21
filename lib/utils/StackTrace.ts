@@ -2,11 +2,12 @@ declare var __stack: any;
 declare var global: any;
 declare var Error: any;
 
-global['__stack'] = function() {
+global['__stack'] = function stackTraceGetter() {
+  var callee = stackTraceGetter;
   var orig = Error.prepareStackTrace;
   Error.prepareStackTrace = function(_, stack) { return stack; };
   var err = new Error;
-  Error.captureStackTrace(err, arguments.callee);
+  Error.captureStackTrace(err, callee);
   var stack = err.stack;
   Error.prepareStackTrace = orig;
   return stack;
@@ -14,7 +15,7 @@ global['__stack'] = function() {
 
 export class StackTrace {
   public list;
- 
+
   constructor() {
     this.list = __stack();
   }

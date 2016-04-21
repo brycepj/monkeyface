@@ -1,9 +1,10 @@
 "use strict";
-global['__stack'] = function () {
+global['__stack'] = function stackTraceGetter() {
+    var callee = stackTraceGetter;
     var orig = Error.prepareStackTrace;
     Error.prepareStackTrace = function (_, stack) { return stack; };
     var err = new Error;
-    Error.captureStackTrace(err, arguments.callee);
+    Error.captureStackTrace(err, callee);
     var stack = err.stack;
     Error.prepareStackTrace = orig;
     return stack;
