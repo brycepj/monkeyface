@@ -10,24 +10,33 @@ global['__stack'] = function () {
 };
 var StackTrace = (function () {
     function StackTrace() {
-        this.setStack();
-        var flexibleWrap = this.flexibleCallsiteWrapper;
-        this.getOrigin = flexibleWrap('getEvalOrigin');
-        this.getLineNumber = flexibleWrap('getLineNumber');
-        this.getFunctionName = flexibleWrap('getFunctionName');
-        this.getFileName = flexibleWrap('getFileName');
-        this.getMethodName = flexibleWrap('getMethodName');
-        this.getColumnNumber = flexibleWrap('getColumnNumber');
-        this.getContext = flexibleWrap('getThis');
-    }
-    StackTrace.prototype.setStack = function () {
         this.list = __stack();
+    }
+    StackTrace.prototype.getOrigin = function (idx, site) {
+        return this.flexibleCallsiteWrapper('getEvalOrigin', idx, site);
     };
-    StackTrace.prototype.flexibleCallsiteWrapper = function (method) {
-        return function (idx, site) {
-            return site ? site[method]() : this.list[idx][method]();
-        };
+    StackTrace.prototype.getLineNumber = function (idx, site) {
+        return this.flexibleCallsiteWrapper('getLineNumber', idx, site);
     };
+    StackTrace.prototype.getFunctionName = function (idx, site) {
+        return this.flexibleCallsiteWrapper('getFunctionName', idx, site);
+    };
+    StackTrace.prototype.getFileName = function (idx, site) {
+        return this.flexibleCallsiteWrapper('getFileName', idx, site);
+    };
+    StackTrace.prototype.getMethodName = function (idx, site) {
+        return this.flexibleCallsiteWrapper('getMethodName', idx, site);
+    };
+    StackTrace.prototype.getColumnNumber = function (idx, site) {
+        return this.flexibleCallsiteWrapper('getColumnNumber', idx, site);
+    };
+    StackTrace.prototype.getContext = function (idx, site) {
+        return this.flexibleCallsiteWrapper('getThis', idx, site);
+    };
+    StackTrace.prototype.flexibleCallsiteWrapper = function (method, idx, site) {
+        return site ? site[method]() : this.list[idx][method]();
+    };
+    ;
     return StackTrace;
 }());
 exports.StackTrace = StackTrace;

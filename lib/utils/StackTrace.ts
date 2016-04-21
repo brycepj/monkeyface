@@ -14,34 +14,35 @@ global['__stack'] = function() {
 
 export class StackTrace {
   public list;
-  public getOrigin: Function;
-  public getLineNumber: Function;
-  public getFunctionName: Function;
-  public getFileName: Function;
-  public getMethodName: Function;
-  public getColumnNumber: Function;
-  public getContext: Function;
-
+ 
   constructor() {
-    this.setStack();
-    let flexibleWrap = this.flexibleCallsiteWrapper;
-    this.getOrigin = flexibleWrap('getEvalOrigin');
-    this.getLineNumber = flexibleWrap('getLineNumber');
-    this.getFunctionName = flexibleWrap('getFunctionName');
-    this.getFileName = flexibleWrap('getFileName');
-    this.getMethodName = flexibleWrap('getMethodName');
-    this.getColumnNumber = flexibleWrap('getColumnNumber');
-    this.getContext = flexibleWrap('getThis');
-  }
-
-  setStack() {
     this.list = __stack();
   }
 
-  private flexibleCallsiteWrapper(method: string) {
-    return function(idx: any, site?) {
-      return site ? site[method]() : this.list[idx][method]();
-    };
+  getOrigin(idx?, site?) {
+    return this.flexibleCallsiteWrapper('getEvalOrigin', idx, site);
   }
+  getLineNumber(idx?, site?) {
+    return this.flexibleCallsiteWrapper('getLineNumber', idx, site);
+  }
+  getFunctionName(idx?, site?) {
+    return this.flexibleCallsiteWrapper('getFunctionName', idx, site);
+  }
+  getFileName(idx?, site?) {
+    return this.flexibleCallsiteWrapper('getFileName', idx, site);
+  }
+  getMethodName(idx?, site?) {
+    return this.flexibleCallsiteWrapper('getMethodName', idx, site);
+  }
+  getColumnNumber(idx?, site?) {
+    return this.flexibleCallsiteWrapper('getColumnNumber', idx, site);
+  }
+  getContext(idx?, site?) {
+    return this.flexibleCallsiteWrapper('getThis', idx, site);
+  }
+  private flexibleCallsiteWrapper(method: string, idx, site) {
+    return site ? site[method]() : this.list[idx][method]();
+  };
+
 }
 
