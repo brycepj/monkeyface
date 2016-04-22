@@ -2,7 +2,7 @@ var _ = require('lodash');
 var expect = require("chai").expect;
 var should = require('chai').should();
 var assert = require('assert');
-var Types = require('../lib/services/Types');
+var Types = require('../dist/services/Types');
 var instances = Types.Instances;
 
 var newEnsureKey = '$blendsure';
@@ -20,8 +20,8 @@ var i = require('../index')({
   }
 });
 
-var Bridge = require('../lib/services/BridgeService');
-var Config = require('../lib/services/ConfigService');
+var Bridge = require('../dist/services/BridgeService');
+var Config = require('../dist/services/ConfigService');
 
 describe("config", () => {
   describe("keys", () => {

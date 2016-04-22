@@ -1,8 +1,8 @@
-
+declare var require:any;
 var expect = require("chai").expect;
 var should = require('chai').should();
 var assert = require('assert');
-var _:_.LoDashStatic = require('lodash');
+var _:any = require('lodash');
 
 var i = require("../../index")();
 

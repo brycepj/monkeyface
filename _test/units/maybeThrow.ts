@@ -1,5 +1,7 @@
-import maybeThrow = require('../../lib/services/maybeThrow');
-
+declare var require:any;
+var maybeThrow = require('../../dist/services/maybeThrow');
+var it = require('mocha').it || it;
+var describe = require('mocha').describe || describe;
 var expect = require("chai").expect;
 var should = require('chai').should();
 var assert = require('assert');

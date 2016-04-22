@@ -1,11 +1,13 @@
-
+declare var require:any;
+var it = require('mocha').it || it;
+var describe = require('mocha').describe || describe;
 var expect = require("chai").expect;
 var should = require('chai').should();
 var assert = require('assert');
-var Instances = require('../../lib/services/Types').Instances;
+var Instances = require('../../dist/services/Types').Instances;
 
-var _:_.LoDashStatic = require('lodash');
-var check = require('../../lib/services/typeChecker');
+var _:any = require('lodash');
+var check = require('../../dist/services/typeChecker');
 var i = require('../../index')();
 
 describe("typeChecker", () => {
@@ -74,7 +76,7 @@ describe("typeChecker", () => {
     })
 
     function primitiveChecker(method, val) {
-      let Instances = require('../../lib/services/Types').Instances;
+      let Instances = require('../../dist/services/Types').Instances;
       let passing = _.filter(Instances, (instance, idx) => { return method(instance) });
       let failing = _.filter(Instances, (instance, idx) => { return !method(instance) });
       let checkedVal = method(val);

@@ -1,9 +1,15 @@
+declare var require: any;
+
 var _ = require('lodash');
 var expect = require("chai").expect;
 var should = require('chai').should();
 var assert = require('assert');
-var u = require('../../lib/services/utils');
-var i = require('../../index')();
+var u = require('../../dist/services/utils');
+var i = require('../../index')({
+  exceptions:{
+    action:'throw'
+  }
+});
 
 var iLodash = i.create('iLodash', _);
 var iLowLevel = i.create('iLowLevel', ['lowest:string', 'thing?:number', 'lodash:iLodash', 'numbaz:number[]']);
@@ -60,8 +66,8 @@ describe("$ensure", () => {
   });
 
   describe("basic types", () => {
-    var Names = require('../../lib/services/Types').Names;
-    var Instances = require('../../lib/services/Types').Instances;
+    var Names = require('../../dist/services/Types').Names;
+    var Instances = require('../../dist/services/Types').Instances;
     it("should pass and return all correctly passed basic types", () => {
       Instances.forEach((instance, idx) => {
         var returnVal = instance.$ensure(Names[idx]);

@@ -1,13 +1,19 @@
+
+declare var require: any;
 var _ = require('lodash');
 var expect = require("chai").expect;
 var should = require('chai').should();
 var assert = require('assert');
 
-var i = require('../../index')();
+var i = require('../../index')({
+  exceptions: {
+    action: 'throw'
+  }
+});
 
 var iHelloWorld = i.create('iHelloWorld', ['hello', 'world']);
 
-function aReallyPickyFunction(someVal$number, someObj$object, someArr$array,
+var aReallyPickyFunction: any = function(someVal$number, someObj$object, someArr$array,
   someDate$date, someErr$error, someStr$string) {
   return true;
 }
@@ -32,7 +38,7 @@ describe("params", () => {
     var fnStr = aReallyPickyFunction.$params.bind(aReallyPickyFunction, 1, { hello: 'this', world: 'that' }, [123], new Date(), new Error(), 1);
     expect(fnStr).to.throw(Error);
   });
-  function basicCollectionProcessor(coll$numbers) {
+  var basicCollectionProcessor: any = function(coll$numbers) {
     return coll$numbers;
   }
   it("should pass properly passed basic collections", () => {
@@ -47,7 +53,7 @@ describe("params", () => {
     expect(fn).to.throw(Error);
   });
 
-  function basicInterfaceProcessor(obj$iHelloWorld) {
+  var basicInterfaceProcessor: any = function(obj$iHelloWorld) {
     return obj$iHelloWorld;
   }
   it("should pass properly passed interfaces", () => {
@@ -61,9 +67,9 @@ describe("params", () => {
     var fn = basicInterfaceProcessor.$params.bind(arg);
     expect(fn).to.throw(Error);
   });
-function basicInterfaceCollectionProcessor(iColl$iHelloWorlds) {
-  return iColl$iHelloWorlds;
-}
+  var basicInterfaceCollectionProcessor: any = function(iColl$iHelloWorlds) {
+    return iColl$iHelloWorlds;
+  }
   it("should pass properly passed interface collections", () => {
     var arg = [{ hello: 'this', world: 'that' }];
     var fn = basicInterfaceCollectionProcessor.$params(arg);
