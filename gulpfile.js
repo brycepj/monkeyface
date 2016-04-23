@@ -2,6 +2,12 @@ var gulp = require('gulp');
 var mocha = require('gulp-mocha');
 var ts = require('gulp-typescript');
 
+gulp.task('test-tester', () => {
+  return gulp.src('./test/_testTester.js')
+    .pipe(mocha({reporter:'nyan'}));
+});
+
+
 gulp.task('test-cfg', () => {
   var cfg_path = './test/_config.js';
   return gulp.src(cfg_path, { read: false })
@@ -27,9 +33,17 @@ gulp.task('log-perf', () => {
 
 gulp.task('test', ['test-cfg', 'test-units', 'test-integration']);
 
-gulp.task('test-dev', ['test-cfg', 'test-units', 'test-integration'], () => {
-  gulp.watch('./**/*.js', ['test-dev']);
+gulp.task('test-dev', [/*'test-cfg', */'test-units', 'test-integration'], () => {
+  gulp.watch('test/**/*.ts', ['test-ts']);
+  gulp.watch('./**/*.js', ['build-tests']);
 });
+
+gulp.task('build-tests', () => {
+  return gulp.src('test/**/*.ts')
+    .pipe(ts(tsProject))
+    .pipe(gulp.dest('test'));
+});
+
 
 var tsProject = ts.createProject('tsconfig.json', {
   module: 'commonjs',
