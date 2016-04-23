@@ -12,6 +12,7 @@ global['__stack'] = function stackTraceGetter() {
 var StackTrace = (function () {
     function StackTrace() {
         this.list = __stack();
+        this.detail = null;
     }
     StackTrace.prototype.getOrigin = function (idx, site) {
         return this.flexibleCallsiteWrapper('getEvalOrigin', idx, site);
@@ -38,6 +39,9 @@ var StackTrace = (function () {
         return site ? site[method]() : this.list[idx][method]();
     };
     ;
+    StackTrace.prototype.setDetail = function (err) {
+        this.detail = err;
+    };
     return StackTrace;
 }());
 exports.StackTrace = StackTrace;

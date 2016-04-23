@@ -1,6 +1,7 @@
 
 var u = require('./utils');
 var check = require('./typeChecker');
+import {DeclarationError} from '../utils/TypeCheckError';
 
 class Bridge {
 
@@ -32,7 +33,11 @@ class Bridge {
 
     return arr.every((item, idx) => {
       checker = checker.validate ? checker.validate.bind(checker) : checker;
-      return checker(item);
+      var checked = checker(item, idx);
+      if (!checked) {
+        throw new DeclarationError(checker, item, idx);
+      }
+      return checked;
     });
   }
 

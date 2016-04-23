@@ -42,7 +42,7 @@ var CallSite = (function () {
     CallSite.prototype.buildShortPath = function () {
         var fp = this.fileName;
         var pieces = fp.split('/');
-        return u.arrLastX(pieces, 3).join('/');
+        return u.arrLastX(pieces, 1).join('/');
     };
     CallSite.prototype.isFromApiCall = function (site, idx) {
         var fileName = site.getFileName(idx);

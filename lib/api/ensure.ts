@@ -3,10 +3,10 @@ declare var require: any;
 var check = require('../services/typeChecker');
 var maybeThrow = require('../services/maybeThrow');
 import {StackTrace} from '../utils/StackTrace';
+import {DeclarationError} from '../utils/TypeCheckError';
 
 function ensure(type: string) {
   var Bridge = require('../services/BridgeService');
-
   let self = this;
   let stack = new StackTrace();
 
@@ -36,7 +36,7 @@ function ensure(type: string) {
       maybeThrow(check.isDate(self), type, self, stack);
       break;
     default:
-      maybeThrow(Bridge.ensureComplex(type, self), type, self, stack);
+      maybeCatch(type, self, stack);
       break;
   }
 
@@ -46,3 +46,18 @@ function ensure(type: string) {
 export = (function() {
   return ensure;
 })();
+
+function maybeCatch(type, val, stack?: StackTrace) {
+  var Bridge = require('../services/BridgeService');
+
+  try {
+    var ensured = Bridge.ensureComplex(type, val);
+  } catch (err) {
+    if (err instanceof DeclarationError) {
+      stack.setDetail(err);
+    } else {
+      throw err;
+    }
+  }
+  maybeThrow(ensured, type, val, stack);
+}

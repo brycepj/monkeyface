@@ -13,7 +13,7 @@ var DeclarationFactory = (function () {
         if (Bridge.Registry.check(declaredType)) {
             var ifaceKey = declaredType;
             iface = Bridge.Registry.get(ifaceKey);
-            var hasInterface = cfg.options.hasInterface;
+            var hasInterface = cfg.options && cfg.options.hasInterface;
             if (hasInterface && hasInterface.indexOf(key) > -1) {
                 iface.setKey(key);
             }

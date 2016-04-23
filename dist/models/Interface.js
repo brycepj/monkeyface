@@ -1,5 +1,6 @@
 "use strict";
 var DeclarationFactory = require('../factories/DeclarationFactory');
+var TypeCheckError_1 = require('../utils/TypeCheckError');
 var check = require('../services/typeChecker');
 var _ = require('lodash');
 var Interface = (function () {
@@ -34,7 +35,7 @@ var Interface = (function () {
     Interface.prototype.setKey = function (key) {
         this.key = key;
     };
-    Interface.prototype.validate = function (val) {
+    Interface.prototype.validate = function (val, idx) {
         var hasDeclarations = !!this.declarations.length || !!this.i;
         var isCollection = !!this.collection;
         var isValid = hasDeclarations ?
@@ -42,6 +43,9 @@ var Interface = (function () {
             (isCollection ?
                 this.validateCollection(val) :
                 this.validateDeclaration(val));
+        if (!isValid) {
+            throw new TypeCheckError_1.DeclarationError(this, val, idx);
+        }
         return isValid;
     };
     Interface.prototype.validateInterface = function (iterable) {
@@ -75,9 +79,9 @@ var Interface = (function () {
             var type = this.collection;
             var validator = check.getChecker(type);
             var iface = registry.get(type);
-            var passes = val.every(function (item) {
+            var passes = val.every(function (item, idx) {
                 if (iface) {
-                    return iface.validate(item);
+                    return iface.validate(item, idx);
                 }
                 else {
                     return validator(item);

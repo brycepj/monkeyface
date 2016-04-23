@@ -54,7 +54,7 @@ export class CallSite {
   private buildShortPath() {
     let fp = this.fileName;
     let pieces = fp.split('/');
-    return u.arrLastX(pieces, 3).join('/');
+    return u.arrLastX(pieces, 1).join('/');
   }
 
   // FIXME: Support optional indexes being passed to StackTrace

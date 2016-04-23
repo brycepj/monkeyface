@@ -12,7 +12,7 @@ export class TypeCheckError extends Error {
   private val: any;
   private callSite: any;
 
-  constructor(type: string, val: any, stack: StackTrace) {
+  constructor(type: string, val: any, private stack: StackTrace) {
     super();
     this.type = type;
     this.val = val;
@@ -25,14 +25,20 @@ export class TypeCheckError extends Error {
 
 
   buildMsg() {
+    let collIdxDetail = this.stack ? this.stack.detail.index : '';
+    let valDetail = this.stack ? '(val=' + this.stack.detail.val + ')' : '';
+    let typeDetail = this.stack ? this.stack.detail.type.key : '';
     let callSite = this.callSite;
-    let val = this.val;
     let type = this.type;
-    let msgBase = 'MonkeyfaceError: Expected: ';
-    return msgBase.concat(type, 
-    ' Received: ', val, 
-    ' (' + callSite.shortPath,' ', callSite.lineNumber, 
-    ':', callSite.columnNumber, ')');
+    let msgBase = 'MonkeyfaceError!';
+    let idx = collIdxDetail ? '(idx: ' + collIdxDetail + ')' : undefined;
+    let key = typeDetail ? '(key=' + typeDetail + ')' : undefined;
+    let val = this.val;
+    return maybeConcatStrings([msgBase,
+      'Expected:', type, key, idx,
+      'Received:', val, valDetail,
+      callSite.shortPath + ':' + callSite.lineNumber + ':' + callSite.columnNumber
+    ]);
   }
 
   enact() {
@@ -57,4 +63,23 @@ export class TypeCheckError extends Error {
   static create(type, val, stack) {
     return new TypeCheckError(type, val, stack);
   }
+}
+
+export class DeclarationError extends Error {
+  public type: any;
+  public val: any;
+  public index: any;
+  constructor(type, val, idx?) {
+    super();
+    this.type = type;
+    this.val = val;
+    this.index = idx ? idx + '' : undefined;
+  }
+}
+
+function maybeConcatStrings(arr) {
+  return arr.reduce((sum, curr) => {
+    let currStr = curr ? ' ' + curr : '';
+    return sum + currStr;
+  });
 }

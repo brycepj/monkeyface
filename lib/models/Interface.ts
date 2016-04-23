@@ -1,6 +1,8 @@
 import {iInterface, iDeclaration} from '../interfaces/Models';
 import {iCreateInterfaceConfig} from '../interfaces/Config';
 import DeclarationFactory = require('../factories/DeclarationFactory');
+import {DeclarationError} from '../utils/TypeCheckError';
+
 var check = require('../services/typeChecker');
 import u = require('../services/utils');
 var _ = require('lodash');
@@ -52,7 +54,7 @@ export class Interface {
   public setKey(key: string): void {
     this.key = key;
   }
-  public validate(val: any): boolean {
+  public validate(val: any, idx?): boolean {
     let hasDeclarations: boolean = !!this.declarations.length || !!this.i;
     let isCollection = !!this.collection;
     let isValid: boolean = hasDeclarations ?
@@ -60,6 +62,9 @@ export class Interface {
       (isCollection ?
         this.validateCollection(val) :
         this.validateDeclaration(val));
+    if (!isValid) {
+      throw new DeclarationError(this, val, idx);
+    }
     return isValid;
   }
 
@@ -96,9 +101,9 @@ export class Interface {
       var type = this.collection;
       var validator = check.getChecker(type);
       var iface = registry.get(type);
-      var passes = val.every(function(item) {
+      var passes = val.every(function(item, idx) {
         if (iface) {
-          return iface.validate(item)
+          return iface.validate(item, idx)
         } else {
           return validator(item);
         }

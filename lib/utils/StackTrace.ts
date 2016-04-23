@@ -15,10 +15,13 @@ global['__stack'] = function stackTraceGetter() {
 
 export class StackTrace {
   public list;
+  public detail;
 
   constructor() {
     this.list = __stack();
+    this.detail = null;
   }
+
 
   getOrigin(idx?, site?) {
     return this.flexibleCallsiteWrapper('getEvalOrigin', idx, site);
@@ -44,6 +47,8 @@ export class StackTrace {
   private flexibleCallsiteWrapper(method: string, idx, site) {
     return site ? site[method]() : this.list[idx][method]();
   };
-
+  setDetail(err) {
+    this.detail = err;
+  }
 }
 

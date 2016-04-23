@@ -15,7 +15,7 @@ class DeclarationFactory {
     if (Bridge.Registry.check(declaredType)) {
       let ifaceKey = declaredType;
       iface = Bridge.Registry.get(ifaceKey);
-      let hasInterface = cfg.options.hasInterface;
+      let hasInterface = cfg.options && cfg.options.hasInterface;
       // if the annotated interface matches the current declaration
       if (hasInterface && hasInterface.indexOf(key) > -1) {
         iface.setKey(key);

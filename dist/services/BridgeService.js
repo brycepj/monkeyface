@@ -1,6 +1,7 @@
 "use strict";
 var u = require('./utils');
 var check = require('./typeChecker');
+var TypeCheckError_1 = require('../utils/TypeCheckError');
 var Bridge = (function () {
     function Bridge() {
         require('../patchers/index');
@@ -22,7 +23,11 @@ var Bridge = (function () {
         var checker = check.getChecker(typeStr) || this.Registry.get(typeStr);
         return arr.every(function (item, idx) {
             checker = checker.validate ? checker.validate.bind(checker) : checker;
-            return checker(item);
+            var checked = checker(item, idx);
+            if (!checked) {
+                throw new TypeCheckError_1.DeclarationError(checker, item, idx);
+            }
+            return checked;
         });
     };
     Bridge.prototype.ensureImplements = function (iface, val) {

@@ -10,6 +10,7 @@ var TypeCheckError = (function (_super) {
     __extends(TypeCheckError, _super);
     function TypeCheckError(type, val, stack) {
         _super.call(this);
+        this.stack = stack;
         this.type = type;
         this.val = val;
         this.callSite = new CallSite_1.CallSite(stack);
@@ -19,11 +20,20 @@ var TypeCheckError = (function (_super) {
         this.msg = this.buildMsg();
     }
     TypeCheckError.prototype.buildMsg = function () {
+        var collIdxDetail = this.stack ? this.stack.detail.index : '';
+        var valDetail = this.stack ? '(val=' + this.stack.detail.val + ')' : '';
+        var typeDetail = this.stack ? this.stack.detail.type.key : '';
         var callSite = this.callSite;
-        var val = this.val;
         var type = this.type;
-        var msgBase = 'MonkeyfaceError: Expected: ';
-        return msgBase.concat(type, ' Received: ', val, ' (' + callSite.shortPath, ' ', callSite.lineNumber, ':', callSite.columnNumber, ')');
+        var msgBase = 'MonkeyfaceError!';
+        var idx = collIdxDetail ? '(idx: ' + collIdxDetail + ')' : undefined;
+        var key = typeDetail ? '(key=' + typeDetail + ')' : undefined;
+        var val = this.val;
+        return maybeConcatStrings([msgBase,
+            'Expected:', type, key, idx,
+            'Received:', val, valDetail,
+            callSite.shortPath + ':' + callSite.lineNumber + ':' + callSite.columnNumber
+        ]);
     };
     TypeCheckError.prototype.enact = function () {
         var action = this.action;
@@ -49,3 +59,20 @@ var TypeCheckError = (function (_super) {
     return TypeCheckError;
 }(Error));
 exports.TypeCheckError = TypeCheckError;
+var DeclarationError = (function (_super) {
+    __extends(DeclarationError, _super);
+    function DeclarationError(type, val, idx) {
+        _super.call(this);
+        this.type = type;
+        this.val = val;
+        this.index = idx ? idx + '' : undefined;
+    }
+    return DeclarationError;
+}(Error));
+exports.DeclarationError = DeclarationError;
+function maybeConcatStrings(arr) {
+    return arr.reduce(function (sum, curr) {
+        var currStr = curr ? ' ' + curr : '';
+        return sum + currStr;
+    });
+}

@@ -5,9 +5,8 @@ import {StackTrace} from '../utils/StackTrace';
 function maybeThrow(Bool, type, val, stack) {
   
   if (!Bool) {
-    let stack = new StackTrace();
+    
     let typeError = TypeCheckError.create(type, val, stack);
-
     var reducedError = Config.middleware ? Config.applyMiddleware(typeError) : typeError;
 
     if (Config.handler) {
