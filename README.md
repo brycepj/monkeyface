@@ -1,3 +1,5 @@
+*(WIP)*
+
 No-mess, declarative typechecking and interfaces in Javascript. 
  
 ## What is this all about?
